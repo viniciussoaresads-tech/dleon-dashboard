@@ -332,6 +332,122 @@ function renderMKT(f){
         };
     });
 
+    const labels=data.map(r=>r.label);
+    const isMsg=f.aq==='mensagem';
+    const isCad=f.aq==='cadastro';
+    const totInv=data.reduce((s,r)=>s+(r.investimento||0),0);
+    const totFat=data.reduce((s,r)=>s+(r.faturamento||0),0);
+    const totMsg=data.reduce((s,r)=>s+(r.mensagens||0),0);
+    const totCad=data.reduce((s,r)=>s+(r.cadastros||0),0);
+    const totFech=data.reduce((s,r)=>s+(r.fechamentos||0),0);
+    const avgRoas=totInv>0?totFat/totInv:0;
+    const avgCac=totFech>0?totInv/totFech:0;
+    const avgCpMsg=totMsg>0?totInv/totMsg:0;
+    const avgCpCad=totCad>0?totInv/totCad:0;
+
+    let kpiHtml=`
+        <div class="kpi"><div class="lb">Investimento</div><div class="vl blue">${fmtM(totInv)}</div></div>
+        <div class="kpi"><div class="lb">Faturamento</div><div class="vl green">${fmtM(totFat)}</div></div>
+        <div class="kpi"><div class="lb">ROAS</div><div class="vl yellow">${avgRoas.toFixed(2)}x</div></div>
+        <div class="kpi"><div class="lb">Fechamentos</div><div class="vl green">${fmtN(totFech)}</div></div>
+        <div class="kpi"><div class="lb">CAC</div><div class="vl red">${fmtR(avgCac)}</div></div>`;
+    if(!isCad)kpiHtml+=`<div class="kpi"><div class="lb">Mensagens</div><div class="vl purple">${fmtN(totMsg)}</div><div class="sub">Custo/Msg: ${fmtR(avgCpMsg)}</div></div>`;
+    if(!isMsg)kpiHtml+=`<div class="kpi"><div class="lb">Cadastros</div><div class="vl cyan">${fmtN(totCad)}</div><div class="sub">Custo/Cad: ${fmtR(avgCpCad)}</div></div>`;
+    document.getElementById('kpi-mkt').innerHTML=kpiHtml;
+
+    dc('c-inv-fat');
+    charts['c-inv-fat']=new Chart(document.getElementById('c-inv-fat'),{
+        type:'bar',data:{labels,datasets:[
+            {label:'Investimento',data:data.map(r=>r.investimento||0),backgroundColor:'rgba(0,122,255,0.6)',borderRadius:4},
+            {label:'Faturamento',data:data.map(r=>r.faturamento||0),backgroundColor:'rgba(52,199,89,0.6)',borderRadius:4}
+        ]},options:{responsive:true,interaction:{mode:'index',intersect:false},scales:{y:{ticks:{callback:v=>fmtMShort(v)}}}}
+    });
+
+    dc('c-roas');
+    charts['c-roas']=new Chart(document.getElementById('c-roas'),{
+        type:'line',data:{labels,datasets:[
+            {label:'ROAS',data:data.map(r=>r.roas||0),borderColor:'#ff9500',backgroundColor:'rgba(255,149,0,0.08)',fill:true,tension:.3,pointRadius:5,pointBackgroundColor:'#ff9500'}
+        ]},options:{responsive:true,scales:{y:{ticks:{callback:v=>v.toFixed(1)+'x'}}}}
+    });
+
+    dc('c-custos');
+    charts['c-custos']=new Chart(document.getElementById('c-custos'),{
+        type:'line',data:{labels,datasets:[
+            {label:'CAC',data:data.map(r=>r.cac||0),borderColor:'#ff3b30',tension:.3,pointRadius:4,yAxisID:'y'},
+            {label:'Custo/Msg',data:data.map(r=>r.custo_msg||0),borderColor:'#007aff',tension:.3,pointRadius:4,yAxisID:'y1'}
+        ]},options:{responsive:true,interaction:{mode:'index',intersect:false},scales:{
+            y:{type:'linear',position:'left',ticks:{callback:v=>'R$'+v.toFixed(0)}},
+            y1:{type:'linear',position:'right',grid:{drawOnChartArea:false},ticks:{callback:v=>'R$'+v.toFixed(2)}}
+        }}
+    });
+
+    dc('c-metricas');
+    charts['c-metricas']=new Chart(document.getElementById('c-metricas'),{
+        type:'line',data:{labels,datasets:[
+            {label:'CPC',data:data.map(r=>r.cpc||0),borderColor:'#007aff',tension:.3,pointRadius:3,yAxisID:'y'},
+            {label:'CPM',data:data.map(r=>r.cpm||0),borderColor:'#ff9500',tension:.3,pointRadius:3,yAxisID:'y'},
+            {label:'CTR (%)',data:data.map(r=>(r.ctr||0)*100),borderColor:'#34c759',tension:.3,pointRadius:3,yAxisID:'y1'}
+        ]},options:{responsive:true,interaction:{mode:'index',intersect:false},scales:{
+            y:{type:'linear',position:'left',ticks:{callback:v=>'R$'+v.toFixed(2)}},
+            y1:{type:'linear',position:'right',grid:{drawOnChartArea:false},ticks:{callback:v=>v.toFixed(2)+'%'}}
+        }}
+    });
+
+    const totalLeads=totMsg+totCad;
+    const convRate=totalLeads>0?totFech/totalLeads*100:0;
+    let t=`<thead><tr>
+        <th title="Periodo">Mes</th>
+        <th title="Valor investido em anuncios">Investimento</th>
+        <th title="Mensagens recebidas via WhatsApp e Instagram">Mensagens</th>
+        <th title="Cadastros via Typebot/formularios">Cadastros</th>
+        <th title="Custo por Mensagem recebida">Custo/Msg</th>
+        <th title="Custo por Cadastro recebido">Custo/Cad</th>
+        <th title="Orcamentos fechados (vendas)">Fechamentos</th>
+        <th title="Receita total gerada">Faturamento</th>
+        <th title="Taxa de Conversao: Fechamentos / Total de Leads">Conv.</th>
+        <th title="Retorno sobre o investimento em anuncios">ROAS</th>
+        <th title="Custo de Aquisicao por Cliente">CAC</th>
+        <th title="Valor medio por venda">Ticket Medio</th>
+        <th title="Custo por Clique no anuncio">CPC</th>
+        <th title="Custo por mil impressoes do anuncio">CPM</th>
+    </tr></thead><tbody>`;
+    data.forEach(r=>{
+        const rv=r.roas||0;
+        const bc=rv>=15?'bg':rv>=10?'by':'br';
+        const leads=(r.mensagens||0)+(r.cadastros||0);
+        const conv=leads>0?((r.fechamentos||0)/leads*100).toFixed(2)+'%':'\u2014';
+        const roasStr=rv>0?`<span class="badge ${bc}">${rv.toFixed(2)}x</span>`:'\u2014';
+        t+=`<tr>
+            <td>${r.label}</td>
+            <td>${fmtM(r.investimento)}</td>
+            <td>${fmtN(r.mensagens)}</td>
+            <td>${fmtN(r.cadastros)}</td>
+            <td>${r.custo_msg?fmtR(r.custo_msg):'\u2014'}</td>
+            <td>${r.custo_cadastro?fmtR(r.custo_cadastro):'\u2014'}</td>
+            <td>${fmtN(r.fechamentos)}</td>
+            <td>${fmtM(r.faturamento)}</td>
+            <td>${conv}</td>
+            <td>${roasStr}</td>
+            <td>${r.cac?fmtR(r.cac):'\u2014'}</td>
+            <td>${r.ticket_medio?fmtR(r.ticket_medio):'\u2014'}</td>
+            <td>${r.cpc?fmtR(r.cpc):'\u2014'}</td>
+            <td>${r.cpm?fmtR(r.cpm):'\u2014'}</td>
+        </tr>`;
+    });
+    const rbc=avgRoas>=15?'bg':avgRoas>=10?'by':'br';
+    t+=`<tr style="background:#f0f4ff;font-weight:700;border-top:2px solid #007aff">
+        <td>TOTAL</td>
+        <td>${fmtM(totInv)}</td><td>${fmtN(totMsg)}</td><td>${fmtN(totCad)}</td>
+        <td>${fmtR(avgCpMsg)}</td><td>${fmtR(avgCpCad)}</td>
+        <td>${fmtN(totFech)}</td><td>${fmtM(totFat)}</td>
+        <td>${convRate.toFixed(2)}%</td>
+        <td><span class="badge ${rbc}">${avgRoas.toFixed(2)}x</span></td>
+        <td>${fmtR(avgCac)}</td><td>${fmtR(totFech>0?totFat/totFech:0)}</td>
+        <td>\u2014</td><td>\u2014</td>
+    </tr>`;
+    t+='</tbody>';
+    document.getElementById('tbl-mkt').innerHTML=t;
+}
 
 function renderPV(f){
     let data=[...PV];
