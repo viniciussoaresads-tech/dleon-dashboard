@@ -206,17 +206,21 @@ function aggregateByMonth(arr){
         m.fechamentos+=(r.fechamentos||0);
         m.mensagens+=(r.mensagens||0);
         m.cadastros+=(r.cadastros||0);
-        if(r.aq!=='cadastro'&&!m._hasMsg){
-            m.custo_msg=r.custo_msg;m.cac=r.cac;m.roas=r.roas;
-            m.ticket_medio=r.ticket_medio;m.cpc=r.cpc;m.ctr=r.ctr;
-            m.cpm=r.cpm;m.custo_cadastro=r.custo_cadastro;m._hasMsg=true;
-        }
+        // Acumular para calcular médias ponderadas de CPC/CTR/CPM
+        if(r.cpc){m._sumCpc=(m._sumCpc||0)+r.cpc*(r.investimento||0);m._wCpc=(m._wCpc||0)+(r.investimento||0);}
+        if(r.ctr){m._sumCtr=(m._sumCtr||0)+r.ctr*(r.investimento||0);m._wCtr=(m._wCtr||0)+(r.investimento||0);}
+        if(r.cpm){m._sumCpm=(m._sumCpm||0)+r.cpm*(r.investimento||0);m._wCpm=(m._wCpm||0)+(r.investimento||0);}
     });
-    // Recompute ROAS/CAC/Ticket a partir dos valores agregados
+    // Recompute todos os derivados a partir dos totais agregados
     return Object.values(map).map(m=>{
         if(m.investimento>0&&m.faturamento>0) m.roas=m.faturamento/m.investimento;
         if(m.investimento>0&&m.fechamentos>0) m.cac=m.investimento/m.fechamentos;
         if(m.faturamento>0&&m.fechamentos>0) m.ticket_medio=m.faturamento/m.fechamentos;
+        if(m.mensagens>0) m.custo_msg=m.investimento/m.mensagens;
+        if(m.cadastros>0) m.custo_cadastro=m.investimento/m.cadastros;
+        if(m._wCpc>0) m.cpc=m._sumCpc/m._wCpc;
+        if(m._wCtr>0) m.ctr=m._sumCtr/m._wCtr;
+        if(m._wCpm>0) m.cpm=m._sumCpm/m._wCpm;
         return m;
     }).sort((a,b)=>a.ano*100+a.mes-(b.ano*100+b.mes));
 }
@@ -276,31 +280,52 @@ function renderMKT(f){
             data=cadRecs;
         }else{
             // aq=all: usar seção geral do produto (tem inv+fat+fech consolidados)
-            // Se não houver geral, agregar mensagem+cadastro
+            // e enriquecer com mensagens/cadastros/custos dos registros por canal
             if(gerRecs.length>0){
-                data=gerRecs;
+                data=gerRecs.map(g=>{
+                    const msg=msgRecs.find(r=>r.ano==g.ano&&r.mes==g.mes);
+                    const cad=cadRecs.find(r=>r.ano==g.ano&&r.mes==g.mes);
+                    const msgs=msg?msg.mensagens:null;
+                    const cads=cad?cad.cadastros:null;
+                    const cmsg=msgs&&msg.investimento>0?msg.investimento/msgs:null;
+                    const ccad=cads&&cad.investimento>0?cad.investimento/cads:null;
+                    return {...g,mensagens:msgs,cadastros:cads,custo_msg:cmsg,custo_cadastro:ccad,
+                        cpc:msg?msg.cpc:null,ctr:msg?msg.ctr:null,cpm:msg?msg.cpm:null};
+                });
             }else{
                 data=aggregateByMonth([...msgRecs,...cadRecs]);
             }
         }
     }else{
         if(f.aq==='mensagem'){
-            // Agregar mensagem de todos os produtos
             const all_msg=[];
-            ['lente','protocolo','hof'].forEach(p=>{
-                all_msg.push(...getProdRecs(p).msgRecs);
-            });
+            ['lente','protocolo','hof'].forEach(p=>{all_msg.push(...getProdRecs(p).msgRecs);});
             data=aggregateByMonth(all_msg);
         }else if(f.aq==='cadastro'){
-            // Agregar cadastro de todos os produtos
             const all_cad=[];
-            ['lente','protocolo','hof'].forEach(p=>{
-                all_cad.push(...getProdRecs(p).cadRecs);
-            });
+            ['lente','protocolo','hof'].forEach(p=>{all_cad.push(...getProdRecs(p).cadRecs);});
             data=aggregateByMonth(all_cad);
         }else{
-            // prod=all + aq=all: usar tipo=geral (total consolidado de todos os produtos)
-            data=KPI.filter(r=>r.tipo==='geral');
+            // prod=all + aq=all: usar tipo=geral e enriquecer com msgs/cads agregados dos produtos
+            const geralRecs=KPI.filter(r=>r.tipo==='geral');
+            data=geralRecs.map(g=>{
+                let totMsg=0,totCad=0;
+                ['lente','protocolo','hof'].forEach(p=>{
+                    const {msgRecs,cadRecs}=getProdRecs(p);
+                    const msg=msgRecs.find(r=>r.ano==g.ano&&r.mes==g.mes);
+                    const cad=cadRecs.find(r=>r.ano==g.ano&&r.mes==g.mes);
+                    totMsg+=msg&&msg.mensagens?msg.mensagens:0;
+                    totCad+=cad&&cad.cadastros?cad.cadastros:0;
+                });
+                const cmsg=totMsg>0?g.investimento/totMsg:null;
+                const ccad=totCad>0?g.investimento/totCad:null;
+                return {...g,
+                    mensagens:totMsg>0?totMsg:g.mensagens,
+                    cadastros:totCad>0?totCad:g.cadastros,
+                    custo_msg:cmsg||g.custo_msg,
+                    custo_cadastro:ccad||g.custo_cadastro
+                };
+            });
         }
     }
 
@@ -320,15 +345,19 @@ function renderMKT(f){
         return;
     }
 
-    // Recomputar ROAS/CAC/Ticket linha a linha a partir dos valores reais
+    // Recomputar ROAS/CAC/Ticket/custos linha a linha a partir dos valores reais
     data=data.map(r=>{
         const fat=r.faturamento||0;
         const fech=r.fechamentos||0;
         const inv=r.investimento||0;
+        const msgs=r.mensagens||0;
+        const cads=r.cadastros||0;
         return {...r,
             roas: inv>0&&fat>0 ? fat/inv : null,
             cac:  inv>0&&fech>0 ? inv/fech : null,
-            ticket_medio: fat>0&&fech>0 ? fat/fech : null
+            ticket_medio: fat>0&&fech>0 ? fat/fech : null,
+            custo_msg: r.custo_msg||(msgs>0&&inv>0?inv/msgs:null),
+            custo_cadastro: r.custo_cadastro||(cads>0&&inv>0?inv/cads:null)
         };
     });
 
