@@ -309,16 +309,17 @@ function renderMKT(f){
             // prod=all + aq=all: usar tipo=geral e enriquecer com msgs/cads agregados dos produtos
             const geralRecs=KPI.filter(r=>r.tipo==='geral');
             data=geralRecs.map(g=>{
-                let totMsg=0,totCad=0;
+                let totMsg=0,totCad=0,invMsg=0,invCad=0;
                 ['lente','protocolo','hof'].forEach(p=>{
                     const {msgRecs,cadRecs}=getProdRecs(p);
                     const msg=msgRecs.find(r=>r.ano==g.ano&&r.mes==g.mes);
                     const cad=cadRecs.find(r=>r.ano==g.ano&&r.mes==g.mes);
-                    totMsg+=msg&&msg.mensagens?msg.mensagens:0;
-                    totCad+=cad&&cad.cadastros?cad.cadastros:0;
+                    if(msg){totMsg+=msg.mensagens||0;invMsg+=msg.investimento||0;}
+                    if(cad){totCad+=cad.cadastros||0;invCad+=cad.investimento||0;}
                 });
-                const cmsg=totMsg>0?g.investimento/totMsg:null;
-                const ccad=totCad>0?g.investimento/totCad:null;
+                // custo correto = só investimento do canal / volume do canal
+                const cmsg=totMsg>0&&invMsg>0?invMsg/totMsg:null;
+                const ccad=totCad>0&&invCad>0?invCad/totCad:null;
                 return {...g,
                     mensagens:totMsg>0?totMsg:g.mensagens,
                     cadastros:totCad>0?totCad:g.cadastros,
@@ -371,8 +372,12 @@ function renderMKT(f){
     const totFech=data.reduce((s,r)=>s+(r.fechamentos||0),0);
     const avgRoas=totInv>0?totFat/totInv:0;
     const avgCac=totFech>0?totInv/totFech:0;
-    const avgCpMsg=totMsg>0?totInv/totMsg:0;
-    const avgCpCad=totCad>0?totInv/totCad:0;
+    // custo/msg e custo/cad: usar só o investimento do canal respectivo (não o total)
+    // para evitar distorção de média sobre média
+    const sumInvMsg=data.reduce((s,r)=>s+((r.custo_msg||0)*(r.mensagens||0)),0);
+    const sumInvCad=data.reduce((s,r)=>s+((r.custo_cadastro||0)*(r.cadastros||0)),0);
+    const avgCpMsg=totMsg>0?sumInvMsg/totMsg:0;
+    const avgCpCad=totCad>0?sumInvCad/totCad:0;
 
     let kpiHtml=`
         <div class="kpi"><div class="lb">Investimento</div><div class="vl blue">${fmtM(totInv)}</div></div>
