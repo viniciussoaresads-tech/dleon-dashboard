@@ -1,0 +1,35 @@
+name: Atualizar dados diários
+
+on:
+  schedule:
+    - cron: '0 9 * * 1-6'
+  workflow_dispatch:
+
+jobs:
+  atualizar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Instalar dependências
+        run: pip install psycopg2-binary
+
+      - name: Atualizar dados
+        env:
+          REDSHIFT_HOST: ${{ secrets.REDSHIFT_HOST }}
+          REDSHIFT_USER: ${{ secrets.REDSHIFT_USER }}
+          REDSHIFT_PASSWORD: ${{ secrets.REDSHIFT_PASSWORD }}
+        run: python update_data.py
+
+      - name: Commit e push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/funil.json
+          git diff --staged --quiet || git commit -m "chore: atualizar dados $(date -u '+%Y-%m-%d')"
+          git push

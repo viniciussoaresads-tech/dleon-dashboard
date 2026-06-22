@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel Comercial · D'Leon</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:#f5f5f5;color:#111;font-size:13px;line-height:1.4}
+.pg{max-width:1100px;margin:0 auto;padding:1.25rem}
+.hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.5rem}
+.brand{display:flex;align-items:center;gap:10px}
+.sq{width:36px;height:36px;background:#111;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;letter-spacing:.5px;flex-shrink:0}
+.btext h1{font-size:15px;font-weight:600}.btext p{font-size:10.5px;color:#aaa;margin-top:1px}
+.upd{font-size:10px;color:#ccc;text-align:right}
+.dtbar{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:1rem;padding:.6rem .8rem;background:#fff;border:1px solid #e8e8e8;border-radius:10px}
+.preset-grp{display:flex;gap:4px;flex-wrap:wrap}
+.pbtn{border:1px solid #e0e0e0;background:#fff;border-radius:6px;padding:3px 10px;font-size:11.5px;cursor:pointer;color:#666;white-space:nowrap;transition:all .15s}
+.pbtn:hover{background:#f5f5f5}.pbtn.on{background:#111;color:#fff;border-color:#111}
+.sep{width:1px;height:18px;background:#e8e8e8;margin:0 2px}
+.date-inputs{display:flex;align-items:center;gap:5px}
+.date-inputs label{font-size:10.5px;color:#aaa}
+.date-inputs input[type=date]{border:1px solid #e0e0e0;border-radius:6px;padding:3px 7px;font-size:11.5px;color:#333;background:#fff;outline:none}
+.date-inputs input[type=date]:focus{border-color:#555}
+.ppill{font-size:10px;color:#888;background:#f0f0f0;border-radius:100px;padding:2px 9px;white-space:nowrap;margin-left:auto}
+.kgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:.85rem}
+.kcard{border:1px solid #e8e8e8;border-radius:10px;padding:.75rem .8rem;background:#fff}
+.klbl{font-size:9.5px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:#bbb;margin-bottom:.4rem}
+.kval{font-size:22px;font-weight:500;line-height:1;margin-bottom:.3rem}
+.ksub{font-size:10.5px}
+.pill{font-size:9.5px;font-weight:600;padding:2px 7px;border-radius:100px}
+.g{color:#167a3f;background:#e5f4ec}.r{color:#b02020;background:#fce8e6}.gr{color:#888;background:#f0f0f0}
+.pgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:.85rem}
+.pcard{border:1px solid;border-radius:10px;padding:.75rem .85rem}
+.pL{background:#EAF3FC;border-color:#C0D8F0}.pP{background:#EDF8E5;border-color:#B8DE9A}
+.pH{background:#FDF5E5;border-color:#EED08A}.pI{background:#F4EEFF;border-color:#C8A8E8}
+.pname{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;opacity:.55;margin-bottom:.35rem}
+.pfat{font-size:17px;font-weight:500;margin-bottom:.2rem}
+.pmeta{font-size:10.5px;color:rgba(0,0,0,.45);line-height:1.6}
+.sec{display:flex;align-items:center;gap:8px;margin:.7rem 0 .45rem;color:#ccc;font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+.sec::before,.sec::after{content:'';flex:1;height:1px;background:#e8e8e8}
+.fbar{display:flex;gap:5px;margin-bottom:.55rem;flex-wrap:wrap;align-items:center}
+.fb{border:1px solid #e0e0e0;background:#fff;border-radius:6px;padding:3px 10px;font-size:11.5px;cursor:pointer;color:#666;transition:all .15s}
+.fb:hover{background:#f5f5f5}.fb.on{background:#111;color:#fff;border-color:#111}
+.tw{border:1px solid #e8e8e8;border-radius:10px;overflow:hidden;background:#fff}
+table{width:100%;border-collapse:collapse;font-size:11.5px}
+th{background:#fafafa;padding:6px 10px;text-align:right;font-weight:600;color:#bbb;font-size:9.5px;letter-spacing:.05em;white-space:nowrap;border-bottom:1px solid #ebebeb}
+th:first-child,th:nth-child(2){text-align:left}
+td{padding:5.5px 10px;border-top:1px solid #f2f2f2;text-align:right;color:#222}
+td:first-child{text-align:left;width:70px}td:nth-child(2){text-align:left}
+.rw td{padding:4px 10px;background:#fafafa;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#ccc;border-top:1px solid #e8e8e8}
+.rd td{background:#fafafa;font-weight:500;font-size:10.5px;color:#777;border-top:1px solid #eaeaea;padding:5px 10px}
+.rp td{background:#fff}.rp:hover td{background:#f8fbff}
+.rs td{background:#f5f5f5;font-weight:600;font-size:11px;color:#444;border-top:1px solid #ddd}
+.rt td{background:#111;color:#fff;font-weight:600;font-size:11.5px}
+.tag{display:inline-flex;align-items:center;gap:3px;font-size:10.5px;font-weight:500;padding:1px 7px;border-radius:4px;white-space:nowrap}
+.dot{width:5px;height:5px;border-radius:50%;display:inline-block}
+.tL{background:#EAF3FC;color:#0B4A80}.tL .dot{background:#2878C8}
+.tP{background:#EDF8E5;color:#185E06}.tP .dot{background:#4A9C18}
+.tH{background:#FDF5E5;color:#6A3600}.tH .dot{background:#C07A10}
+.tI{background:#F4EEFF;color:#4A1A8A}.tI .dot{background:#7B4DB5}
+.tO{background:#f0f0f0;color:#555}.tO .dot{background:#999}
+.hi{color:#167a3f;font-weight:600}.lo{color:#b02020;font-weight:600}.md{color:#999}.fat{font-weight:500}
+.charts{display:grid;grid-template-columns:1.65fr 1fr;gap:8px;margin-top:.8rem}
+.cc{border:1px solid #e8e8e8;border-radius:10px;padding:.85rem;background:#fff}
+.cttl{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#ccc;margin-bottom:.55rem}
+.ch{position:relative;height:148px}
+.lg{display:flex;gap:10px;flex-wrap:wrap;margin-top:.45rem}
+.li{display:flex;align-items:center;gap:4px;font-size:10px;color:#aaa}
+.ld{width:8px;height:8px;border-radius:2px}
+.loading{text-align:center;padding:3rem;color:#ccc;font-size:12px}
+@media(max-width:700px){
+  .kgrid{grid-template-columns:repeat(2,1fr)}
+  .pgrid{grid-template-columns:repeat(2,1fr)}
+  .charts{grid-template-columns:1fr}
+  .kval{font-size:16px}
+}
+</style>
+</head>
+<body>
+<div class="pg">
+<div class="hd">
+  <div class="brand">
+    <div class="sq">DL</div>
+    <div class="btext">
+      <h1>Painel Comercial · Clínica D'Leon</h1>
+      <p>Lentes · Protocolo · HOF · Implante · Outros</p>
+    </div>
+  </div>
+  <div class="upd" id="upd-lbl"></div>
+</div>
+<div class="dtbar">
+  <div class="preset-grp">
+    <button class="pbtn" onclick="preset('hoje')">Hoje</button>
+    <button class="pbtn" onclick="preset('semana')">Esta semana</button>
+    <button class="pbtn on" id="btn-mes" onclick="preset('mes')">Este mês</button>
+    <button class="pbtn" onclick="preset('anterior')">Mês anterior</button>
+  </div>
+  <div class="sep"></div>
+  <div class="date-inputs">
+    <label>De</label><input type="date" id="dt-ini" onchange="applyDates()">
+    <label>Até</label><input type="date" id="dt-fim" onchange="applyDates()">
+  </div>
+  <span class="ppill" id="ppill"></span>
+</div>
+<div id="main"><div class="loading">Carregando dados...</div></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+let ALL=[], META={}, filt='Todos', dIni='', dFim='', ch1=null, ch2=null;
+
+const money=v=>'R$ '+Math.round(v).toLocaleString('pt-BR');
+const moneyK=v=>v>=1000?'R$ '+(v/1000).toFixed(1).replace('.',',')+'k':money(v);
+const pct=v=>v==null?'—':v.toFixed(1)+'%';
+const pc=(v,lo,hi)=>v==null?'md':v>=hi?'hi':v<=lo?'lo':'md';
+const wk=d=>{const n=+d.slice(8);return n<=7?1:n<=14?2:n<=21?3:4;};
+const wkLbl=w=>(['','01–07','08–14','15–21','22–28'])[w]+' '+monthName(dIni);
+const monthName=d=>{const dt=new Date(d+'T12:00:00');return dt.toLocaleDateString('pt-BR',{month:'short'}).replace('.','')};
+const dayFmt=d=>{const dt=new Date(d+'T12:00:00');return dt.toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'2-digit'}).replace(',','').replace(/^\w/,c=>c.toUpperCase());};
+const tagCls=p=>({'Lentes':'tL','Protocolo':'tP','HOF':'tH','Implante':'tI','Outros':'tO'})[p]||'tO';
+const sm=rows=>({aval:rows.reduce((a,r)=>a+r.aval,0),comp:rows.reduce((a,r)=>a+r.comp,0),fech:rows.reduce((a,r)=>a+r.fech,0),fat:rows.reduce((a,r)=>a+r.fatur,0)});
+
+function todayStr(){return new Date().toISOString().slice(0,10)}
+function firstOfMonth(){return todayStr().slice(0,7)+'-01'}
+function firstOfPrevMonth(){const d=new Date();d.setDate(1);d.setMonth(d.getMonth()-1);return d.toISOString().slice(0,7)+'-01'}
+function lastOfPrevMonth(){const d=new Date();d.setDate(0);return d.toISOString().slice(0,10)}
+function mondayOfWeek(){const d=new Date();const day=d.getDay()||7;d.setDate(d.getDate()-day+1);return d.toISOString().slice(0,10)}
+
+function clamp(d){
+  const dates=ALL.map(r=>r.data).sort();
+  if(!dates.length)return d;
+  return d<dates[0]?dates[0]:d>dates[dates.length-1]?dates[dates.length-1]:d;
+}
+
+fetch('./data/funil.json').then(r=>r.json()).then(j=>{
+  META=j; ALL=j.rows;
+  const upd=new Date(j.updated_at+'T12:00:00');
+  document.getElementById('upd-lbl').textContent='Atualizado em '+upd.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric'});
+  buildMain();
+  dIni=clamp(firstOfMonth());
+  dFim=clamp(todayStr());
+  document.getElementById('dt-ini').value=dIni;
+  document.getElementById('dt-fim').value=dFim;
+  const dates=ALL.map(r=>r.data).sort();
+  if(dates.length){document.getElementById('dt-ini').min=document.getElementById('dt-fim').min=dates[0];document.getElementById('dt-ini').max=document.getElementById('dt-fim').max=dates[dates.length-1];}
+  render();
+}).catch(()=>{document.getElementById('main').innerHTML='<div class="loading">Erro ao carregar dados.</div>';});
+
+function buildMain(){
+  document.getElementById('main').innerHTML=`
+<div class="kgrid" id="kgrid"></div>
+<div class="pgrid" id="pgrid"></div>
+<div class="sec">tabela diária por produto</div>
+<div class="fbar">
+  <button class="fb on" onclick="setF('Todos')">Todos</button>
+  <button class="fb" onclick="setF('Lentes')">Lentes</button>
+  <button class="fb" onclick="setF('Protocolo')">Protocolo</button>
+  <button class="fb" onclick="setF('HOF')">HOF</button>
+  <button class="fb" onclick="setF('Implante')">Implante</button>
+  <button class="fb" onclick="setF('Outros')">Outros</button>
+</div>
+<div class="tw"><table>
+<thead><tr><th></th><th>Produto</th><th>Aval.</th><th>Comp.</th><th>% Comp.</th><th>Fech.</th><th>% Conv.</th><th>Ticket Méd.</th><th>Faturamento</th></tr></thead>
+<tbody id="tbody"></tbody></table></div>
+<div class="charts">
+  <div class="cc"><div class="cttl">Faturamento diário por produto</div><div class="ch"><canvas id="c1"></canvas></div>
+    <div class="lg">
+      <div class="li"><div class="ld" style="background:#2878C8"></div>Lentes</div>
+      <div class="li"><div class="ld" style="background:#4A9C18"></div>Protocolo</div>
+      <div class="li"><div class="ld" style="background:#C07A10"></div>HOF</div>
+      <div class="li"><div class="ld" style="background:#7B4DB5"></div>Implante</div>
+      <div class="li"><div class="ld" style="background:#ccc"></div>Outros</div>
+    </div>
+  </div>
+  <div class="cc"><div class="cttl">Funil do período</div><div class="ch"><canvas id="c2"></canvas></div></div>
+</div>`;
+}
+
+function preset(p){
+  document.querySelectorAll('.pbtn').forEach(b=>b.classList.remove('on'));
+  event.target.classList.add('on');
+  if(p==='hoje'){dIni=dFim=clamp(todayStr());}
+  else if(p==='semana'){dIni=clamp(mondayOfWeek());dFim=clamp(todayStr());}
+  else if(p==='mes'){dIni=clamp(firstOfMonth());dFim=clamp(todayStr());}
+  else if(p==='anterior'){dIni=clamp(firstOfPrevMonth());dFim=clamp(lastOfPrevMonth());}
+  document.getElementById('dt-ini').value=dIni;
+  document.getElementById('dt-fim').value=dFim;
+  render();
+}
+
+function applyDates(){
+  document.querySelectorAll('.pbtn').forEach(b=>b.classList.remove('on'));
+  dIni=document.getElementById('dt-ini').value;
+  dFim=document.getElementById('dt-fim').value;
+  render();
+}
+
+function setF(f){
+  filt=f;
+  document.querySelectorAll('.fb').forEach(b=>b.classList.toggle('on',b.textContent===f));
+  render();
+}
+
+function render(){
+  const filtered=ALL.filter(r=>r.data>=dIni&&r.data<=dFim);
+  const data=filt==='Todos'?filtered:filtered.filter(r=>r.produto===filt);
+  const T=sm(data);
+  const pComp=T.aval>0?T.comp/T.aval*100:null;
+  const pConv=T.comp>0?T.fech/T.comp*100:null;
+  const ticket=T.fech>0?T.fat/T.fech:null;
+  const d1=new Date(dIni+'T12:00:00').toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'});
+  const d2=new Date(dFim+'T12:00:00').toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'});
+  document.getElementById('ppill').textContent=d1===d2?d1:`${d1} a ${d2}`;
+
+  document.getElementById('kgrid').innerHTML=[
+    ['Avaliações',T.aval,'','gr'],
+    ['Comparecimentos',T.comp,`<span class="pill ${pComp!=null&&pComp>=50?'g':'r'}">${pct(pComp)}</span>`,''],
+    ['Fechamentos',T.fech,`<span class="pill ${pConv!=null&&pConv>=50?'g':'r'}">${pct(pConv)} conv.</span>`,''],
+    ['Ticket Médio',ticket?moneyK(ticket):'—','<span class="pill gr">por fechamento</span>',''],
+    ['Faturamento',moneyK(T.fat),`<span class="pill gr">${d1===d2?d1:d1+' – '+d2}</span>`,''],
+  ].map(([l,v,sub])=>`<div class="kcard"><div class="klbl">${l}</div><div class="kval" style="${String(v).length>8?'font-size:15px':''}">${v}</div>${sub?`<div class="ksub">${sub}</div>`:''}</div>`).join('');
+
+  const prodCfg=[['Lentes','pL'],['Protocolo','pP'],['HOF','pH'],['Implante','pI']];
+  document.getElementById('pgrid').innerHTML=prodCfg.map(([p,cls])=>{
+    const ps=sm(filtered.filter(r=>r.produto===p));
+    const pc_=ps.aval>0?(ps.comp/ps.aval*100).toFixed(0)+'%':'—';
+    const pv_=ps.comp>0?(ps.fech/ps.comp*100).toFixed(0)+'%':'—';
+    const tk_=ps.fech>0?moneyK(ps.fat/ps.fech):'—';
+    return `<div class="pcard ${cls}"><div class="pname">${p}</div><div class="pfat">${moneyK(ps.fat)}</div><div class="pmeta">${ps.aval} aval · ${ps.comp} comp (${pc_})<br>${ps.fech} fech · conv. ${pv_}<br>Ticket: ${tk_}</div></div>`;
+  }).join('');
+
+  const dates=[...new Set(filtered.map(r=>r.data))].sort();
+  let html='',lastW=0,wRows=[];
+  const flushW=w=>{
+    if(!wRows.length)return;
+    const ws=sm(wRows);
+    const pc_=ws.aval>0?ws.comp/ws.aval*100:null;
+    const pv_=ws.comp>0?ws.fech/ws.comp*100:null;
+    html+=`<tr class="rs"><td></td><td>Total Semana ${w}</td><td>${ws.aval||'—'}</td><td>${ws.comp||'—'}</td><td class="${pc(pc_,25,50)}">${pct(pc_)}</td><td>${ws.fech||'—'}</td><td class="${pc(pv_,40,60)}">${pct(pv_)}</td><td>${ws.fech>0?moneyK(ws.fat/ws.fech):'—'}</td><td class="fat">${money(ws.fat)}</td></tr>`;
+    wRows=[];
+  };
+  dates.forEach(date=>{
+    const dRows=data.filter(r=>r.data===date);
+    if(!dRows.length)return;
+    const w=wk(date);
+    if(w!==lastW){if(lastW)flushW(lastW);html+=`<tr class="rw"><td colspan="9">— Semana ${w} · ${wkLbl(w)}</td></tr>`;lastW=w;}
+    const allDay=filtered.filter(r=>r.data===date);
+    const dF=allDay.reduce((a,r)=>a+r.fech,0),dFat=allDay.reduce((a,r)=>a+r.fatur,0);
+    html+=`<tr class="rd"><td colspan="6">${dayFmt(date)}</td><td colspan="3" style="text-align:right;color:#bbb;font-size:10px">${dF} fech · ${moneyK(dFat)}</td></tr>`;
+    dRows.forEach(r=>{
+      html+=`<tr class="rp"><td></td><td><span class="tag ${tagCls(r.produto)}"><span class="dot"></span>${r.produto}</span></td><td>${r.aval||'—'}</td><td>${r.comp||'—'}</td><td class="${pc(r.pct_comp,25,50)}">${pct(r.pct_comp)}</td><td>${r.fech||'—'}</td><td class="${pc(r.pct_vend,40,60)}">${pct(r.pct_vend)}</td><td>${r.fech>0?moneyK(r.fatur/r.fech):'—'}</td><td class="fat">${r.fatur>0?money(r.fatur):'—'}</td></tr>`;
+      wRows.push(r);
+    });
+  });
+  if(lastW)flushW(lastW);
+  html+=`<tr class="rt"><td></td><td>Total período</td><td>${T.aval}</td><td>${T.comp}</td><td>${pct(pComp)}</td><td>${T.fech}</td><td>${pct(pConv)}</td><td>${ticket?moneyK(ticket):'—'}</td><td>${money(T.fat)}</td></tr>`;
+  document.getElementById('tbody').innerHTML=html;
+  renderCharts(filtered,dates);
+}
+
+function renderCharts(filtered,dates){
+  const prods=['Lentes','Protocolo','HOF','Implante','Outros'];
+  const colors=['#2878C8','#4A9C18','#C07A10','#7B4DB5','#ccc'];
+  const labels=dates.map(d=>d.slice(8)+'/'+d.slice(5,7));
+  const ds1=prods.map((p,i)=>({label:p,data:dates.map(d=>Math.round(filtered.filter(r=>r.data===d&&r.produto===p).reduce((a,r)=>a+r.fatur,0))),backgroundColor:colors[i],borderRadius:3,borderSkipped:false}));
+  const fT=sm(filtered.filter(r=>r.produto!=='Outros'));
+  if(ch1)ch1.destroy();if(ch2)ch2.destroy();
+  ch1=new Chart(document.getElementById('c1'),{type:'bar',data:{labels,datasets:ds1},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${money(c.raw)}`}}},scales:{x:{stacked:true,grid:{display:false},ticks:{font:{size:8},color:'#ccc',maxRotation:0,autoSkip:true,maxTicksLimit:12}},y:{stacked:true,grid:{color:'#f0f0f0'},ticks:{callback:v=>'R$'+Math.round(v/1000)+'k',font:{size:8},color:'#ccc'},border:{display:false}}}}});
+  ch2=new Chart(document.getElementById('c2'),{type:'bar',data:{labels:['Avaliações','Comparecimentos','Fechamentos'],datasets:[{data:[fT.aval,fT.comp,fT.fech],backgroundColor:['#2878C8','#4A9C18','#C07A10'],borderRadius:5,borderSkipped:false}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${c.raw} (${(c.raw/(fT.aval||1)*100).toFixed(0)}%)`}}},scales:{x:{grid:{color:'#f0f0f0'},ticks:{font:{size:8.5},color:'#ccc'},border:{display:false}},y:{grid:{display:false},ticks:{font:{size:9.5},color:'#666'}}}}});
+}
+</script>
+</body>
+</html>
