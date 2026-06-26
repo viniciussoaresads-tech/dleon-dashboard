@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Equipe Comercial · D'Leon</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:#f5f5f5;color:#111;font-size:13px;line-height:1.4}
+.pg{max-width:960px;margin:0 auto;padding:1.25rem}
+.hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.5rem}
+.brand{display:flex;align-items:center;gap:10px}
+.sq{width:36px;height:36px;background:#111;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;letter-spacing:.5px;flex-shrink:0}
+.btext h1{font-size:15px;font-weight:600}.btext p{font-size:10.5px;color:#aaa;margin-top:1px}
+.hd-right{display:flex;align-items:center;gap:10px}
+.upd{font-size:10px;color:#ccc}
+.back{font-size:11px;color:#888;text-decoration:none;border:1px solid #e0e0e0;background:#fff;padding:3px 10px;border-radius:6px}
+.back:hover{background:#f5f5f5}
+
+/* tabs */
+.tabs{display:flex;gap:0;border:1px solid #e0e0e0;border-radius:10px;overflow:hidden;margin-bottom:1rem;background:#fff}
+.tab{flex:1;padding:.6rem 1rem;text-align:center;cursor:pointer;font-size:12px;font-weight:500;color:#888;border:none;background:none;transition:all .15s}
+.tab:not(:last-child){border-right:1px solid #e0e0e0}
+.tab.on{background:#111;color:#fff}
+.tab-panel{display:none}.tab-panel.on{display:block}
+
+/* kpi cards */
+.kgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:1rem}
+.kcard{border:1px solid #e8e8e8;border-radius:10px;padding:.7rem .8rem;background:#fff}
+.klbl{font-size:9.5px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:#bbb;margin-bottom:.35rem}
+.kval{font-size:20px;font-weight:500;line-height:1;margin-bottom:.25rem}
+.ksub{font-size:10.5px;color:#aaa}
+
+/* ranking table */
+.tw{border:1px solid #e8e8e8;border-radius:10px;overflow:hidden;background:#fff}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:#fafafa;padding:7px 10px;text-align:right;font-weight:600;color:#bbb;font-size:9.5px;letter-spacing:.05em;white-space:nowrap;border-bottom:1px solid #ebebeb}
+th:first-child,th:nth-child(2){text-align:left}
+td{padding:6px 10px;border-top:1px solid #f2f2f2;text-align:right;color:#222;vertical-align:middle}
+td:first-child{text-align:center;width:32px;color:#ccc;font-size:11px;font-weight:600}
+td:nth-child(2){text-align:left}
+tr:hover td{background:#f8fbff}
+.medal-1{color:#b8860b;font-weight:700}
+.medal-2{color:#888;font-weight:700}
+.medal-3{color:#cd7f32;font-weight:700}
+.nome{font-weight:500;color:#111;font-size:12px}
+.bar-wrap{display:flex;align-items:center;gap:6px}
+.bar{height:5px;border-radius:3px;flex-shrink:0;min-width:2px}
+.bar-v{background:#2878C8}.bar-s{background:#4A9C18}.bar-a{background:#C07A10}
+.pct-hi{color:#167a3f;font-weight:600}
+.pct-mid{color:#888}
+.pct-lo{color:#b02020;font-weight:600}
+.fat{font-weight:500}
+.pill{font-size:9px;font-weight:600;padding:1px 6px;border-radius:100px;white-space:nowrap}
+.g{color:#167a3f;background:#e5f4ec}.r{color:#b02020;background:#fce8e6}.gr{color:#888;background:#f0f0f0}
+.total-row td{background:#111;color:#fff;font-weight:600;font-size:12px}
+
+@media(max-width:640px){
+  .kgrid{grid-template-columns:repeat(2,1fr)}
+  .kval{font-size:16px}
+}
+</style>
+</head>
+<body>
+<div class="pg">
+<div class="hd">
+  <div class="brand">
+    <div class="sq">DL</div>
+    <div class="btext">
+      <h1>Equipe Comercial · Clínica D'Leon</h1>
+      <p>Vendedores · SDRs · Avaliadores</p>
+    </div>
+  </div>
+  <div class="hd-right">
+    <span class="upd" id="upd-lbl"></span>
+    <a class="back" href="funil-comercial.html">← Funil</a>
+  </div>
+</div>
+
+<div class="tabs">
+  <button class="tab on" onclick="setTab('vendedores')">Vendedores</button>
+  <button class="tab"    onclick="setTab('sdrs')">SDRs</button>
+  <button class="tab"    onclick="setTab('avaliadores')">Avaliadores</button>
+</div>
+
+<!-- VENDEDORES -->
+<div class="tab-panel on" id="panel-vendedores">
+  <div class="kgrid" id="kv"></div>
+  <div class="tw"><table>
+    <thead><tr><th>#</th><th>Vendedor</th><th>Vendas</th><th>Faturamento</th><th>Ticket Médio</th><th>Clientes</th></tr></thead>
+    <tbody id="tv"></tbody>
+  </table></div>
+</div>
+
+<!-- SDRs -->
+<div class="tab-panel" id="panel-sdrs">
+  <div class="kgrid" id="ks"></div>
+  <div class="tw"><table>
+    <thead><tr><th>#</th><th>SDR</th><th>Leads</th><th>Agendou</th><th>Compareceu</th><th>% Comp.</th><th>Convertidos</th><th>% Conv.</th></tr></thead>
+    <tbody id="ts"></tbody>
+  </table></div>
+</div>
+
+<!-- AVALIADORES -->
+<div class="tab-panel" id="panel-avaliadores">
+  <div class="kgrid" id="ka"></div>
+  <div class="tw"><table>
+    <thead><tr><th>#</th><th>Avaliador</th><th>Avaliações</th><th>Compareceram</th><th>Converteram</th><th>% Conv.</th><th>Faturamento</th></tr></thead>
+    <tbody id="ta"></tbody>
+  </table></div>
+</div>
+</div>
+
+<script>
+const money = v => 'R$ ' + Math.round(v).toLocaleString('pt-BR');
+const moneyK = v => v >= 1000 ? 'R$ ' + (v/1000).toFixed(0) + 'k' : money(v);
+const pct = v => v == null ? '—' : v.toFixed(1) + '%';
+const pcCls = (v, lo, hi) => v >= hi ? 'pct-hi' : v <= lo ? 'pct-lo' : 'pct-mid';
+const medal = i => i === 0 ? '<span class="medal-1">1°</span>' : i === 1 ? '<span class="medal-2">2°</span>' : i === 2 ? '<span class="medal-3">3°</span>' : `<span>${i+1}°</span>`;
+const bar = (v, max, cls) => `<div class="bar-wrap"><div class="bar ${cls}" style="width:${Math.round(v/max*80)}px"></div><span>${v}</span></div>`;
+
+let D = {};
+
+fetch('./data/equipe.json').then(r => r.json()).then(d => {
+  D = d;
+  const upd = new Date(d.updated_at + 'T12:00:00');
+  document.getElementById('upd-lbl').textContent = 'Atualizado ' + upd.toLocaleDateString('pt-BR', {day:'2-digit',month:'2-digit',year:'numeric'});
+  renderVendedores();
+  renderSDRs();
+  renderAvaliadores();
+});
+
+function setTab(t) {
+  document.querySelectorAll('.tab').forEach((b,i) => b.classList.toggle('on', ['vendedores','sdrs','avaliadores'][i] === t));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('on'));
+  document.getElementById('panel-' + t).classList.add('on');
+}
+
+function renderVendedores() {
+  const rows = D.vendedores;
+  const totFat = rows.reduce((a,r) => a + r.faturamento, 0);
+  const totVendas = rows.reduce((a,r) => a + r.vendas, 0);
+  const totCli = rows.reduce((a,r) => a + r.clientes, 0);
+  const avgTicket = totVendas > 0 ? totFat / totVendas : 0;
+  const maxFat = Math.max(...rows.map(r => r.faturamento));
+
+  document.getElementById('kv').innerHTML = [
+    ['Faturamento Total', money(totFat), ''],
+    ['Vendas', totVendas, ''],
+    ['Ticket Médio', moneyK(avgTicket), ''],
+    ['Clientes Únicos', totCli, ''],
+  ].map(([l,v,s]) => `<div class="kcard"><div class="klbl">${l}</div><div class="kval">${v}</div>${s?`<div class="ksub">${s}</div>`:''}</div>`).join('');
+
+  let html = '';
+  rows.forEach((r, i) => {
+    html += `<tr>
+      <td>${medal(i)}</td>
+      <td><span class="nome">${r.nome.trim()}</span></td>
+      <td>${r.vendas}</td>
+      <td><div class="bar-wrap"><div class="bar bar-v" style="width:${Math.round(r.faturamento/maxFat*90)}px"></div><span class="fat">${money(r.faturamento)}</span></div></td>
+      <td>${moneyK(r.ticket)}</td>
+      <td>${r.clientes}</td>
+    </tr>`;
+  });
+  html += `<tr class="total-row"><td></td><td>Total</td><td>${totVendas}</td><td>${money(totFat)}</td><td>${moneyK(avgTicket)}</td><td>${totCli}</td></tr>`;
+  document.getElementById('tv').innerHTML = html;
+}
+
+function renderSDRs() {
+  const rows = D.sdrs;
+  const totLeads = rows.reduce((a,r) => a + r.leads, 0);
+  const totAgend = rows.reduce((a,r) => a + r.agendou, 0);
+  const totComp  = rows.reduce((a,r) => a + r.compareceu, 0);
+  const totConv  = rows.reduce((a,r) => a + r.convertidos, 0);
+  const avgComp  = totAgend > 0 ? totComp / totAgend * 100 : 0;
+  const avgConv  = totComp  > 0 ? totConv  / totComp  * 100 : 0;
+  const maxAgend = Math.max(...rows.map(r => r.agendou));
+
+  document.getElementById('ks').innerHTML = [
+    ['Leads Totais', totLeads, ''],
+    ['Agendamentos', totAgend, `${(totAgend/totLeads*100).toFixed(0)}% dos leads`],
+    ['Comparecimentos', totComp, `${avgComp.toFixed(1)}% dos agendados`],
+    ['Convertidos', totConv, `${avgConv.toFixed(1)}% dos comparecidos`],
+  ].map(([l,v,s]) => `<div class="kcard"><div class="klbl">${l}</div><div class="kval">${v}</div>${s?`<div class="ksub">${s}</div>`:''}</div>`).join('');
+
+  let html = '';
+  rows.forEach((r, i) => {
+    const pComp = r.pct_comp;
+    const pConv = r.pct_conv;
+    html += `<tr>
+      <td>${medal(i)}</td>
+      <td><span class="nome">${r.nome.trim()}</span></td>
+      <td>${r.leads}</td>
+      <td><div class="bar-wrap"><div class="bar bar-s" style="width:${Math.round(r.agendou/maxAgend*80)}px"></div><span>${r.agendou}</span></div></td>
+      <td>${r.compareceu}</td>
+      <td><span class="${pcCls(pComp,25,50)}">${pct(pComp)}</span></td>
+      <td>${r.convertidos}</td>
+      <td><span class="${pcCls(pConv,30,50)}">${pct(pConv)}</span></td>
+    </tr>`;
+  });
+  html += `<tr class="total-row"><td></td><td>Total</td><td>${totLeads}</td><td>${totAgend}</td><td>${totComp}</td><td>${pct(avgComp)}</td><td>${totConv}</td><td>${pct(avgConv)}</td></tr>`;
+  document.getElementById('ts').innerHTML = html;
+}
+
+function renderAvaliadores() {
+  const rows = D.avaliadores;
+  const totAval = rows.reduce((a,r) => a + r.avaliacoes, 0);
+  const totComp = rows.reduce((a,r) => a + r.compareceram, 0);
+  const totConv = rows.reduce((a,r) => a + r.converteram, 0);
+  const totFat  = rows.reduce((a,r) => a + r.faturamento, 0);
+  const avgConv = totComp > 0 ? totConv / totComp * 100 : 0;
+  const maxConv = Math.max(...rows.map(r => r.converteram));
+
+  document.getElementById('ka').innerHTML = [
+    ['Avaliações', totAval, ''],
+    ['Comparecimentos', totComp, `${(totComp/totAval*100).toFixed(0)}% das avaliações`],
+    ['Convertidas', totConv, `${avgConv.toFixed(1)}% dos comparecidos`],
+    ['Faturamento Gerado', money(totFat), ''],
+  ].map(([l,v,s]) => `<div class="kcard"><div class="klbl">${l}</div><div class="kval" style="${String(v).length>8?'font-size:15px':''}">${v}</div>${s?`<div class="ksub">${s}</div>`:''}</div>`).join('');
+
+  let html = '';
+  rows.forEach((r, i) => {
+    const pConv = r.pct_conv;
+    html += `<tr>
+      <td>${medal(i)}</td>
+      <td><span class="nome">${r.nome.trim()}</span></td>
+      <td>${r.avaliacoes}</td>
+      <td>${r.compareceram}</td>
+      <td><div class="bar-wrap"><div class="bar bar-a" style="width:${Math.round((r.converteram||0)/Math.max(maxConv,1)*80)}px"></div><span>${r.converteram}</span></div></td>
+      <td><span class="${pcCls(pConv,35,55)}">${pct(pConv)}</span></td>
+      <td class="fat">${r.faturamento > 0 ? money(r.faturamento) : '—'}</td>
+    </tr>`;
+  });
+  html += `<tr class="total-row"><td></td><td>Total</td><td>${totAval}</td><td>${totComp}</td><td>${totConv}</td><td>${pct(avgConv)}</td><td>${money(totFat)}</td></tr>`;
+  document.getElementById('ta').innerHTML = html;
+}
+</script>
+</body>
+</html>
