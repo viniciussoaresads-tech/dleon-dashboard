@@ -1,1 +1,2403 @@
-{"updated_at": "2026-07-01", "start": "2026-04-02", "end": "2026-07-01", "vendedores": [{"nome": "STEFANY ANILORRAINE SILVA FIALHO ", "vendas": 228, "faturamento": 2051096.0, "ticket": 8996.0, "clientes": 222}, {"nome": "Marlon Vinícius de Paula Carmo", "vendas": 208, "faturamento": 1822965.0, "ticket": 8764.0, "clientes": 205}, {"nome": "Alex Morais Andrade", "vendas": 182, "faturamento": 1668125.0, "ticket": 9166.0, "clientes": 173}, {"nome": "Tamara Teixeira Galvão", "vendas": 177, "faturamento": 1654568.0, "ticket": 9348.0, "clientes": 173}, {"nome": "DEBORA CAROLINE GONÇALVES DE OLIVEIRA ", "vendas": 182, "faturamento": 1136598.0, "ticket": 6245.0, "clientes": 174}, {"nome": "Kamila Brenda de Oliveira", "vendas": 149, "faturamento": 639745.0, "ticket": 4294.0, "clientes": 143}, {"nome": "Vanessa Queiroz Dos Reis", "vendas": 110, "faturamento": 492603.0, "ticket": 4478.0, "clientes": 107}, {"nome": "LUCAS FIRMINO AZEVEDO", "vendas": 3, "faturamento": 15191.0, "ticket": 5064.0, "clientes": 3}, {"nome": "Luana Isabela De Souza Almeida", "vendas": 1, "faturamento": 7750.0, "ticket": 7750.0, "clientes": 1}, {"nome": "Izabella Helena Teixieira Marques De Castro", "vendas": 3, "faturamento": 5330.0, "ticket": 1777.0, "clientes": 3}, {"nome": "Esther Nobre Moreira", "vendas": 1, "faturamento": 5000.0, "ticket": 5000.0, "clientes": 1}, {"nome": "Lorene Cares de Lima", "vendas": 1, "faturamento": 1700.0, "ticket": 1700.0, "clientes": 1}], "sdrs": [{"nome": "Gustavo Alves de Lima", "leads": 889, "agendou": 496, "compareceu": 107, "pct_comp": 21.6, "convertidos": 45, "pct_conv": 42.1}, {"nome": "Lorene Cares de Lima", "leads": 387, "agendou": 378, "compareceu": 149, "pct_comp": 39.4, "convertidos": 82, "pct_conv": 55.0}, {"nome": "Thiago Soares de Araujo", "leads": 704, "agendou": 374, "compareceu": 94, "pct_comp": 25.1, "convertidos": 48, "pct_conv": 51.1}, {"nome": "kassandra kamile", "leads": 331, "agendou": 328, "compareceu": 131, "pct_comp": 39.9, "convertidos": 75, "pct_conv": 57.3}, {"nome": "maira luana de souza", "leads": 791, "agendou": 288, "compareceu": 95, "pct_comp": 33.0, "convertidos": 44, "pct_conv": 46.3}, {"nome": "Jessica Alves Balieiro ", "leads": 247, "agendou": 239, "compareceu": 74, "pct_comp": 31.0, "convertidos": 37, "pct_conv": 50.0}, {"nome": "Barbara Arruda ", "leads": 238, "agendou": 236, "compareceu": 82, "pct_comp": 34.7, "convertidos": 40, "pct_conv": 48.8}, {"nome": "Chaiene Cristina ", "leads": 722, "agendou": 222, "compareceu": 85, "pct_comp": 38.3, "convertidos": 43, "pct_conv": 50.6}, {"nome": "Jullie Nathaly", "leads": 181, "agendou": 172, "compareceu": 65, "pct_comp": 37.8, "convertidos": 34, "pct_conv": 52.3}, {"nome": "Ária dos Santos Silva Gonçalves", "leads": 936, "agendou": 118, "compareceu": 31, "pct_comp": 26.3, "convertidos": 14, "pct_conv": 45.2}, {"nome": "Luana Isabela De Souza Almeida", "leads": 83, "agendou": 75, "compareceu": 75, "pct_comp": 100.0, "convertidos": 40, "pct_conv": 53.3}, {"nome": "DEBORA CAROLINE GONÇALVES DE OLIVEIRA ", "leads": 37, "agendou": 34, "compareceu": 34, "pct_comp": 100.0, "convertidos": 35, "pct_conv": 102.9}, {"nome": "Alan Vinicius De Almeida Rosa", "leads": 68, "agendou": 33, "compareceu": 8, "pct_comp": 24.2, "convertidos": 3, "pct_conv": 37.5}, {"nome": "Esther Nobre Moreira", "leads": 31, "agendou": 30, "compareceu": 30, "pct_comp": 100.0, "convertidos": 11, "pct_conv": 36.7}, {"nome": "Ana Luiza Souza Santos", "leads": 9, "agendou": 9, "compareceu": 9, "pct_comp": 100.0, "convertidos": 1, "pct_conv": 11.1}, {"nome": "Barbara Maria Barbosa Nunes", "leads": 13, "agendou": 9, "compareceu": 8, "pct_comp": 88.9, "convertidos": 1, "pct_conv": 12.5}, {"nome": "Natalia Xavier da Silva Duarte", "leads": 10, "agendou": 9, "compareceu": 1, "pct_comp": 11.1, "convertidos": 1, "pct_conv": 100.0}, {"nome": "Ynara Victoria Terozeni Pacelli", "leads": 12, "agendou": 9, "compareceu": 1, "pct_comp": 11.1, "convertidos": 0, "pct_conv": 0}, {"nome": "Alex Morais Andrade", "leads": 5, "agendou": 5, "compareceu": 5, "pct_comp": 100.0, "convertidos": 5, "pct_conv": 100.0}], "avaliadores": [{"nome": "Izabella Helena Teixieira Marques De Castro", "avaliacoes": 742, "compareceram": 737, "converteram": 327, "pct_conv": 44.4, "faturamento": 3359692.0}, {"nome": "Mario Dener Rocha Lima", "avaliacoes": 578, "compareceram": 575, "converteram": 239, "pct_conv": 41.6, "faturamento": 2461078.0}, {"nome": "Luana Isabela De Souza Almeida", "avaliacoes": 268, "compareceram": 268, "converteram": 124, "pct_conv": 46.3, "faturamento": 1473929.0}, {"nome": "DEBORA CAROLINE GONÇALVES DE OLIVEIRA ", "avaliacoes": 40, "compareceram": 38, "converteram": 34, "pct_conv": 89.5, "faturamento": 279136.0}, {"nome": "STEFANY ANILORRAINE SILVA FIALHO ", "avaliacoes": 32, "compareceram": 32, "converteram": 26, "pct_conv": 81.3, "faturamento": 210117.0}, {"nome": "Tamara Teixeira Galvão", "avaliacoes": 25, "compareceram": 25, "converteram": 23, "pct_conv": 92.0, "faturamento": 232309.0}, {"nome": "Maria Fabilha Fernandes Ramos", "avaliacoes": 16, "compareceram": 16, "converteram": 11, "pct_conv": 68.8, "faturamento": 128853.0}, {"nome": "Alex Morais Andrade", "avaliacoes": 10, "compareceram": 10, "converteram": 9, "pct_conv": 90.0, "faturamento": 82072.0}, {"nome": "Leticia Laia Sena Pontes Silva", "avaliacoes": 29, "compareceram": 29, "converteram": 7, "pct_conv": 24.1, "faturamento": 49370.0}, {"nome": "Kamila Brenda de Oliveira", "avaliacoes": 6, "compareceram": 6, "converteram": 6, "pct_conv": 100.0, "faturamento": 59700.0}, {"nome": "Messias Gomes", "avaliacoes": 6, "compareceram": 5, "converteram": 4, "pct_conv": 80.0, "faturamento": 31760.0}, {"nome": "LUCAS FIRMINO AZEVEDO", "avaliacoes": 12, "compareceram": 11, "converteram": 4, "pct_conv": 36.4, "faturamento": 27282.0}, {"nome": "Thiago Soares de Araujo", "avaliacoes": 442, "compareceram": 5, "converteram": 0, "pct_conv": 0, "faturamento": 0.0}]}
+{
+  "updated_at": "2026-07-01",
+  "start": "2026-01-01",
+  "end": "2026-07-01",
+  "vendedores": [
+    {
+      "nome": "STEFANY ANILORRAINE SILVA FIALHO",
+      "meses": [
+        {
+          "mes": "2026-01",
+          "vendas": 93,
+          "faturamento": 858219.0,
+          "clientes": 92
+        },
+        {
+          "mes": "2026-02",
+          "vendas": 77,
+          "faturamento": 685414.0,
+          "clientes": 76
+        },
+        {
+          "mes": "2026-03",
+          "vendas": 103,
+          "faturamento": 765891.0,
+          "clientes": 97
+        },
+        {
+          "mes": "2026-04",
+          "vendas": 62,
+          "faturamento": 590660.0,
+          "clientes": 61
+        },
+        {
+          "mes": "2026-05",
+          "vendas": 88,
+          "faturamento": 717726.0,
+          "clientes": 87
+        },
+        {
+          "mes": "2026-06",
+          "vendas": 80,
+          "faturamento": 755460.0,
+          "clientes": 79
+        }
+      ]
+    },
+    {
+      "nome": "Tamara Teixeira Galvão",
+      "meses": [
+        {
+          "mes": "2026-01",
+          "vendas": 90,
+          "faturamento": 714871.0,
+          "clientes": 88
+        },
+        {
+          "mes": "2026-02",
+          "vendas": 72,
+          "faturamento": 645612.0,
+          "clientes": 72
+        },
+        {
+          "mes": "2026-03",
+          "vendas": 84,
+          "faturamento": 740945.0,
+          "clientes": 82
+        },
+        {
+          "mes": "2026-04",
+          "vendas": 61,
+          "faturamento": 516040.0,
+          "clientes": 60
+        },
+        {
+          "mes": "2026-05",
+          "vendas": 79,
+          "faturamento": 759198.0,
+          "clientes": 77
+        },
+        {
+          "mes": "2026-06",
+          "vendas": 40,
+          "faturamento": 421330.0,
+          "clientes": 40
+        }
+      ]
+    },
+    {
+      "nome": "Alex Morais Andrade",
+      "meses": [
+        {
+          "mes": "2026-01",
+          "vendas": 73,
+          "faturamento": 622416.0,
+          "clientes": 73
+        },
+        {
+          "mes": "2026-02",
+          "vendas": 61,
+          "faturamento": 542723.0,
+          "clientes": 60
+        },
+        {
+          "mes": "2026-03",
+          "vendas": 80,
+          "faturamento": 702710.0,
+          "clientes": 80
+        },
+        {
+          "mes": "2026-04",
+          "vendas": 56,
+          "faturamento": 507225.0,
+          "clientes": 54
+        },
+        {
+          "mes": "2026-05",
+          "vendas": 75,
+          "faturamento": 610566.0,
+          "clientes": 73
+        },
+        {
+          "mes": "2026-06",
+          "vendas": 52,
+          "faturamento": 562714.0,
+          "clientes": 51
+        }
+      ]
+    },
+    {
+      "nome": "Marlon Vinícius de Paula Carmo",
+      "meses": [
+        {
+          "mes": "2026-02",
+          "vendas": 36,
+          "faturamento": 274172.0,
+          "clientes": 36
+        },
+        {
+          "mes": "2026-03",
+          "vendas": 69,
+          "faturamento": 579118.0,
+          "clientes": 67
+        },
+        {
+          "mes": "2026-04",
+          "vendas": 73,
+          "faturamento": 600867.0,
+          "clientes": 72
+        },
+        {
+          "mes": "2026-05",
+          "vendas": 65,
+          "faturamento": 550224.0,
+          "clientes": 64
+        },
+        {
+          "mes": "2026-06",
+          "vendas": 72,
+          "faturamento": 694423.0,
+          "clientes": 72
+        }
+      ]
+    },
+    {
+      "nome": "DEBORA CAROLINE GONÇALVES DE OLIVEIRA",
+      "meses": [
+        {
+          "mes": "2026-01",
+          "vendas": 58,
+          "faturamento": 419516.0,
+          "clientes": 58
+        },
+        {
+          "mes": "2026-02",
+          "vendas": 57,
+          "faturamento": 408403.0,
+          "clientes": 56
+        },
+        {
+          "mes": "2026-03",
+          "vendas": 68,
+          "faturamento": 290903.0,
+          "clientes": 67
+        },
+        {
+          "mes": "2026-04",
+          "vendas": 65,
+          "faturamento": 440071.0,
+          "clientes": 65
+        },
+        {
+          "mes": "2026-05",
+          "vendas": 44,
+          "faturamento": 265256.0,
+          "clientes": 44
+        },
+        {
+          "mes": "2026-06",
+          "vendas": 74,
+          "faturamento": 438151.0,
+          "clientes": 69
+        }
+      ]
+    },
+    {
+      "nome": "Kamila Brenda de Oliveira",
+      "meses": [
+        {
+          "mes": "2026-01",
+          "vendas": 83,
+          "faturamento": 439714.0,
+          "clientes": 82
+        },
+        {
+          "mes": "2026-02",
+          "vendas": 75,
+          "faturamento": 384162.0,
+          "clientes": 71
+        },
+        {
+          "mes": "2026-03",
+          "vendas": 56,
+          "faturamento": 283643.0,
+          "clientes": 53
+        },
+        {
+          "mes": "2026-04",
+          "vendas": 57,
+          "faturamento": 259054.0,
+          "clientes": 55
+        },
+        {
+          "mes": "2026-05",
+          "vendas": 50,
+          "faturamento": 147500.0,
+          "clientes": 49
+        },
+        {
+          "mes": "2026-06",
+          "vendas": 45,
+          "faturamento": 254335.0,
+          "clientes": 44
+        }
+      ]
+    },
+    {
+      "nome": "Vanessa Queiroz Dos Reis",
+      "meses": [
+        {
+          "mes": "2026-01",
+          "vendas": 29,
+          "faturamento": 112982.0,
+          "clientes": 28
+        },
+        {
+          "mes": "2026-02",
+          "vendas": 46,
+          "faturamento": 197549.0,
+          "clientes": 44
+        },
+        {
+          "mes": "2026-03",
+          "vendas": 49,
+          "faturamento": 142914.0,
+          "clientes": 47
+        },
+        {
+          "mes": "2026-04",
+          "vendas": 40,
+          "faturamento": 191726.0,
+          "clientes": 38
+        },
+        {
+          "mes": "2026-05",
+          "vendas": 43,
+          "faturamento": 146193.0,
+          "clientes": 43
+        },
+        {
+          "mes": "2026-06",
+          "vendas": 32,
+          "faturamento": 157894.0,
+          "clientes": 31
+        }
+      ]
+    },
+    {
+      "nome": "Messias Gomes",
+      "meses": [
+        {
+          "mes": "2026-01",
+          "vendas": 4,
+          "faturamento": 64870.0,
+          "clientes": 4
+        },
+        {
+          "mes": "2026-03",
+          "vendas": 1,
+          "faturamento": 6500.0,
+          "clientes": 1
+        }
+      ]
+    }
+  ],
+  "sdrs": [
+    {
+      "nome": "maira luana de souza",
+      "meses": [
+        {
+          "mes": "2026-01",
+          "leads": 98,
+          "agendou": 52,
+          "compareceu": 9,
+          "convertidos": 5
+        },
+        {
+          "mes": "2026-02",
+          "leads": 1577,
+          "agendou": 278,
+          "compareceu": 46,
+          "convertidos": 21
+        },
+        {
+          "mes": "2026-03",
+          "leads": 512,
+          "agendou": 123,
+          "compareceu": 30,
+          "convertidos": 12
+        },
+        {
+          "mes": "2026-04",
+          "leads": 479,
+          "agendou": 121,
+          "compareceu": 41,
+          "convertidos": 21
+        },
+        {
+          "mes": "2026-05",
+          "leads": 222,
+          "agendou": 82,
+          "compareceu": 27,
+          "convertidos": 11
+        },
+        {
+          "mes": "2026-06",
+          "leads": 97,
+          "agendou": 92,
+          "compareceu": 30,
+          "convertidos": 13
+        }
+      ]
+    },
+    {
+      "nome": "Chaiene Cristina",
+      "meses": [
+        {
+          "mes": "2026-01",
+          "leads": 599,
+          "agendou": 87,
+          "compareceu": 17,
+          "convertidos": 6
+        },
+        {
+          "mes": "2026-02",
+          "leads": 773,
+          "agendou": 110,
+          "compareceu": 21,
+          "convertidos": 6
+        },
+        {
+          "mes": "2026-03",
+          "leads": 506,
+          "agendou": 98,
+          "compareceu": 32,
+          "convertidos": 17
+        },
+        {
+          "mes": "2026-04",
+          "leads": 495,
+          "agendou": 112,
+          "compareceu": 41,
+          "convertidos": 19
+        },
+        {
+          "mes": "2026-05",
+          "leads": 190,
+          "agendou": 71,
+          "compareceu": 36,
+          "convertidos": 22
+        },
+        {
+          "mes": "2026-06",
+          "leads": 43,
+          "agendou": 42,
+          "compareceu": 9,
+          "convertidos": 3
+        }
+      ]
+    },
+    {
+      "nome": "Gustavo Alves de Lima",
+      "meses": [
+        {
+          "mes": "2026-01",
+          "leads": 384,
+          "agendou": 152,
+          "compareceu": 47,
+          "convertidos": 15
+        },
+        {
+          "mes": "2026-02",
+          "leads": 405,
+          "agendou": 156,
+          "compareceu": 29,
+          "convertidos": 11
+        },
+        {
+          "mes": "2026-03",
+          "leads": 496,
+          "agendou": 158,
+          "compareceu": 27,
+          "convertidos": 4
+        },
+        {
+          "mes": "2026-04",
+          "leads": 531,
+          "agendou": 241,
+          "compareceu": 60,
+          "convertidos": 27
+        },
+        {
+          "mes": "2026-05",
+          "leads": 220,
+          "agendou": 111,
+          "compareceu": 26,
+          "convertidos": 8
+        },
+        {
+          "mes": "2026-06",
+          "leads": 155,
+          "agendou": 152,
+          "compareceu": 22,
+          "convertidos": 11
+        }
+      ]
+    },
+    {
+      "nome": "Ária dos Santos Silva Gonçalves",
+      "meses": [
+        {
+          "mes": "2026-01",
+          "leads": 15,
+          "agendou": 15,
+          "compareceu": 0,
+          "convertidos": 0
+        },
+        {
+          "mes": "2026-02",
+          "leads": 437,
+          "agendou": 45,
+          "compareceu": 8,
+          "convertidos": 4
+        },
+        {
+          "mes": "2026-03",
+          "leads": 498,
+          "agendou": 54,
+          "compareceu": 19,
+          "convertidos": 9
+        },
+        {
+          "mes": "2026-04",
+          "leads": 717,
+          "agendou": 60,
+          "compareceu": 18,
+          "convertidos": 7
+        },
+        {
+          "mes": "2026-05",
+          "leads": 228,
+          "agendou": 42,
+          "compareceu": 10,
+          "convertidos": 4
+        },
+        {
+          "mes": "2026-06",
+          "leads": 20,
+          "agendou": 19,
+          "compareceu": 3,
+          "convertidos": 3
+        }
+      ]
+    },
+    {
+      "nome": "Thiago Soares de Araujo",
+      "meses": [
+        {
+          "mes": "2026-01",
+          "leads": 172,
+          "agendou": 120,
+          "compareceu": 21,
+          "convertidos": 10
+        },
+        {
+          "mes": "2026-02",
+          "leads": 492,
+          "agendou": 150,
+          "compareceu": 30,
+          "convertidos": 16
+        },
+        {
+          "mes": "2026-03",
+          "leads": 473,
+          "agendou": 169,
+          "compareceu": 41,
+          "convertidos": 17
+        },
+        {
+          "mes": "2026-04",
+          "leads": 434,
+          "agendou": 128,
+          "compareceu": 29,
+          "convertidos": 13
+        },
+        {
+          "mes": "2026-05",
+          "leads": 188,
+          "agendou": 154,
+          "compareceu": 49,
+          "convertidos": 28
+        },
+        {
+          "mes": "2026-06",
+          "leads": 98,
+          "agendou": 98,
+          "compareceu": 18,
+          "convertidos": 7
+        }
+      ]
+    },
+    {
+      "nome": "A IA DLEON",
+      "meses": [
+        {
+          "mes": "2026-01",
+          "leads": 1462,
+          "agendou": 167,
+          "compareceu": 67,
+          "convertidos": 36
+        },
+        {
+          "mes": "2026-02",
+          "leads": 27,
+          "agendou": 6,
+          "compareceu": 4,
+          "convertidos": 3
+        },
+        {
+          "mes": "2026-04",
+          "leads": 1,
+          "agendou": 1,
+          "compareceu": 1,
+          "convertidos": 0
+        },
+        {
+          "mes": "2026-05",
+          "leads": 2,
+          "agendou": 0,
+          "compareceu": 0,
+          "convertidos": 0
+        }
+      ]
+    },
+    {
+      "nome": "Lorene Cares de Lima",
+      "meses": [
+        {
+          "mes": "2026-01",
+          "leads": 232,
+          "agendou": 228,
+          "compareceu": 95,
+          "convertidos": 52
+        },
+        {
+          "mes": "2026-02",
+          "leads": 196,
+          "agendou": 196,
+          "compareceu": 71,
+          "convertidos": 37
+        },
+        {
+          "mes": "2026-03",
+          "leads": 164,
+          "agendou": 162,
+          "compareceu": 66,
+          "convertidos": 37
+        },
+        {
+          "mes": "2026-04",
+          "leads": 182,
+          "agendou": 177,
+          "compareceu": 71,
+          "convertidos": 47
+        },
+        {
+          "mes": "2026-05",
+          "leads": 87,
+          "agendou": 86,
+          "compareceu": 39,
+          "convertidos": 18
+        },
+        {
+          "mes": "2026-06",
+          "leads": 127,
+          "agendou": 124,
+          "compareceu": 41,
+          "convertidos": 19
+        }
+      ]
+    },
+    {
+      "nome": "Jullie Nathaly",
+      "meses": [
+        {
+          "mes": "2026-01",
+          "leads": 272,
+          "agendou": 175,
+          "compareceu": 61,
+          "convertidos": 31
+        },
+        {
+          "mes": "2026-02",
+          "leads": 259,
+          "agendou": 156,
+          "compareceu": 50,
+          "convertidos": 21
+        },
+        {
+          "mes": "2026-03",
+          "leads": 184,
+          "agendou": 126,
+          "compareceu": 43,
+          "convertidos": 20
+        },
+        {
+          "mes": "2026-04",
+          "leads": 92,
+          "agendou": 84,
+          "compareceu": 32,
+          "convertidos": 19
+        },
+        {
+          "mes": "2026-05",
+          "leads": 61,
+          "agendou": 61,
+          "compareceu": 26,
+          "convertidos": 13
+        },
+        {
+          "mes": "2026-06",
+          "leads": 38,
+          "agendou": 37,
+          "compareceu": 9,
+          "convertidos": 4
+        }
+      ]
+    },
+    {
+      "nome": "kassandra kamile",
+      "meses": [
+        {
+          "mes": "2026-01",
+          "leads": 187,
+          "agendou": 185,
+          "compareceu": 77,
+          "convertidos": 46
+        },
+        {
+          "mes": "2026-02",
+          "leads": 153,
+          "agendou": 151,
+          "compareceu": 54,
+          "convertidos": 29
+        },
+        {
+          "mes": "2026-03",
+          "leads": 150,
+          "agendou": 148,
+          "compareceu": 64,
+          "convertidos": 31
+        },
+        {
+          "mes": "2026-04",
+          "leads": 142,
+          "agendou": 141,
+          "compareceu": 57,
+          "convertidos": 34
+        },
+        {
+          "mes": "2026-05",
+          "leads": 97,
+          "agendou": 96,
+          "compareceu": 43,
+          "convertidos": 23
+        },
+        {
+          "mes": "2026-06",
+          "leads": 101,
+          "agendou": 100,
+          "compareceu": 36,
+          "convertidos": 22
+        }
+      ]
+    },
+    {
+      "nome": "Jessica Alves Balieiro",
+      "meses": [
+        {
+          "mes": "2026-01",
+          "leads": 180,
+          "agendou": 177,
+          "compareceu": 66,
+          "convertidos": 44
+        },
+        {
+          "mes": "2026-02",
+          "leads": 152,
+          "agendou": 150,
+          "compareceu": 47,
+          "convertidos": 24
+        },
+        {
+          "mes": "2026-03",
+          "leads": 115,
+          "agendou": 114,
+          "compareceu": 41,
+          "convertidos": 23
+        },
+        {
+          "mes": "2026-04",
+          "leads": 47,
+          "agendou": 44,
+          "compareceu": 11,
+          "convertidos": 4
+        },
+        {
+          "mes": "2026-05",
+          "leads": 106,
+          "agendou": 103,
+          "compareceu": 27,
+          "convertidos": 16
+        },
+        {
+          "mes": "2026-06",
+          "leads": 94,
+          "agendou": 92,
+          "compareceu": 36,
+          "convertidos": 17
+        }
+      ]
+    },
+    {
+      "nome": "Barbara Arruda",
+      "meses": [
+        {
+          "mes": "2026-01",
+          "leads": 168,
+          "agendou": 164,
+          "compareceu": 59,
+          "convertidos": 29
+        },
+        {
+          "mes": "2026-02",
+          "leads": 118,
+          "agendou": 118,
+          "compareceu": 34,
+          "convertidos": 23
+        },
+        {
+          "mes": "2026-03",
+          "leads": 135,
+          "agendou": 134,
+          "compareceu": 47,
+          "convertidos": 25
+        },
+        {
+          "mes": "2026-04",
+          "leads": 93,
+          "agendou": 93,
+          "compareceu": 37,
+          "convertidos": 17
+        },
+        {
+          "mes": "2026-05",
+          "leads": 105,
+          "agendou": 103,
+          "compareceu": 35,
+          "convertidos": 19
+        },
+        {
+          "mes": "2026-06",
+          "leads": 46,
+          "agendou": 46,
+          "compareceu": 14,
+          "convertidos": 5
+        }
+      ]
+    },
+    {
+      "nome": "Alan Vinicius De Almeida Rosa",
+      "meses": [
+        {
+          "mes": "2026-01",
+          "leads": 55,
+          "agendou": 2,
+          "compareceu": 2,
+          "convertidos": 1
+        },
+        {
+          "mes": "2026-02",
+          "leads": 111,
+          "agendou": 7,
+          "compareceu": 4,
+          "convertidos": 1
+        },
+        {
+          "mes": "2026-03",
+          "leads": 49,
+          "agendou": 11,
+          "compareceu": 2,
+          "convertidos": 0
+        },
+        {
+          "mes": "2026-04",
+          "leads": 44,
+          "agendou": 10,
+          "compareceu": 3,
+          "convertidos": 2
+        },
+        {
+          "mes": "2026-05",
+          "leads": 18,
+          "agendou": 18,
+          "compareceu": 5,
+          "convertidos": 1
+        },
+        {
+          "mes": "2026-06",
+          "leads": 6,
+          "agendou": 5,
+          "compareceu": 0,
+          "convertidos": 0
+        }
+      ]
+    },
+    {
+      "nome": "Luana Isabela De Souza Almeida",
+      "meses": [
+        {
+          "mes": "2026-01",
+          "leads": 79,
+          "agendou": 74,
+          "compareceu": 74,
+          "convertidos": 51
+        },
+        {
+          "mes": "2026-02",
+          "leads": 61,
+          "agendou": 56,
+          "compareceu": 56,
+          "convertidos": 36
+        },
+        {
+          "mes": "2026-03",
+          "leads": 44,
+          "agendou": 42,
+          "compareceu": 42,
+          "convertidos": 27
+        },
+        {
+          "mes": "2026-04",
+          "leads": 31,
+          "agendou": 27,
+          "compareceu": 27,
+          "convertidos": 16
+        },
+        {
+          "mes": "2026-05",
+          "leads": 28,
+          "agendou": 26,
+          "compareceu": 26,
+          "convertidos": 11
+        },
+        {
+          "mes": "2026-06",
+          "leads": 26,
+          "agendou": 24,
+          "compareceu": 24,
+          "convertidos": 15
+        }
+      ]
+    },
+    {
+      "nome": "João Victor Sodré",
+      "meses": [
+        {
+          "mes": "2026-01",
+          "leads": 4,
+          "agendou": 4,
+          "compareceu": 1,
+          "convertidos": 0
+        },
+        {
+          "mes": "2026-02",
+          "leads": 132,
+          "agendou": 10,
+          "compareceu": 1,
+          "convertidos": 0
+        },
+        {
+          "mes": "2026-03",
+          "leads": 6,
+          "agendou": 0,
+          "compareceu": 0,
+          "convertidos": 0
+        }
+      ]
+    },
+    {
+      "nome": "DEBORA CAROLINE GONÇALVES DE OLIVEIRA",
+      "meses": [
+        {
+          "mes": "2026-02",
+          "leads": 26,
+          "agendou": 21,
+          "compareceu": 21,
+          "convertidos": 23
+        },
+        {
+          "mes": "2026-03",
+          "leads": 17,
+          "agendou": 16,
+          "compareceu": 16,
+          "convertidos": 16
+        },
+        {
+          "mes": "2026-04",
+          "leads": 11,
+          "agendou": 11,
+          "compareceu": 11,
+          "convertidos": 11
+        },
+        {
+          "mes": "2026-05",
+          "leads": 8,
+          "agendou": 8,
+          "compareceu": 8,
+          "convertidos": 8
+        },
+        {
+          "mes": "2026-06",
+          "leads": 19,
+          "agendou": 16,
+          "compareceu": 16,
+          "convertidos": 17
+        }
+      ]
+    },
+    {
+      "nome": "Esther Nobre Moreira",
+      "meses": [
+        {
+          "mes": "2026-03",
+          "leads": 9,
+          "agendou": 9,
+          "compareceu": 9,
+          "convertidos": 3
+        },
+        {
+          "mes": "2026-04",
+          "leads": 6,
+          "agendou": 6,
+          "compareceu": 6,
+          "convertidos": 3
+        },
+        {
+          "mes": "2026-05",
+          "leads": 12,
+          "agendou": 11,
+          "compareceu": 11,
+          "convertidos": 3
+        },
+        {
+          "mes": "2026-06",
+          "leads": 13,
+          "agendou": 13,
+          "compareceu": 13,
+          "convertidos": 5
+        }
+      ]
+    },
+    {
+      "nome": "Vanessa Queiroz Dos Reis",
+      "meses": [
+        {
+          "mes": "2026-01",
+          "leads": 1,
+          "agendou": 1,
+          "compareceu": 1,
+          "convertidos": 0
+        },
+        {
+          "mes": "2026-02",
+          "leads": 14,
+          "agendou": 11,
+          "compareceu": 10,
+          "convertidos": 8
+        },
+        {
+          "mes": "2026-03",
+          "leads": 1,
+          "agendou": 1,
+          "compareceu": 1,
+          "convertidos": 1
+        },
+        {
+          "mes": "2026-04",
+          "leads": 3,
+          "agendou": 3,
+          "compareceu": 3,
+          "convertidos": 2
+        }
+      ]
+    },
+    {
+      "nome": "STEFANY ANILORRAINE SILVA FIALHO",
+      "meses": [
+        {
+          "mes": "2026-02",
+          "leads": 5,
+          "agendou": 4,
+          "compareceu": 4,
+          "convertidos": 5
+        },
+        {
+          "mes": "2026-03",
+          "leads": 9,
+          "agendou": 7,
+          "compareceu": 7,
+          "convertidos": 9
+        },
+        {
+          "mes": "2026-04",
+          "leads": 3,
+          "agendou": 3,
+          "compareceu": 3,
+          "convertidos": 3
+        }
+      ]
+    },
+    {
+      "nome": "Barbara Maria Barbosa Nunes",
+      "meses": [
+        {
+          "mes": "2026-04",
+          "leads": 2,
+          "agendou": 2,
+          "compareceu": 1,
+          "convertidos": 0
+        },
+        {
+          "mes": "2026-05",
+          "leads": 4,
+          "agendou": 3,
+          "compareceu": 3,
+          "convertidos": 1
+        },
+        {
+          "mes": "2026-06",
+          "leads": 7,
+          "agendou": 4,
+          "compareceu": 4,
+          "convertidos": 0
+        }
+      ]
+    },
+    {
+      "nome": "Ynara Victoria Terozeni Pacelli",
+      "meses": [
+        {
+          "mes": "2026-02",
+          "leads": 1,
+          "agendou": 1,
+          "compareceu": 0,
+          "convertidos": 0
+        },
+        {
+          "mes": "2026-05",
+          "leads": 4,
+          "agendou": 4,
+          "compareceu": 0,
+          "convertidos": 0
+        },
+        {
+          "mes": "2026-06",
+          "leads": 8,
+          "agendou": 5,
+          "compareceu": 1,
+          "convertidos": 0
+        }
+      ]
+    },
+    {
+      "nome": "Natalia Xavier da Silva Duarte",
+      "meses": [
+        {
+          "mes": "2026-03",
+          "leads": 2,
+          "agendou": 2,
+          "compareceu": 1,
+          "convertidos": 1
+        },
+        {
+          "mes": "2026-06",
+          "leads": 10,
+          "agendou": 9,
+          "compareceu": 1,
+          "convertidos": 1
+        }
+      ]
+    },
+    {
+      "nome": "Ana Luiza Souza Santos",
+      "meses": [
+        {
+          "mes": "2026-03",
+          "leads": 2,
+          "agendou": 2,
+          "compareceu": 2,
+          "convertidos": 1
+        },
+        {
+          "mes": "2026-04",
+          "leads": 3,
+          "agendou": 3,
+          "compareceu": 3,
+          "convertidos": 1
+        },
+        {
+          "mes": "2026-05",
+          "leads": 2,
+          "agendou": 2,
+          "compareceu": 2,
+          "convertidos": 0
+        },
+        {
+          "mes": "2026-06",
+          "leads": 4,
+          "agendou": 4,
+          "compareceu": 4,
+          "convertidos": 0
+        }
+      ]
+    },
+    {
+      "nome": "Alex Morais Andrade",
+      "meses": [
+        {
+          "mes": "2026-02",
+          "leads": 2,
+          "agendou": 1,
+          "compareceu": 1,
+          "convertidos": 1
+        },
+        {
+          "mes": "2026-03",
+          "leads": 3,
+          "agendou": 1,
+          "compareceu": 1,
+          "convertidos": 1
+        },
+        {
+          "mes": "2026-04",
+          "leads": 1,
+          "agendou": 1,
+          "compareceu": 1,
+          "convertidos": 1
+        },
+        {
+          "mes": "2026-05",
+          "leads": 1,
+          "agendou": 1,
+          "compareceu": 1,
+          "convertidos": 1
+        },
+        {
+          "mes": "2026-06",
+          "leads": 3,
+          "agendou": 3,
+          "compareceu": 3,
+          "convertidos": 3
+        }
+      ]
+    },
+    {
+      "nome": "Kamila Brenda de Oliveira",
+      "meses": [
+        {
+          "mes": "2026-02",
+          "leads": 3,
+          "agendou": 2,
+          "compareceu": 2,
+          "convertidos": 0
+        },
+        {
+          "mes": "2026-03",
+          "leads": 3,
+          "agendou": 3,
+          "compareceu": 3,
+          "convertidos": 3
+        },
+        {
+          "mes": "2026-04",
+          "leads": 1,
+          "agendou": 1,
+          "compareceu": 1,
+          "convertidos": 1
+        }
+      ]
+    },
+    {
+      "nome": "Mario Dener Rocha Lima",
+      "meses": [
+        {
+          "mes": "2026-01",
+          "leads": 1,
+          "agendou": 1,
+          "compareceu": 1,
+          "convertidos": 1
+        },
+        {
+          "mes": "2026-02",
+          "leads": 2,
+          "agendou": 2,
+          "compareceu": 2,
+          "convertidos": 1
+        },
+        {
+          "mes": "2026-04",
+          "leads": 1,
+          "agendou": 1,
+          "compareceu": 1,
+          "convertidos": 0
+        },
+        {
+          "mes": "2026-05",
+          "leads": 1,
+          "agendou": 1,
+          "compareceu": 1,
+          "convertidos": 1
+        }
+      ]
+    },
+    {
+      "nome": "Tamara Teixeira Galvão",
+      "meses": [
+        {
+          "mes": "2026-01",
+          "leads": 1,
+          "agendou": 1,
+          "compareceu": 1,
+          "convertidos": 1
+        },
+        {
+          "mes": "2026-02",
+          "leads": 3,
+          "agendou": 1,
+          "compareceu": 1,
+          "convertidos": 1
+        },
+        {
+          "mes": "2026-03",
+          "leads": 1,
+          "agendou": 1,
+          "compareceu": 1,
+          "convertidos": 1
+        }
+      ]
+    }
+  ],
+  "avaliadores": [
+    {
+      "nome": "Izabella Helena Teixieira Marques De Castro",
+      "meses": [
+        {
+          "mes": "2026-01",
+          "avaliacoes": 282,
+          "compareceram": 279,
+          "converteram": 139,
+          "faturamento": 1273912.0
+        },
+        {
+          "mes": "2026-02",
+          "avaliacoes": 313,
+          "compareceram": 313,
+          "converteram": 134,
+          "faturamento": 1354386.0
+        },
+        {
+          "mes": "2026-03",
+          "avaliacoes": 337,
+          "compareceram": 337,
+          "converteram": 165,
+          "faturamento": 1673473.0
+        },
+        {
+          "mes": "2026-04",
+          "avaliacoes": 304,
+          "compareceram": 303,
+          "converteram": 131,
+          "faturamento": 1350958.0
+        },
+        {
+          "mes": "2026-05",
+          "avaliacoes": 372,
+          "compareceram": 368,
+          "converteram": 166,
+          "faturamento": 1678277.0
+        },
+        {
+          "mes": "2026-06",
+          "avaliacoes": 70,
+          "compareceram": 70,
+          "converteram": 33,
+          "faturamento": 373597.0
+        }
+      ]
+    },
+    {
+      "nome": "Mario Dener Rocha Lima",
+      "meses": [
+        {
+          "mes": "2026-01",
+          "avaliacoes": 305,
+          "compareceram": 304,
+          "converteram": 129,
+          "faturamento": 1176060.0
+        },
+        {
+          "mes": "2026-02",
+          "avaliacoes": 209,
+          "compareceram": 209,
+          "converteram": 95,
+          "faturamento": 942242.0
+        },
+        {
+          "mes": "2026-03",
+          "avaliacoes": 295,
+          "compareceram": 293,
+          "converteram": 116,
+          "faturamento": 1044109.0
+        },
+        {
+          "mes": "2026-04",
+          "avaliacoes": 281,
+          "compareceram": 279,
+          "converteram": 122,
+          "faturamento": 1204926.0
+        },
+        {
+          "mes": "2026-05",
+          "avaliacoes": 177,
+          "compareceram": 177,
+          "converteram": 67,
+          "faturamento": 700474.0
+        },
+        {
+          "mes": "2026-06",
+          "avaliacoes": 131,
+          "compareceram": 130,
+          "converteram": 55,
+          "faturamento": 611732.0
+        }
+      ]
+    },
+    {
+      "nome": "Luana Isabela De Souza Almeida",
+      "meses": [
+        {
+          "mes": "2026-01",
+          "avaliacoes": 4,
+          "compareceram": 4,
+          "converteram": 3,
+          "faturamento": 21754.0
+        },
+        {
+          "mes": "2026-03",
+          "avaliacoes": 2,
+          "compareceram": 2,
+          "converteram": 0,
+          "faturamento": 0.0
+        },
+        {
+          "mes": "2026-04",
+          "avaliacoes": 3,
+          "compareceram": 3,
+          "converteram": 1,
+          "faturamento": 200.0
+        },
+        {
+          "mes": "2026-05",
+          "avaliacoes": 1,
+          "compareceram": 1,
+          "converteram": 1,
+          "faturamento": 9100.0
+        },
+        {
+          "mes": "2026-06",
+          "avaliacoes": 264,
+          "compareceram": 264,
+          "converteram": 122,
+          "faturamento": 1464629.0
+        }
+      ]
+    },
+    {
+      "nome": "DEBORA CAROLINE GONÇALVES DE OLIVEIRA",
+      "meses": [
+        {
+          "mes": "2026-01",
+          "avaliacoes": 15,
+          "compareceram": 12,
+          "converteram": 12,
+          "faturamento": 115385.0
+        },
+        {
+          "mes": "2026-02",
+          "avaliacoes": 26,
+          "compareceram": 25,
+          "converteram": 24,
+          "faturamento": 130132.0
+        },
+        {
+          "mes": "2026-03",
+          "avaliacoes": 21,
+          "compareceram": 20,
+          "converteram": 18,
+          "faturamento": 90334.0
+        },
+        {
+          "mes": "2026-04",
+          "avaliacoes": 12,
+          "compareceram": 12,
+          "converteram": 11,
+          "faturamento": 105317.0
+        },
+        {
+          "mes": "2026-05",
+          "avaliacoes": 10,
+          "compareceram": 9,
+          "converteram": 8,
+          "faturamento": 64504.0
+        },
+        {
+          "mes": "2026-06",
+          "avaliacoes": 19,
+          "compareceram": 18,
+          "converteram": 16,
+          "faturamento": 116195.0
+        }
+      ]
+    },
+    {
+      "nome": "STEFANY ANILORRAINE SILVA FIALHO",
+      "meses": [
+        {
+          "mes": "2026-01",
+          "avaliacoes": 2,
+          "compareceram": 2,
+          "converteram": 2,
+          "faturamento": 29200.0
+        },
+        {
+          "mes": "2026-02",
+          "avaliacoes": 8,
+          "compareceram": 8,
+          "converteram": 8,
+          "faturamento": 48290.0
+        },
+        {
+          "mes": "2026-03",
+          "avaliacoes": 23,
+          "compareceram": 22,
+          "converteram": 19,
+          "faturamento": 61402.0
+        },
+        {
+          "mes": "2026-04",
+          "avaliacoes": 11,
+          "compareceram": 11,
+          "converteram": 8,
+          "faturamento": 46060.0
+        },
+        {
+          "mes": "2026-05",
+          "avaliacoes": 16,
+          "compareceram": 16,
+          "converteram": 12,
+          "faturamento": 94257.0
+        },
+        {
+          "mes": "2026-06",
+          "avaliacoes": 8,
+          "compareceram": 8,
+          "converteram": 8,
+          "faturamento": 82550.0
+        }
+      ]
+    },
+    {
+      "nome": "Tamara Teixeira Galvão",
+      "meses": [
+        {
+          "mes": "2026-01",
+          "avaliacoes": 3,
+          "compareceram": 3,
+          "converteram": 3,
+          "faturamento": 32180.0
+        },
+        {
+          "mes": "2026-02",
+          "avaliacoes": 7,
+          "compareceram": 7,
+          "converteram": 6,
+          "faturamento": 30970.0
+        },
+        {
+          "mes": "2026-03",
+          "avaliacoes": 14,
+          "compareceram": 14,
+          "converteram": 14,
+          "faturamento": 125456.0
+        },
+        {
+          "mes": "2026-04",
+          "avaliacoes": 4,
+          "compareceram": 4,
+          "converteram": 3,
+          "faturamento": 18182.0
+        },
+        {
+          "mes": "2026-05",
+          "avaliacoes": 16,
+          "compareceram": 16,
+          "converteram": 15,
+          "faturamento": 162377.0
+        },
+        {
+          "mes": "2026-06",
+          "avaliacoes": 5,
+          "compareceram": 5,
+          "converteram": 5,
+          "faturamento": 51750.0
+        }
+      ]
+    },
+    {
+      "nome": "Vanessa Queiroz Dos Reis",
+      "meses": [
+        {
+          "mes": "2026-01",
+          "avaliacoes": 6,
+          "compareceram": 6,
+          "converteram": 5,
+          "faturamento": 37451.0
+        },
+        {
+          "mes": "2026-02",
+          "avaliacoes": 16,
+          "compareceram": 15,
+          "converteram": 14,
+          "faturamento": 40140.0
+        },
+        {
+          "mes": "2026-03",
+          "avaliacoes": 5,
+          "compareceram": 5,
+          "converteram": 5,
+          "faturamento": 44344.0
+        },
+        {
+          "mes": "2026-04",
+          "avaliacoes": 2,
+          "compareceram": 2,
+          "converteram": 2,
+          "faturamento": 32196.0
+        },
+        {
+          "mes": "2026-05",
+          "avaliacoes": 2,
+          "compareceram": 1,
+          "converteram": 1,
+          "faturamento": 9000.0
+        },
+        {
+          "mes": "2026-06",
+          "avaliacoes": 1,
+          "compareceram": 1,
+          "converteram": 1,
+          "faturamento": 16100.0
+        }
+      ]
+    },
+    {
+      "nome": "Franciele Ramos Alves Brito",
+      "meses": [
+        {
+          "mes": "2026-01",
+          "avaliacoes": 27,
+          "compareceram": 27,
+          "converteram": 27,
+          "faturamento": 72610.0
+        }
+      ]
+    },
+    {
+      "nome": "Alex Morais Andrade",
+      "meses": [
+        {
+          "mes": "2026-01",
+          "avaliacoes": 5,
+          "compareceram": 5,
+          "converteram": 5,
+          "faturamento": 52488.0
+        },
+        {
+          "mes": "2026-02",
+          "avaliacoes": 6,
+          "compareceram": 6,
+          "converteram": 6,
+          "faturamento": 34990.0
+        },
+        {
+          "mes": "2026-03",
+          "avaliacoes": 4,
+          "compareceram": 4,
+          "converteram": 4,
+          "faturamento": 47000.0
+        },
+        {
+          "mes": "2026-04",
+          "avaliacoes": 1,
+          "compareceram": 1,
+          "converteram": 1,
+          "faturamento": 7754.0
+        },
+        {
+          "mes": "2026-05",
+          "avaliacoes": 3,
+          "compareceram": 3,
+          "converteram": 3,
+          "faturamento": 14418.0
+        },
+        {
+          "mes": "2026-06",
+          "avaliacoes": 6,
+          "compareceram": 6,
+          "converteram": 5,
+          "faturamento": 59900.0
+        }
+      ]
+    },
+    {
+      "nome": "Kamila Brenda de Oliveira",
+      "meses": [
+        {
+          "mes": "2026-01",
+          "avaliacoes": 7,
+          "compareceram": 7,
+          "converteram": 7,
+          "faturamento": 36086.0
+        },
+        {
+          "mes": "2026-02",
+          "avaliacoes": 4,
+          "compareceram": 4,
+          "converteram": 2,
+          "faturamento": 31480.0
+        },
+        {
+          "mes": "2026-03",
+          "avaliacoes": 10,
+          "compareceram": 10,
+          "converteram": 7,
+          "faturamento": 91150.0
+        },
+        {
+          "mes": "2026-04",
+          "avaliacoes": 2,
+          "compareceram": 2,
+          "converteram": 2,
+          "faturamento": 11500.0
+        },
+        {
+          "mes": "2026-05",
+          "avaliacoes": 4,
+          "compareceram": 4,
+          "converteram": 4,
+          "faturamento": 48200.0
+        }
+      ]
+    },
+    {
+      "nome": "Messias Gomes",
+      "meses": [
+        {
+          "mes": "2026-01",
+          "avaliacoes": 2,
+          "compareceram": 2,
+          "converteram": 2,
+          "faturamento": 32870.0
+        },
+        {
+          "mes": "2026-02",
+          "avaliacoes": 5,
+          "compareceram": 5,
+          "converteram": 4,
+          "faturamento": 35800.0
+        },
+        {
+          "mes": "2026-03",
+          "avaliacoes": 2,
+          "compareceram": 2,
+          "converteram": 2,
+          "faturamento": 26500.0
+        },
+        {
+          "mes": "2026-05",
+          "avaliacoes": 1,
+          "compareceram": 1,
+          "converteram": 1,
+          "faturamento": 7000.0
+        },
+        {
+          "mes": "2026-06",
+          "avaliacoes": 5,
+          "compareceram": 4,
+          "converteram": 3,
+          "faturamento": 24760.0
+        }
+      ]
+    },
+    {
+      "nome": "Maria Fabilha Fernandes Ramos",
+      "meses": [
+        {
+          "mes": "2026-01",
+          "avaliacoes": 1,
+          "compareceram": 1,
+          "converteram": 0,
+          "faturamento": 0.0
+        },
+        {
+          "mes": "2026-06",
+          "avaliacoes": 16,
+          "compareceram": 16,
+          "converteram": 11,
+          "faturamento": 128853.0
+        }
+      ]
+    },
+    {
+      "nome": "LUCAS FIRMINO AZEVEDO",
+      "meses": [
+        {
+          "mes": "2026-01",
+          "avaliacoes": 8,
+          "compareceram": 8,
+          "converteram": 5,
+          "faturamento": 67522.0
+        },
+        {
+          "mes": "2026-03",
+          "avaliacoes": 6,
+          "compareceram": 6,
+          "converteram": 1,
+          "faturamento": 2280.0
+        },
+        {
+          "mes": "2026-05",
+          "avaliacoes": 9,
+          "compareceram": 8,
+          "converteram": 4,
+          "faturamento": 27282.0
+        },
+        {
+          "mes": "2026-06",
+          "avaliacoes": 3,
+          "compareceram": 3,
+          "converteram": 0,
+          "faturamento": 0.0
+        }
+      ]
+    },
+    {
+      "nome": "Jessica Alves Balieiro",
+      "meses": [
+        {
+          "mes": "2026-01",
+          "avaliacoes": 151,
+          "compareceram": 10,
+          "converteram": 8,
+          "faturamento": 78763.0
+        },
+        {
+          "mes": "2026-02",
+          "avaliacoes": 138,
+          "compareceram": 5,
+          "converteram": 1,
+          "faturamento": 6700.0
+        },
+        {
+          "mes": "2026-03",
+          "avaliacoes": 128,
+          "compareceram": 1,
+          "converteram": 0,
+          "faturamento": 0.0
+        },
+        {
+          "mes": "2026-04",
+          "avaliacoes": 46,
+          "compareceram": 0,
+          "converteram": 0,
+          "faturamento": 0.0
+        },
+        {
+          "mes": "2026-05",
+          "avaliacoes": 95,
+          "compareceram": 2,
+          "converteram": 0,
+          "faturamento": 0.0
+        },
+        {
+          "mes": "2026-06",
+          "avaliacoes": 125,
+          "compareceram": 1,
+          "converteram": 0,
+          "faturamento": 0.0
+        },
+        {
+          "mes": "2026-07",
+          "avaliacoes": 1,
+          "compareceram": 0,
+          "converteram": 0,
+          "faturamento": 0.0
+        }
+      ]
+    },
+    {
+      "nome": "Lorene Cares de Lima",
+      "meses": [
+        {
+          "mes": "2026-01",
+          "avaliacoes": 223,
+          "compareceram": 10,
+          "converteram": 6,
+          "faturamento": 45487.0
+        },
+        {
+          "mes": "2026-02",
+          "avaliacoes": 165,
+          "compareceram": 3,
+          "converteram": 2,
+          "faturamento": 22900.0
+        },
+        {
+          "mes": "2026-03",
+          "avaliacoes": 153,
+          "compareceram": 0,
+          "converteram": 0,
+          "faturamento": 0.0
+        },
+        {
+          "mes": "2026-04",
+          "avaliacoes": 171,
+          "compareceram": 0,
+          "converteram": 0,
+          "faturamento": 0.0
+        },
+        {
+          "mes": "2026-05",
+          "avaliacoes": 78,
+          "compareceram": 1,
+          "converteram": 0,
+          "faturamento": 0.0
+        },
+        {
+          "mes": "2026-06",
+          "avaliacoes": 128,
+          "compareceram": 3,
+          "converteram": 0,
+          "faturamento": 0.0
+        },
+        {
+          "mes": "2026-07",
+          "avaliacoes": 1,
+          "compareceram": 0,
+          "converteram": 0,
+          "faturamento": 0.0
+        }
+      ]
+    },
+    {
+      "nome": "Leticia Laia Sena Pontes Silva",
+      "meses": [
+        {
+          "mes": "2026-04",
+          "avaliacoes": 8,
+          "compareceram": 8,
+          "converteram": 3,
+          "faturamento": 23520.0
+        },
+        {
+          "mes": "2026-05",
+          "avaliacoes": 10,
+          "compareceram": 10,
+          "converteram": 2,
+          "faturamento": 13400.0
+        },
+        {
+          "mes": "2026-06",
+          "avaliacoes": 11,
+          "compareceram": 11,
+          "converteram": 2,
+          "faturamento": 12450.0
+        }
+      ]
+    },
+    {
+      "nome": "Thiago Soares de Araujo",
+      "meses": [
+        {
+          "mes": "2026-01",
+          "avaliacoes": 144,
+          "compareceram": 4,
+          "converteram": 4,
+          "faturamento": 20547.0
+        },
+        {
+          "mes": "2026-02",
+          "avaliacoes": 178,
+          "compareceram": 4,
+          "converteram": 2,
+          "faturamento": 13732.0
+        },
+        {
+          "mes": "2026-03",
+          "avaliacoes": 194,
+          "compareceram": 0,
+          "converteram": 0,
+          "faturamento": 0.0
+        },
+        {
+          "mes": "2026-04",
+          "avaliacoes": 129,
+          "compareceram": 0,
+          "converteram": 0,
+          "faturamento": 0.0
+        },
+        {
+          "mes": "2026-05",
+          "avaliacoes": 168,
+          "compareceram": 2,
+          "converteram": 0,
+          "faturamento": 0.0
+        },
+        {
+          "mes": "2026-06",
+          "avaliacoes": 128,
+          "compareceram": 3,
+          "converteram": 0,
+          "faturamento": 0.0
+        },
+        {
+          "mes": "2026-07",
+          "avaliacoes": 26,
+          "compareceram": 0,
+          "converteram": 0,
+          "faturamento": 0.0
+        }
+      ]
+    },
+    {
+      "nome": "kassandra kamile",
+      "meses": [
+        {
+          "mes": "2026-01",
+          "avaliacoes": 160,
+          "compareceram": 12,
+          "converteram": 3,
+          "faturamento": 43400.0
+        },
+        {
+          "mes": "2026-02",
+          "avaliacoes": 135,
+          "compareceram": 4,
+          "converteram": 2,
+          "faturamento": 23540.0
+        },
+        {
+          "mes": "2026-03",
+          "avaliacoes": 123,
+          "compareceram": 2,
+          "converteram": 1,
+          "faturamento": 7500.0
+        },
+        {
+          "mes": "2026-04",
+          "avaliacoes": 129,
+          "compareceram": 1,
+          "converteram": 0,
+          "faturamento": 0.0
+        },
+        {
+          "mes": "2026-05",
+          "avaliacoes": 98,
+          "compareceram": 1,
+          "converteram": 0,
+          "faturamento": 0.0
+        },
+        {
+          "mes": "2026-06",
+          "avaliacoes": 95,
+          "compareceram": 1,
+          "converteram": 0,
+          "faturamento": 0.0
+        },
+        {
+          "mes": "2026-07",
+          "avaliacoes": 3,
+          "compareceram": 0,
+          "converteram": 0,
+          "faturamento": 0.0
+        }
+      ]
+    },
+    {
+      "nome": "Marlon Vinícius de Paula Carmo",
+      "meses": [
+        {
+          "mes": "2026-02",
+          "avaliacoes": 2,
+          "compareceram": 1,
+          "converteram": 1,
+          "faturamento": 7800.0
+        },
+        {
+          "mes": "2026-03",
+          "avaliacoes": 1,
+          "compareceram": 1,
+          "converteram": 1,
+          "faturamento": 18600.0
+        },
+        {
+          "mes": "2026-05",
+          "avaliacoes": 2,
+          "compareceram": 2,
+          "converteram": 1,
+          "faturamento": 6000.0
+        },
+        {
+          "mes": "2026-06",
+          "avaliacoes": 2,
+          "compareceram": 2,
+          "converteram": 2,
+          "faturamento": 13000.0
+        }
+      ]
+    },
+    {
+      "nome": "Larissa Vieira da Silva",
+      "meses": [
+        {
+          "mes": "2026-02",
+          "avaliacoes": 4,
+          "compareceram": 4,
+          "converteram": 3,
+          "faturamento": 15583.0
+        },
+        {
+          "mes": "2026-03",
+          "avaliacoes": 1,
+          "compareceram": 1,
+          "converteram": 1,
+          "faturamento": 4740.0
+        }
+      ]
+    },
+    {
+      "nome": "maira luana de souza",
+      "meses": [
+        {
+          "mes": "2026-01",
+          "avaliacoes": 108,
+          "compareceram": 3,
+          "converteram": 2,
+          "faturamento": 21747.0
+        },
+        {
+          "mes": "2026-02",
+          "avaliacoes": 151,
+          "compareceram": 4,
+          "converteram": 2,
+          "faturamento": 15597.0
+        },
+        {
+          "mes": "2026-03",
+          "avaliacoes": 134,
+          "compareceram": 2,
+          "converteram": 0,
+          "faturamento": 0.0
+        },
+        {
+          "mes": "2026-04",
+          "avaliacoes": 122,
+          "compareceram": 1,
+          "converteram": 0,
+          "faturamento": 0.0
+        },
+        {
+          "mes": "2026-05",
+          "avaliacoes": 68,
+          "compareceram": 1,
+          "converteram": 0,
+          "faturamento": 0.0
+        },
+        {
+          "mes": "2026-06",
+          "avaliacoes": 101,
+          "compareceram": 0,
+          "converteram": 0,
+          "faturamento": 0.0
+        },
+        {
+          "mes": "2026-07",
+          "avaliacoes": 6,
+          "compareceram": 0,
+          "converteram": 0,
+          "faturamento": 0.0
+        }
+      ]
+    },
+    {
+      "nome": "Chaiene Cristina",
+      "meses": [
+        {
+          "mes": "2026-01",
+          "avaliacoes": 69,
+          "compareceram": 4,
+          "converteram": 0,
+          "faturamento": 0.0
+        },
+        {
+          "mes": "2026-02",
+          "avaliacoes": 85,
+          "compareceram": 3,
+          "converteram": 1,
+          "faturamento": 10500.0
+        },
+        {
+          "mes": "2026-03",
+          "avaliacoes": 89,
+          "compareceram": 1,
+          "converteram": 0,
+          "faturamento": 0.0
+        },
+        {
+          "mes": "2026-04",
+          "avaliacoes": 75,
+          "compareceram": 0,
+          "converteram": 0,
+          "faturamento": 0.0
+        },
+        {
+          "mes": "2026-05",
+          "avaliacoes": 60,
+          "compareceram": 1,
+          "converteram": 1,
+          "faturamento": 15000.0
+        },
+        {
+          "mes": "2026-06",
+          "avaliacoes": 49,
+          "compareceram": 2,
+          "converteram": 0,
+          "faturamento": 0.0
+        }
+      ]
+    },
+    {
+      "nome": "Ária dos Santos Silva Gonçalves",
+      "meses": [
+        {
+          "mes": "2026-01",
+          "avaliacoes": 11,
+          "compareceram": 1,
+          "converteram": 0,
+          "faturamento": 0.0
+        },
+        {
+          "mes": "2026-02",
+          "avaliacoes": 56,
+          "compareceram": 3,
+          "converteram": 1,
+          "faturamento": 7500.0
+        },
+        {
+          "mes": "2026-03",
+          "avaliacoes": 45,
+          "compareceram": 1,
+          "converteram": 1,
+          "faturamento": 15500.0
+        },
+        {
+          "mes": "2026-04",
+          "avaliacoes": 43,
+          "compareceram": 1,
+          "converteram": 0,
+          "faturamento": 0.0
+        },
+        {
+          "mes": "2026-05",
+          "avaliacoes": 37,
+          "compareceram": 0,
+          "converteram": 0,
+          "faturamento": 0.0
+        },
+        {
+          "mes": "2026-06",
+          "avaliacoes": 31,
+          "compareceram": 0,
+          "converteram": 0,
+          "faturamento": 0.0
+        }
+      ]
+    },
+    {
+      "nome": "Barbara Arruda",
+      "meses": [
+        {
+          "mes": "2026-01",
+          "avaliacoes": 140,
+          "compareceram": 8,
+          "converteram": 1,
+          "faturamento": 6997.0
+        },
+        {
+          "mes": "2026-02",
+          "avaliacoes": 114,
+          "compareceram": 2,
+          "converteram": 0,
+          "faturamento": 0.0
+        },
+        {
+          "mes": "2026-03",
+          "avaliacoes": 119,
+          "compareceram": 0,
+          "converteram": 0,
+          "faturamento": 0.0
+        },
+        {
+          "mes": "2026-04",
+          "avaliacoes": 104,
+          "compareceram": 0,
+          "converteram": 0,
+          "faturamento": 0.0
+        },
+        {
+          "mes": "2026-05",
+          "avaliacoes": 104,
+          "compareceram": 0,
+          "converteram": 0,
+          "faturamento": 0.0
+        },
+        {
+          "mes": "2026-06",
+          "avaliacoes": 65,
+          "compareceram": 0,
+          "converteram": 0,
+          "faturamento": 0.0
+        },
+        {
+          "mes": "2026-07",
+          "avaliacoes": 6,
+          "compareceram": 0,
+          "converteram": 0,
+          "faturamento": 0.0
+        }
+      ]
+    },
+    {
+      "nome": "Gustavo Alves de Lima",
+      "meses": [
+        {
+          "mes": "2026-01",
+          "avaliacoes": 93,
+          "compareceram": 4,
+          "converteram": 0,
+          "faturamento": 0.0
+        },
+        {
+          "mes": "2026-02",
+          "avaliacoes": 131,
+          "compareceram": 3,
+          "converteram": 1,
+          "faturamento": 13500.0
+        },
+        {
+          "mes": "2026-03",
+          "avaliacoes": 126,
+          "compareceram": 0,
+          "converteram": 0,
+          "faturamento": 0.0
+        },
+        {
+          "mes": "2026-04",
+          "avaliacoes": 195,
+          "compareceram": 0,
+          "converteram": 0,
+          "faturamento": 0.0
+        },
+        {
+          "mes": "2026-05",
+          "avaliacoes": 129,
+          "compareceram": 2,
+          "converteram": 0,
+          "faturamento": 0.0
+        },
+        {
+          "mes": "2026-06",
+          "avaliacoes": 156,
+          "compareceram": 2,
+          "converteram": 0,
+          "faturamento": 0.0
+        },
+        {
+          "mes": "2026-07",
+          "avaliacoes": 18,
+          "compareceram": 0,
+          "converteram": 0,
+          "faturamento": 0.0
+        }
+      ]
+    },
+    {
+      "nome": "Jullie Nathaly",
+      "meses": [
+        {
+          "mes": "2026-01",
+          "avaliacoes": 131,
+          "compareceram": 6,
+          "converteram": 0,
+          "faturamento": 0.0
+        },
+        {
+          "mes": "2026-02",
+          "avaliacoes": 130,
+          "compareceram": 2,
+          "converteram": 0,
+          "faturamento": 0.0
+        },
+        {
+          "mes": "2026-03",
+          "avaliacoes": 132,
+          "compareceram": 2,
+          "converteram": 1,
+          "faturamento": 14190.0
+        },
+        {
+          "mes": "2026-04",
+          "avaliacoes": 155,
+          "compareceram": 0,
+          "converteram": 0,
+          "faturamento": 0.0
+        },
+        {
+          "mes": "2026-05",
+          "avaliacoes": 69,
+          "compareceram": 0,
+          "converteram": 0,
+          "faturamento": 0.0
+        },
+        {
+          "mes": "2026-06",
+          "avaliacoes": 51,
+          "compareceram": 1,
+          "converteram": 0,
+          "faturamento": 0.0
+        }
+      ]
+    }
+  ]
+}

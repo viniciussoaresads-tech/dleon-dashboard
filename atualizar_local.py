@@ -83,15 +83,17 @@ with open(DATA_FILE, 'w', encoding='utf-8') as f:
     json.dump({"updated_at": today.isoformat(), "start": str(start), "end": str(today), "rows": data}, f, ensure_ascii=False)
 print(f"funil OK: {len(data)} linhas")
 
-# Equipe comercial
-INI, FIM = str(start), str(today)
+# Equipe comercial — formato mensal (desde Jan 2026)
+from collections import defaultdict
+EQ_INI = '2026-01-01'
+EQ_FIM = str(today)
 
 cur.execute("""
     SELECT o.seller_name,
-        COUNT(DISTINCT o.order_id) AS vendas,
-        ROUND(SUM(o.total_price)::numeric,2) AS faturamento,
-        ROUND(AVG(o.total_price)::numeric,2) AS ticket_medio,
-        COUNT(DISTINCT o.customer_id) AS clientes
+           DATE_TRUNC('month', o.created_at)::date AS mes,
+           COUNT(DISTINCT o.order_id)           AS vendas,
+           ROUND(SUM(o.total_price)::numeric,2) AS faturamento,
+           COUNT(DISTINCT o.customer_id)        AS clientes
     FROM com8053.orders o
     WHERE o.schema='clinica_dleon'
       AND o.created_at::date BETWEEN %s AND %s
@@ -99,67 +101,68 @@ cur.execute("""
       AND o.total_price > 0
       AND o.seller_name NOT ILIKE '%%Cl%%nica%%'
       AND o.seller_name NOT ILIKE '%%Renegocia%%'
-    GROUP BY o.seller_name
-    HAVING AVG(o.total_price) >= 1000
-    ORDER BY faturamento DESC
-""", (INI, FIM))
-vendedores = [{"nome": r[0], "vendas": int(r[1]), "faturamento": float(r[2]),
-               "ticket": float(r[3]), "clientes": int(r[4])} for r in cur.fetchall()]
+      AND o.seller_name NOT ILIKE '%%Administrador%%'
+    GROUP BY o.seller_name, DATE_TRUNC('month', o.created_at)
+    ORDER BY o.seller_name, mes
+""", (EQ_INI, EQ_FIM))
+vd, vt = defaultdict(list), defaultdict(float)
+for r in cur.fetchall():
+    n = str(r[0]).strip(); vt[n] += float(r[3])
+    vd[n].append({'mes': str(r[1])[:7], 'vendas': int(r[2]), 'faturamento': float(r[3]), 'clientes': int(r[4])})
+vendedores = [{'nome': n, 'meses': ms} for n, ms in sorted(vd.items(), key=lambda x: -vt[x[0]]) if vt[n] >= 50000]
 
 cur.execute("""
     SELECT d.employee_name,
-        COUNT(*) AS leads,
-        COUNT(CASE WHEN d.customer_appointment_date IS NOT NULL THEN 1 END) AS agendou,
-        COUNT(CASE WHEN d.customer_appointment_status_id=5 THEN 1 END) AS compareceu,
-        ROUND(100.0*COUNT(CASE WHEN d.customer_appointment_status_id=5 THEN 1 END)
-            /NULLIF(COUNT(CASE WHEN d.customer_appointment_date IS NOT NULL THEN 1 END),0),1) AS pct_comp,
-        COUNT(CASE WHEN d.converted_at IS NOT NULL THEN 1 END) AS convertidos,
-        ROUND(100.0*COUNT(CASE WHEN d.converted_at IS NOT NULL THEN 1 END)
-            /NULLIF(COUNT(CASE WHEN d.customer_appointment_status_id=5 THEN 1 END),0),1) AS pct_conv
+           DATE_TRUNC('month', d.created_at)::date AS mes,
+           COUNT(*)                                                              AS leads,
+           COUNT(CASE WHEN d.customer_appointment_date IS NOT NULL THEN 1 END)  AS agendou,
+           COUNT(CASE WHEN d.customer_appointment_status_id=5 THEN 1 END)       AS compareceu,
+           COUNT(CASE WHEN d.converted_at IS NOT NULL THEN 1 END)               AS convertidos
     FROM com8053.deals d
     WHERE d.schema='clinica_dleon'
       AND d.created_at::date BETWEEN %s AND %s
       AND d.employee_name IS NOT NULL
       AND d.employee_name NOT ILIKE '%%Administrador%%'
-    GROUP BY d.employee_name
-    HAVING COUNT(*) >= 5
-    ORDER BY agendou DESC
-""", (INI, FIM))
-sdrs = [{"nome": r[0], "leads": int(r[1]), "agendou": int(r[2]), "compareceu": int(r[3]),
-          "pct_comp": float(r[4]) if r[4] else 0, "convertidos": int(r[5]),
-          "pct_conv": float(r[6]) if r[6] else 0} for r in cur.fetchall()]
+    GROUP BY d.employee_name, DATE_TRUNC('month', d.created_at)
+    ORDER BY d.employee_name, mes
+""", (EQ_INI, EQ_FIM))
+sd, st = defaultdict(list), defaultdict(int)
+for r in cur.fetchall():
+    n = str(r[0]).strip(); st[n] += int(r[2])
+    sd[n].append({'mes': str(r[1])[:7], 'leads': int(r[2]), 'agendou': int(r[3]), 'compareceu': int(r[4]), 'convertidos': int(r[5])})
+sdrs = [{'nome': n, 'meses': ms} for n, ms in sorted(sd.items(), key=lambda x: -st[x[0]]) if st[n] >= 5]
 
 cur.execute("""
     SELECT a.employee_name,
-        COUNT(*) AS avaliacoes,
-        COUNT(CASE WHEN a.status_id=5 THEN 1 END) AS compareceram,
-        COUNT(CASE WHEN a.status_id=5 AND o.order_id IS NOT NULL
-                    AND o.status NOT IN ('CANCELED','ABANDONMENT') AND o.total_price>0 THEN 1 END) AS converteram,
-        ROUND(100.0*COUNT(CASE WHEN a.status_id=5 AND o.order_id IS NOT NULL
-                    AND o.status NOT IN ('CANCELED','ABANDONMENT') AND o.total_price>0 THEN 1 END)
-            /NULLIF(COUNT(CASE WHEN a.status_id=5 THEN 1 END),0),1) AS pct_conv,
-        ROUND(SUM(CASE WHEN a.status_id=5 AND o.order_id IS NOT NULL
-                    AND o.status NOT IN ('CANCELED','ABANDONMENT')
-                    THEN o.total_price ELSE 0 END)::numeric,2) AS faturamento
+           DATE_TRUNC('month', a.start_date)::date AS mes,
+           COUNT(*)                                                              AS avaliacoes,
+           COUNT(CASE WHEN a.status_id=5 THEN 1 END)                            AS compareceram,
+           COUNT(CASE WHEN a.status_id=5 AND o.order_id IS NOT NULL
+                       AND o.status NOT IN ('CANCELED','ABANDONMENT')
+                       AND o.total_price>0 THEN 1 END)                          AS converteram,
+           ROUND(SUM(CASE WHEN a.status_id=5 AND o.order_id IS NOT NULL
+                       AND o.status NOT IN ('CANCELED','ABANDONMENT')
+                       THEN o.total_price ELSE 0 END)::numeric,2)               AS faturamento
     FROM com8053.appointments a
     LEFT JOIN com8053.orders o ON o.order_id=a.order_id AND o.schema='clinica_dleon'
     WHERE a.schema='clinica_dleon' AND a.service_budget=true
       AND a.start_date::date BETWEEN %s AND %s
       AND a.employee_name IS NOT NULL
-    GROUP BY a.employee_name
-    HAVING COUNT(CASE WHEN a.status_id=5 THEN 1 END) >= 5
-    ORDER BY converteram DESC
-""", (INI, FIM))
-avaliadores = [{"nome": r[0], "avaliacoes": int(r[1]), "compareceram": int(r[2]),
-                "converteram": int(r[3]), "pct_conv": float(r[4]) if r[4] else 0,
-                "faturamento": float(r[5])} for r in cur.fetchall()]
+    GROUP BY a.employee_name, DATE_TRUNC('month', a.start_date)
+    ORDER BY a.employee_name, mes
+""", (EQ_INI, EQ_FIM))
+ad, at_ = defaultdict(list), defaultdict(int)
+for r in cur.fetchall():
+    n = str(r[0]).strip(); at_[n] += int(r[3])
+    ad[n].append({'mes': str(r[1])[:7], 'avaliacoes': int(r[2]), 'compareceram': int(r[3]), 'converteram': int(r[4]), 'faturamento': float(r[5])})
+avaliadores = [{'nome': n, 'meses': ms} for n, ms in sorted(ad.items(), key=lambda x: -sum(m['converteram'] for m in x[1])) if at_[n] >= 5]
 
 conn.close()
 
 equipe_file = ROOT / "data" / "equipe.json"
 with open(equipe_file, 'w', encoding='utf-8') as f:
-    json.dump({"updated_at": today.isoformat(), "start": INI, "end": FIM,
-               "vendedores": vendedores, "sdrs": sdrs, "avaliadores": avaliadores}, f, ensure_ascii=False)
+    json.dump({'updated_at': EQ_FIM, 'start': EQ_INI, 'end': EQ_FIM,
+               'vendedores': vendedores, 'sdrs': sdrs, 'avaliadores': avaliadores}, f, ensure_ascii=False)
 print(f"equipe OK: {len(vendedores)} vendedores | {len(sdrs)} SDRs | {len(avaliadores)} avaliadores")
 
 # Git push

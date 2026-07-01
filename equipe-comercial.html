@@ -16,22 +16,60 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .upd{font-size:10px;color:#ccc}
 .back{font-size:11px;color:#888;text-decoration:none;border:1px solid #e0e0e0;background:#fff;padding:3px 10px;border-radius:6px}
 .back:hover{background:#f5f5f5}
-
-/* tabs */
+/* ── Date Range Picker ───────────────────────────────────── */
+.dp-wrap{position:relative;margin-bottom:1rem}
+.dp-trigger{display:inline-flex;align-items:center;gap:7px;padding:7px 13px;background:#fff;border:1px solid #ddd;border-radius:8px;cursor:pointer;font-size:12.5px;color:#333;font-weight:500;white-space:nowrap;transition:border-color .15s;user-select:none}
+.dp-trigger:hover{border-color:#999}
+.dp-trigger.dp-open{border-color:#111;box-shadow:0 0 0 3px rgba(0,0,0,.06)}
+.dp-trigger svg{flex-shrink:0;opacity:.55}
+.dp-lbl{min-width:175px;text-align:left}
+.dp-chv{color:#aaa;font-size:10px;transition:transform .2s;margin-left:2px}
+.dp-trigger.dp-open .dp-chv{transform:rotate(180deg)}
+.dp-panel{position:absolute;top:calc(100% + 6px);left:0;z-index:9999;background:#fff;border:1px solid #e0e0e0;border-radius:12px;box-shadow:0 12px 48px rgba(0,0,0,.14);display:none;flex-direction:row;overflow:hidden;min-width:580px}
+.dp-panel.dp-open{display:flex}
+.dp-side{padding:10px 6px;border-right:1px solid #f0f0f0;min-width:152px;display:flex;flex-direction:column;gap:1px}
+.dp-pr{text-align:left;padding:5px 10px;border-radius:6px;cursor:pointer;font-size:12px;color:#444;border:none;background:none;white-space:nowrap;width:100%;transition:background .1s}
+.dp-pr:hover{background:#f5f5f5}
+.dp-pr.dp-on{background:#111;color:#fff;font-weight:500}
+.dp-right{display:flex;flex-direction:column;flex:1}
+.dp-calpair{display:flex;padding:12px 14px 4px;gap:12px}
+.dp-cal{flex:1}
+.dp-cal+.dp-cal{border-left:1px solid #f0f0f0;padding-left:14px}
+.dp-chd{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px}
+.dp-cnav{border:none;background:none;cursor:pointer;width:24px;height:24px;border-radius:4px;color:#555;font-size:18px;line-height:1;display:flex;align-items:center;justify-content:center;transition:background .1s}
+.dp-cnav:hover{background:#f0f0f0}
+.dp-cnav-ph{width:24px;display:inline-block}
+.dp-cname{font-size:12px;font-weight:600;color:#111}
+.dp-g7{display:grid;grid-template-columns:repeat(7,28px);gap:1px}
+.dp-dh{text-align:center;font-size:9.5px;font-weight:600;color:#ccc;padding:2px 0;width:28px}
+.dp-d{width:28px;height:27px;display:flex;align-items:center;justify-content:center;font-size:11.5px;cursor:pointer;color:#333;border-radius:4px;transition:background .07s}
+.dp-d:not(.dp-dis):not(.dp-s):not(.dp-e):not(.dp-in):hover{background:#f0f0f0}
+.dp-d.dp-tod{font-weight:700}
+.dp-d.dp-dis{color:#ddd;cursor:default;pointer-events:none}
+.dp-d.dp-in{background:#EAF3FC;color:#0B4A80;border-radius:0}
+.dp-d.dp-s{background:#111;color:#fff;border-radius:4px}
+.dp-d.dp-e{background:#111;color:#fff;border-radius:4px}
+.dp-d.dp-s.dp-e{border-radius:4px}
+.dp-foot{display:flex;align-items:center;justify-content:space-between;padding:8px 14px;border-top:1px solid #f0f0f0;margin-top:6px}
+.dp-rlbl{font-size:11px;color:#888}
+.dp-fbtns{display:flex;gap:6px}
+.dp-cancel{border:none;background:none;cursor:pointer;font-size:12px;color:#555;padding:5px 10px;border-radius:6px;transition:background .1s}
+.dp-cancel:hover{background:#f5f5f5}
+.dp-ok{border:none;background:#111;color:#fff;cursor:pointer;font-size:12px;font-weight:500;padding:5px 14px;border-radius:6px;transition:background .1s}
+.dp-ok:hover{background:#333}
+/* ── Tabs ────────────────────────────────────────── */
 .tabs{display:flex;gap:0;border:1px solid #e0e0e0;border-radius:10px;overflow:hidden;margin-bottom:1rem;background:#fff}
 .tab{flex:1;padding:.6rem 1rem;text-align:center;cursor:pointer;font-size:12px;font-weight:500;color:#888;border:none;background:none;transition:all .15s}
 .tab:not(:last-child){border-right:1px solid #e0e0e0}
 .tab.on{background:#111;color:#fff}
 .tab-panel{display:none}.tab-panel.on{display:block}
-
-/* kpi cards */
+/* ── KPI Cards ───────────────────────────────────── */
 .kgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:1rem}
 .kcard{border:1px solid #e8e8e8;border-radius:10px;padding:.7rem .8rem;background:#fff}
 .klbl{font-size:9.5px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:#bbb;margin-bottom:.35rem}
 .kval{font-size:20px;font-weight:500;line-height:1;margin-bottom:.25rem}
 .ksub{font-size:10.5px;color:#aaa}
-
-/* ranking table */
+/* ── Ranking Table ───────────────────────────────── */
 .tw{border:1px solid #e8e8e8;border-radius:10px;overflow:hidden;background:#fff}
 table{width:100%;border-collapse:collapse;font-size:12px}
 th{background:#fafafa;padding:7px 10px;text-align:right;font-weight:600;color:#bbb;font-size:9.5px;letter-spacing:.05em;white-space:nowrap;border-bottom:1px solid #ebebeb}
@@ -54,10 +92,14 @@ tr:hover td{background:#f8fbff}
 .pill{font-size:9px;font-weight:600;padding:1px 6px;border-radius:100px;white-space:nowrap}
 .g{color:#167a3f;background:#e5f4ec}.r{color:#b02020;background:#fce8e6}.gr{color:#888;background:#f0f0f0}
 .total-row td{background:#111;color:#fff;font-weight:600;font-size:12px}
-
+.empty-state{text-align:center;padding:2rem;color:#ccc;font-size:12px}
 @media(max-width:640px){
   .kgrid{grid-template-columns:repeat(2,1fr)}
   .kval{font-size:16px}
+  .dp-panel{min-width:unset;flex-direction:column}
+  .dp-side{border-right:none;border-bottom:1px solid #f0f0f0;flex-direction:row;flex-wrap:wrap;padding:6px}
+  .dp-calpair{flex-direction:column}
+  .dp-cal+.dp-cal{border-left:none;padding-left:0;border-top:1px solid #f0f0f0;padding-top:10px}
 }
 </style>
 </head>
@@ -75,6 +117,19 @@ tr:hover td{background:#f8fbff}
     <span class="upd" id="upd-lbl"></span>
     <a class="back" href="funil-comercial.html">← Funil</a>
   </div>
+</div>
+
+<div class="dp-wrap">
+  <div class="dp-trigger" id="dp-btn" onclick="DP.toggle()">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="1.5" y="2.5" width="13" height="12" rx="1.5" stroke="#333" stroke-width="1.4"/>
+      <path d="M1.5 6h13" stroke="#333" stroke-width="1.4"/>
+      <path d="M5 1v3M11 1v3" stroke="#333" stroke-width="1.4" stroke-linecap="round"/>
+    </svg>
+    <span class="dp-lbl"></span>
+    <span class="dp-chv">▾</span>
+  </div>
+  <div class="dp-panel" id="dp-panel"></div>
 </div>
 
 <div class="tabs">
@@ -112,48 +167,300 @@ tr:hover td{background:#f8fbff}
 </div>
 
 <script>
+// ══════════════════════════════════════════════════
+// DATE RANGE PICKER
+// ══════════════════════════════════════════════════
+const DP = (() => {
+  const MN = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+  const DN = ['D','S','T','Q','Q','S','S'];
+  let _cb, _btnEl, _panelEl;
+  let _ps = null, _pe = null;
+  let _cs, _ce;
+  let _c1 = {y:0,m:0}, _c2 = {y:0,m:0};
+  let _ap = null;
+  let _mn, _mx;
+
+  const T = () => new Date().toISOString().slice(0,10);
+  const add = (d,n) => { const dt=new Date(d+'T12:00:00'); dt.setDate(dt.getDate()+n); return dt.toISOString().slice(0,10); };
+  const fmt = d => { if(!d)return''; const [y,m,dd]=d.split('-'); return `${dd}/${m}/${y}`; };
+  const fom = d => d.slice(0,7)+'-01';
+  const lom = d => { const dt=new Date(d.slice(0,7)+'-01T12:00:00'); dt.setMonth(dt.getMonth()+1); dt.setDate(0); return dt.toISOString().slice(0,10); };
+  const sun = () => { const dt=new Date(),d=dt.getDay(); dt.setDate(dt.getDate()-d); return dt.toISOString().slice(0,10); };
+  const psat = () => { const dt=new Date(),d=dt.getDay(); dt.setDate(dt.getDate()-d-1); return dt.toISOString().slice(0,10); };
+  const psun = () => { const dt=new Date(),d=dt.getDay(); dt.setDate(dt.getDate()-d-7); return dt.toISOString().slice(0,10); };
+  const foy = () => new Date().getFullYear()+'-01-01';
+  const lpm = () => { const dt=new Date(); dt.setDate(1); dt.setMonth(dt.getMonth()-1); return dt.toISOString().slice(0,10); };
+
+  const PRESETS = [
+    {l:'Hoje',            f:()=>[T(),T()]},
+    {l:'Ontem',           f:()=>{const y=add(T(),-1);return[y,y];}},
+    {l:'Esta semana',     f:()=>[sun(),T()]},
+    {l:'Semana passada',  f:()=>[psun(),psat()]},
+    {l:'Últimos 7 dias',  f:()=>[add(T(),-6),T()]},
+    {l:'Últimos 14 dias', f:()=>[add(T(),-13),T()]},
+    {l:'Últimos 28 dias', f:()=>[add(T(),-27),T()]},
+    {l:'Este mês',        f:()=>[fom(T()),T()]},
+    {l:'Mês passado',     f:()=>{const s=lpm();return[s,lom(s)];}},
+    {l:'Últimos 3 meses', f:()=>[add(T(),-89),T()]},
+    {l:'Este ano',        f:()=>[foy(),T()]},
+  ];
+
+  function _posCals(endDate) {
+    const dt=new Date(endDate+'T12:00:00');
+    _c2={y:dt.getFullYear(),m:dt.getMonth()+1};
+    const dt2=new Date(_c2.y,_c2.m-2,1);
+    _c1={y:dt2.getFullYear(),m:dt2.getMonth()+1};
+  }
+
+  function init(btnId, panelId, opts) {
+    _btnEl=document.getElementById(btnId);
+    _panelEl=document.getElementById(panelId);
+    _cb=opts.onApply;
+    _cs=opts.start; _ce=opts.end;
+    _mn=opts.min||'2020-01-01'; _mx=opts.max||T();
+    _ap=opts.preset??null;
+    _ps=_cs; _pe=_ce;
+    _posCals(_ce);
+    _updBtn();
+    document.addEventListener('click', e=>{
+      if(!_btnEl.contains(e.target)&&!_panelEl.contains(e.target)) _close();
+    });
+  }
+
+  function _updBtn() {
+    _btnEl.querySelector('.dp-lbl').textContent = _cs===_ce ? fmt(_cs) : `${fmt(_cs)} – ${fmt(_ce)}`;
+  }
+
+  function toggle() {
+    if(_panelEl.classList.contains('dp-open')){_close();return;}
+    _ps=_cs; _pe=_ce;
+    _btnEl.classList.add('dp-open');
+    _panelEl.classList.add('dp-open');
+    _render();
+  }
+
+  function _close() {
+    _btnEl.classList.remove('dp-open');
+    _panelEl.classList.remove('dp-open');
+  }
+
+  function _render() {
+    _panelEl.innerHTML=`
+      <div class="dp-side">${PRESETS.map((p,i)=>`<button class="dp-pr${_ap===i?' dp-on':''}" onclick="DP.preset(${i})">${p.l}</button>`).join('')}</div>
+      <div class="dp-right">
+        <div class="dp-calpair" id="dp-calpair">
+          <div class="dp-cal" id="dpc1"></div>
+          <div class="dp-cal" id="dpc2"></div>
+        </div>
+        <div class="dp-foot">
+          <span class="dp-rlbl" id="dp-rlbl"></span>
+          <div class="dp-fbtns">
+            <button class="dp-cancel" onclick="DP.cancel()">Cancelar</button>
+            <button class="dp-ok" onclick="DP.apply()">Aplicar</button>
+          </div>
+        </div>
+      </div>`;
+    _drawCal(1); _drawCal(2);
+    _updRlbl();
+    document.getElementById('dp-calpair').addEventListener('mouseleave', ()=>{
+      if(_ps&&!_pe) { _drawCal(1); _drawCal(2); _updRlbl(); }
+    });
+  }
+
+  function _drawCal(n) {
+    const {y,m}=n===1?_c1:_c2;
+    const el=document.getElementById(`dpc${n}`);
+    const fd=new Date(y,m-1,1).getDay();
+    const ld=new Date(y,m,0).getDate();
+    const p2=s=>String(s).padStart(2,'0');
+    let h=`<div class="dp-chd">`;
+    h+=n===1?`<button class="dp-cnav" onclick="DP.nav(-1)">&#8249;</button>`:`<span class="dp-cnav-ph"></span>`;
+    h+=`<span class="dp-cname">${MN[m-1]} ${y}</span>`;
+    h+=n===2?`<button class="dp-cnav" onclick="DP.nav(1)">&#8250;</button>`:`<span class="dp-cnav-ph"></span>`;
+    h+=`</div><div class="dp-g7">`;
+    DN.forEach(d=>h+=`<span class="dp-dh">${d}</span>`);
+    for(let i=0;i<fd;i++) h+=`<span></span>`;
+    const td=T(), S=_ps, E=_pe;
+    for(let d=1;d<=ld;d++){
+      const ds=`${y}-${p2(m)}-${p2(d)}`;
+      const dis=ds<_mn||ds>_mx;
+      let cls='dp-d';
+      if(dis) cls+=' dp-dis';
+      else {
+        if(ds===td) cls+=' dp-tod';
+        if(S&&ds===S) cls+=' dp-s';
+        if(E&&ds===E) cls+=' dp-e';
+        if(S&&E&&ds>S&&ds<E) cls+=' dp-in';
+      }
+      h+=`<span class="${cls}" data-d="${ds}">${d}</span>`;
+    }
+    h+=`</div>`;
+    el.innerHTML=h;
+    el.querySelectorAll('.dp-d:not(.dp-dis)').forEach(sp=>{
+      sp.addEventListener('click',()=>pick(sp.dataset.d));
+      sp.addEventListener('mouseenter',()=>_hover(sp.dataset.d));
+    });
+  }
+
+  function _hover(ds) {
+    if(!_ps||_pe) return;
+    const S=_ps<ds?_ps:ds, E=_ps<ds?ds:_ps;
+    document.querySelectorAll('.dp-d').forEach(sp=>{
+      const d=sp.dataset.d; if(!d) return;
+      sp.classList.remove('dp-s','dp-e','dp-in');
+      if(d===S) sp.classList.add('dp-s');
+      if(d===E) sp.classList.add('dp-e');
+      if(d>S&&d<E) sp.classList.add('dp-in');
+    });
+    const el=document.getElementById('dp-rlbl');
+    if(el) el.textContent=`${fmt(S)} – ${fmt(E)}`;
+  }
+
+  function pick(ds) {
+    if(!_ps||(_ps&&_pe)){_ps=ds;_pe=null;_ap=null;}
+    else{if(ds<_ps){_pe=_ps;_ps=ds;}else{_pe=ds;}_ap=null;}
+    _render();
+  }
+
+  function preset(i) {
+    [_ps,_pe]=PRESETS[i].f(); _ap=i;
+    _posCals(_pe); _render();
+  }
+
+  function nav(dir) {
+    const d1=new Date(_c1.y,_c1.m-1+dir,1); _c1={y:d1.getFullYear(),m:d1.getMonth()+1};
+    const d2=new Date(_c2.y,_c2.m-1+dir,1); _c2={y:d2.getFullYear(),m:d2.getMonth()+1};
+    _render();
+  }
+
+  function _updRlbl() {
+    const el=document.getElementById('dp-rlbl');
+    if(el) el.textContent=_ps&&_pe?`${fmt(_ps)} – ${fmt(_pe)}`:_ps?`${fmt(_ps)} – ...`:'';
+  }
+
+  function cancel() { _ps=_cs; _pe=_ce; _close(); }
+
+  function apply() {
+    if(_ps&&_pe){_cs=_ps;_ce=_pe;_updBtn();_close();if(_cb)_cb(_cs,_ce);}
+  }
+
+  function getRange() { return {start:_cs,end:_ce}; }
+
+  return {init,toggle,preset,nav,pick,cancel,apply,getRange};
+})();
+
+// ══════════════════════════════════════════════════
+// HELPERS
+// ══════════════════════════════════════════════════
 const money = v => 'R$ ' + Math.round(v).toLocaleString('pt-BR');
 const moneyK = v => v >= 1000 ? 'R$ ' + (v/1000).toFixed(0) + 'k' : money(v);
 const pct = v => v == null ? '—' : v.toFixed(1) + '%';
 const pcCls = (v, lo, hi) => v >= hi ? 'pct-hi' : v <= lo ? 'pct-lo' : 'pct-mid';
-const medal = i => i === 0 ? '<span class="medal-1">1°</span>' : i === 1 ? '<span class="medal-2">2°</span>' : i === 2 ? '<span class="medal-3">3°</span>' : `<span>${i+1}°</span>`;
-const bar = (v, max, cls) => `<div class="bar-wrap"><div class="bar ${cls}" style="width:${Math.round(v/max*80)}px"></div><span>${v}</span></div>`;
+const medal = i => i===0?'<span class="medal-1">1°</span>':i===1?'<span class="medal-2">2°</span>':i===2?'<span class="medal-3">3°</span>':`<span>${i+1}°</span>`;
 
+// ══════════════════════════════════════════════════
+// DATA + FILTER
+// ══════════════════════════════════════════════════
 let D = {};
 
-fetch('./data/equipe.json').then(r => r.json()).then(d => {
+fetch('./data/equipe.json').then(r=>r.json()).then(d => {
   D = d;
-  const upd = new Date(d.updated_at + 'T12:00:00');
-  document.getElementById('upd-lbl').textContent = 'Atualizado ' + upd.toLocaleDateString('pt-BR', {day:'2-digit',month:'2-digit',year:'numeric'});
-  renderVendedores();
-  renderSDRs();
-  renderAvaliadores();
+  const upd = new Date(d.updated_at+'T12:00:00');
+  document.getElementById('upd-lbl').textContent = 'Atualizado ' + upd.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric'});
+
+  const today = new Date().toISOString().slice(0,10);
+  const defEnd = today <= d.end ? today : d.end;
+  const dt3m = new Date(defEnd+'T12:00:00'); dt3m.setDate(dt3m.getDate()-89);
+  const defStart = dt3m.toISOString().slice(0,10) >= d.start ? dt3m.toISOString().slice(0,10) : d.start;
+
+  DP.init('dp-btn','dp-panel',{
+    start: defStart,
+    end: defEnd,
+    min: d.start,
+    max: d.end,
+    preset: 9,
+    onApply: (s,e) => applyDateRange(s,e)
+  });
+
+  applyDateRange(defStart, defEnd);
 });
 
-function setTab(t) {
-  document.querySelectorAll('.tab').forEach((b,i) => b.classList.toggle('on', ['vendedores','sdrs','avaliadores'][i] === t));
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('on'));
-  document.getElementById('panel-' + t).classList.add('on');
+function applyDateRange(start, end) {
+  const sm = start.slice(0,7);
+  const em = end.slice(0,7);
+
+  // Aggregate vendedores
+  const vend = D.vendedores.map(v => {
+    const ms = v.meses.filter(m => m.mes >= sm && m.mes <= em);
+    if (!ms.length) return null;
+    const vendas = ms.reduce((a,m)=>a+m.vendas,0);
+    const faturamento = ms.reduce((a,m)=>a+m.faturamento,0);
+    const clientes = ms.reduce((a,m)=>a+m.clientes,0);
+    return {nome:v.nome, vendas, faturamento, ticket:vendas>0?faturamento/vendas:0, clientes};
+  }).filter(Boolean).sort((a,b)=>b.faturamento-a.faturamento);
+
+  // Aggregate SDRs
+  const sdrs = D.sdrs.map(s => {
+    const ms = s.meses.filter(m => m.mes >= sm && m.mes <= em);
+    if (!ms.length) return null;
+    const leads = ms.reduce((a,m)=>a+m.leads,0);
+    const agendou = ms.reduce((a,m)=>a+m.agendou,0);
+    const compareceu = ms.reduce((a,m)=>a+m.compareceu,0);
+    const convertidos = ms.reduce((a,m)=>a+m.convertidos,0);
+    return {nome:s.nome, leads, agendou, compareceu,
+            pct_comp: agendou>0?compareceu/agendou*100:0,
+            convertidos,
+            pct_conv: compareceu>0?convertidos/compareceu*100:0};
+  }).filter(Boolean).sort((a,b)=>b.agendou-a.agendou);
+
+  // Aggregate avaliadores
+  const avals = D.avaliadores.map(a => {
+    const ms = a.meses.filter(m => m.mes >= sm && m.mes <= em);
+    if (!ms.length) return null;
+    const avaliacoes = ms.reduce((a,m)=>a+m.avaliacoes,0);
+    const compareceram = ms.reduce((a,m)=>a+m.compareceram,0);
+    const converteram = ms.reduce((a,m)=>a+m.converteram,0);
+    const faturamento = ms.reduce((a,m)=>a+m.faturamento,0);
+    return {nome:a.nome, avaliacoes, compareceram, converteram,
+            pct_conv: compareceram>0?converteram/compareceram*100:0,
+            faturamento};
+  }).filter(Boolean).sort((a,b)=>b.converteram-a.converteram);
+
+  renderVendedores(vend);
+  renderSDRs(sdrs);
+  renderAvaliadores(avals);
 }
 
-function renderVendedores() {
-  const rows = D.vendedores;
-  const totFat = rows.reduce((a,r) => a + r.faturamento, 0);
-  const totVendas = rows.reduce((a,r) => a + r.vendas, 0);
-  const totCli = rows.reduce((a,r) => a + r.clientes, 0);
-  const avgTicket = totVendas > 0 ? totFat / totVendas : 0;
-  const maxFat = Math.max(...rows.map(r => r.faturamento));
+// ══════════════════════════════════════════════════
+// TAB
+// ══════════════════════════════════════════════════
+function setTab(t) {
+  document.querySelectorAll('.tab').forEach((b,i)=>b.classList.toggle('on',['vendedores','sdrs','avaliadores'][i]===t));
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('on'));
+  document.getElementById('panel-'+t).classList.add('on');
+}
+
+// ══════════════════════════════════════════════════
+// RENDER FUNCTIONS
+// ══════════════════════════════════════════════════
+function renderVendedores(rows) {
+  if (!rows.length) { document.getElementById('kv').innerHTML=''; document.getElementById('tv').innerHTML='<tr><td colspan="6" class="empty-state">Sem dados no período</td></tr>'; return; }
+  const totFat = rows.reduce((a,r)=>a+r.faturamento,0);
+  const totVendas = rows.reduce((a,r)=>a+r.vendas,0);
+  const totCli = rows.reduce((a,r)=>a+r.clientes,0);
+  const avgTicket = totVendas>0?totFat/totVendas:0;
+  const maxFat = Math.max(...rows.map(r=>r.faturamento));
 
   document.getElementById('kv').innerHTML = [
     ['Faturamento Total', money(totFat), ''],
     ['Vendas', totVendas, ''],
     ['Ticket Médio', moneyK(avgTicket), ''],
     ['Clientes Únicos', totCli, ''],
-  ].map(([l,v,s]) => `<div class="kcard"><div class="klbl">${l}</div><div class="kval">${v}</div>${s?`<div class="ksub">${s}</div>`:''}</div>`).join('');
+  ].map(([l,v,s])=>`<div class="kcard"><div class="klbl">${l}</div><div class="kval" style="${String(v).length>8?'font-size:15px':''}">${v}</div>${s?`<div class="ksub">${s}</div>`:''}</div>`).join('');
 
-  let html = '';
-  rows.forEach((r, i) => {
-    html += `<tr>
+  let html='';
+  rows.forEach((r,i)=>{
+    html+=`<tr>
       <td>${medal(i)}</td>
       <td><span class="nome">${r.nome.trim()}</span></td>
       <td>${r.vendas}</td>
@@ -162,76 +469,73 @@ function renderVendedores() {
       <td>${r.clientes}</td>
     </tr>`;
   });
-  html += `<tr class="total-row"><td></td><td>Total</td><td>${totVendas}</td><td>${money(totFat)}</td><td>${moneyK(avgTicket)}</td><td>${totCli}</td></tr>`;
+  html+=`<tr class="total-row"><td></td><td>Total</td><td>${totVendas}</td><td>${money(totFat)}</td><td>${moneyK(avgTicket)}</td><td>${totCli}</td></tr>`;
   document.getElementById('tv').innerHTML = html;
 }
 
-function renderSDRs() {
-  const rows = D.sdrs;
-  const totLeads = rows.reduce((a,r) => a + r.leads, 0);
-  const totAgend = rows.reduce((a,r) => a + r.agendou, 0);
-  const totComp  = rows.reduce((a,r) => a + r.compareceu, 0);
-  const totConv  = rows.reduce((a,r) => a + r.convertidos, 0);
-  const avgComp  = totAgend > 0 ? totComp / totAgend * 100 : 0;
-  const avgConv  = totComp  > 0 ? totConv  / totComp  * 100 : 0;
-  const maxAgend = Math.max(...rows.map(r => r.agendou));
+function renderSDRs(rows) {
+  if (!rows.length) { document.getElementById('ks').innerHTML=''; document.getElementById('ts').innerHTML='<tr><td colspan="8" class="empty-state">Sem dados no período</td></tr>'; return; }
+  const totLeads = rows.reduce((a,r)=>a+r.leads,0);
+  const totAgend = rows.reduce((a,r)=>a+r.agendou,0);
+  const totComp  = rows.reduce((a,r)=>a+r.compareceu,0);
+  const totConv  = rows.reduce((a,r)=>a+r.convertidos,0);
+  const avgComp  = totAgend>0?totComp/totAgend*100:0;
+  const avgConv  = totComp>0?totConv/totComp*100:0;
+  const maxAgend = Math.max(...rows.map(r=>r.agendou));
 
   document.getElementById('ks').innerHTML = [
     ['Leads Totais', totLeads, ''],
-    ['Agendamentos', totAgend, `${(totAgend/totLeads*100).toFixed(0)}% dos leads`],
+    ['Agendamentos', totAgend, totLeads>0?`${(totAgend/totLeads*100).toFixed(0)}% dos leads`:''],
     ['Comparecimentos', totComp, `${avgComp.toFixed(1)}% dos agendados`],
     ['Convertidos', totConv, `${avgConv.toFixed(1)}% dos comparecidos`],
-  ].map(([l,v,s]) => `<div class="kcard"><div class="klbl">${l}</div><div class="kval">${v}</div>${s?`<div class="ksub">${s}</div>`:''}</div>`).join('');
+  ].map(([l,v,s])=>`<div class="kcard"><div class="klbl">${l}</div><div class="kval">${v}</div>${s?`<div class="ksub">${s}</div>`:''}</div>`).join('');
 
-  let html = '';
-  rows.forEach((r, i) => {
-    const pComp = r.pct_comp;
-    const pConv = r.pct_conv;
-    html += `<tr>
+  let html='';
+  rows.forEach((r,i)=>{
+    html+=`<tr>
       <td>${medal(i)}</td>
       <td><span class="nome">${r.nome.trim()}</span></td>
       <td>${r.leads}</td>
       <td><div class="bar-wrap"><div class="bar bar-s" style="width:${Math.round(r.agendou/maxAgend*80)}px"></div><span>${r.agendou}</span></div></td>
       <td>${r.compareceu}</td>
-      <td><span class="${pcCls(pComp,25,50)}">${pct(pComp)}</span></td>
+      <td><span class="${pcCls(r.pct_comp,25,50)}">${pct(r.pct_comp)}</span></td>
       <td>${r.convertidos}</td>
-      <td><span class="${pcCls(pConv,30,50)}">${pct(pConv)}</span></td>
+      <td><span class="${pcCls(r.pct_conv,30,50)}">${pct(r.pct_conv)}</span></td>
     </tr>`;
   });
-  html += `<tr class="total-row"><td></td><td>Total</td><td>${totLeads}</td><td>${totAgend}</td><td>${totComp}</td><td>${pct(avgComp)}</td><td>${totConv}</td><td>${pct(avgConv)}</td></tr>`;
+  html+=`<tr class="total-row"><td></td><td>Total</td><td>${totLeads}</td><td>${totAgend}</td><td>${totComp}</td><td>${pct(avgComp)}</td><td>${totConv}</td><td>${pct(avgConv)}</td></tr>`;
   document.getElementById('ts').innerHTML = html;
 }
 
-function renderAvaliadores() {
-  const rows = D.avaliadores;
-  const totAval = rows.reduce((a,r) => a + r.avaliacoes, 0);
-  const totComp = rows.reduce((a,r) => a + r.compareceram, 0);
-  const totConv = rows.reduce((a,r) => a + r.converteram, 0);
-  const totFat  = rows.reduce((a,r) => a + r.faturamento, 0);
-  const avgConv = totComp > 0 ? totConv / totComp * 100 : 0;
-  const maxConv = Math.max(...rows.map(r => r.converteram));
+function renderAvaliadores(rows) {
+  if (!rows.length) { document.getElementById('ka').innerHTML=''; document.getElementById('ta').innerHTML='<tr><td colspan="7" class="empty-state">Sem dados no período</td></tr>'; return; }
+  const totAval = rows.reduce((a,r)=>a+r.avaliacoes,0);
+  const totComp = rows.reduce((a,r)=>a+r.compareceram,0);
+  const totConv = rows.reduce((a,r)=>a+r.converteram,0);
+  const totFat  = rows.reduce((a,r)=>a+r.faturamento,0);
+  const avgConv = totComp>0?totConv/totComp*100:0;
+  const maxConv = Math.max(...rows.map(r=>r.converteram));
 
   document.getElementById('ka').innerHTML = [
     ['Avaliações', totAval, ''],
-    ['Comparecimentos', totComp, `${(totComp/totAval*100).toFixed(0)}% das avaliações`],
+    ['Comparecimentos', totComp, totAval>0?`${(totComp/totAval*100).toFixed(0)}% das avaliações`:''],
     ['Convertidas', totConv, `${avgConv.toFixed(1)}% dos comparecidos`],
     ['Faturamento Gerado', money(totFat), ''],
-  ].map(([l,v,s]) => `<div class="kcard"><div class="klbl">${l}</div><div class="kval" style="${String(v).length>8?'font-size:15px':''}">${v}</div>${s?`<div class="ksub">${s}</div>`:''}</div>`).join('');
+  ].map(([l,v,s])=>`<div class="kcard"><div class="klbl">${l}</div><div class="kval" style="${String(v).length>8?'font-size:15px':''}">${v}</div>${s?`<div class="ksub">${s}</div>`:''}</div>`).join('');
 
-  let html = '';
-  rows.forEach((r, i) => {
-    const pConv = r.pct_conv;
-    html += `<tr>
+  let html='';
+  rows.forEach((r,i)=>{
+    html+=`<tr>
       <td>${medal(i)}</td>
       <td><span class="nome">${r.nome.trim()}</span></td>
       <td>${r.avaliacoes}</td>
       <td>${r.compareceram}</td>
       <td><div class="bar-wrap"><div class="bar bar-a" style="width:${Math.round((r.converteram||0)/Math.max(maxConv,1)*80)}px"></div><span>${r.converteram}</span></div></td>
-      <td><span class="${pcCls(pConv,35,55)}">${pct(pConv)}</span></td>
-      <td class="fat">${r.faturamento > 0 ? money(r.faturamento) : '—'}</td>
+      <td><span class="${pcCls(r.pct_conv,35,55)}">${pct(r.pct_conv)}</span></td>
+      <td class="fat">${r.faturamento>0?money(r.faturamento):'—'}</td>
     </tr>`;
   });
-  html += `<tr class="total-row"><td></td><td>Total</td><td>${totAval}</td><td>${totComp}</td><td>${totConv}</td><td>${pct(avgConv)}</td><td>${money(totFat)}</td></tr>`;
+  html+=`<tr class="total-row"><td></td><td>Total</td><td>${totAval}</td><td>${totComp}</td><td>${totConv}</td><td>${pct(avgConv)}</td><td>${money(totFat)}</td></tr>`;
   document.getElementById('ta').innerHTML = html;
 }
 </script>
