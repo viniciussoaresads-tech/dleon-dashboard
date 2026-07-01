@@ -199,6 +199,7 @@ const DP = (() => {
     _cs=opts.start; _ce=opts.end;
     _mn=opts.min||'2020-01-01'; _mx=opts.max||T();
     _ap=opts.preset??null;
+    if(_ap!==null) [_cs,_ce]=PRESETS[_ap].f();
     _ps=_cs; _pe=_ce;
     _posCals(_ce);
     _updBtn();
@@ -366,9 +367,9 @@ fetch('./data/funil.json').then(r=>r.json()).then(j=>{
   const mn=dates[0]||'2026-01-01', mx=dates[dates.length-1]||todayStr();
 
   DP.init('dp-btn','dp-panel',{
-    start:dIni, end:dFim,
+    start:mn, end:mx,
     min:mn, max:mx,
-    preset:7,
+    preset:9,
     onApply:(s,e)=>{dIni=s;dFim=e;render();}
   });
   render();
