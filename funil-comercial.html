@@ -150,7 +150,7 @@ td:first-child{text-align:left;width:70px}td:nth-child(2){text-align:left}
 // ══════════════════════════════════════════════════
 // DATE RANGE PICKER
 // ══════════════════════════════════════════════════
-const DP = (() => {
+const DP = window.DP = (() => {
   const MN = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
   const DN = ['D','S','T','Q','Q','S','S'];
   let _cb, _btnEl, _panelEl;
@@ -204,7 +204,8 @@ const DP = (() => {
     _posCals(_ce);
     _updBtn();
     document.addEventListener('click', e=>{
-      if(!_btnEl.contains(e.target)&&!_panelEl.contains(e.target)) _close();
+      const p=e.composedPath();
+      if(!p.includes(_btnEl)&&!p.includes(_panelEl)) _close();
     });
   }
 
