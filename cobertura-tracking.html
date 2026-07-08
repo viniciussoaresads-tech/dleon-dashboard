@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cobertura de Trackeamento · D'Leon</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:#f5f5f5;color:#111;font-size:13px;line-height:1.4}
+.pg{max-width:1100px;margin:0 auto;padding:1.25rem}
+.hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.5rem}
+.brand{display:flex;align-items:center;gap:10px}
+.sq{width:36px;height:36px;background:#111;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700}
+.btext h1{font-size:15px;font-weight:600}.btext p{font-size:10.5px;color:#aaa;margin-top:1px}
+.upd{font-size:10px;color:#ccc;text-align:right}
+.nav-back{font-size:11.5px;color:#007aff;text-decoration:none;font-weight:600}
+.kgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-bottom:14px}
+.kpi{background:#fff;border-radius:12px;padding:14px 16px;border:1px solid #e8e8e8}
+.kpi .lb{color:#999;font-size:10px;text-transform:uppercase;letter-spacing:.5px;font-weight:600}
+.kpi .vl{font-size:22px;font-weight:700;margin:4px 0 2px}
+.kpi .sub{color:#bbb;font-size:10.5px}
+.g{color:#34c759}.y{color:#ff9500}.r{color:#ff3b30}.b{color:#007aff}
+.cc{background:#fff;border-radius:12px;border:1px solid #e8e8e8;padding:14px 16px;margin-bottom:12px}
+.cttl{font-size:12px;font-weight:600;margin-bottom:10px}
+.ch{position:relative;height:230px}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{text-align:left;color:#999;font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:.4px;padding:6px 8px;border-bottom:1px solid #eee}
+td{padding:7px 8px;border-bottom:1px solid #f4f4f4}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+.note{font-size:10.5px;color:#aaa;margin-top:8px}
+</style>
+</head>
+<body>
+<div class="pg">
+  <div class="hd">
+    <div class="brand">
+      <div class="sq">DL</div>
+      <div class="btext"><h1>Cobertura de Trackeamento</h1><p>Lastro anúncio → lead no UNO CRM (source_id / WACL)</p></div>
+    </div>
+    <div>
+      <a class="nav-back" href="./index.html">← Dashboard</a>
+      <div class="upd" id="upd-lbl"></div>
+    </div>
+  </div>
+  <div id="main"><div style="color:#bbb;padding:40px;text-align:center">Carregando dados...</div></div>
+</div>
+<script>
+const META_TETO = 85; // teto técnico estimado (CTWA ~50-55% por conversa; leads gerais ~85%)
+fetch('./data/cobertura.json').then(r=>r.json()).then(j=>{
+  document.getElementById('upd-lbl').textContent = 'Atualizado: ' + j.updated_at;
+  const dias = j.dias, meses = j.meses, causas = j.causas_30d;
+  const last7 = dias.slice(-8, -1);
+  const s7 = last7.reduce((a,d)=>({l:a.l+d.leads, c:a.c+d.com_lastro}), {l:0,c:0});
+  const pct7 = s7.l ? (100*s7.c/s7.l) : 0;
+  const s30 = dias.reduce((a,d)=>({l:a.l+d.leads, c:a.c+d.com_lastro}), {l:0,c:0});
+  const pct30 = s30.l ? (100*s30.c/s30.l) : 0;
+  const mesAtual = meses[meses.length-1];
+  const ano = meses.reduce((a,m)=>({l:a.l+m.leads, c:a.c+m.com_lastro}), {l:0,c:0});
+  const pctAno = ano.l ? (100*ano.c/ano.l) : 0;
+  const cls = p => p >= 75 ? 'g' : (p >= 60 ? 'y' : 'r');
+
+  let h = '<div class="kgrid">';
+  h += `<div class="kpi"><div class="lb">Últimos 7 dias</div><div class="vl ${cls(pct7)}">${pct7.toFixed(1)}%</div><div class="sub">${s7.c.toLocaleString('pt-BR')} de ${s7.l.toLocaleString('pt-BR')} leads</div></div>`;
+  h += `<div class="kpi"><div class="lb">Últimos 30 dias</div><div class="vl ${cls(pct30)}">${pct30.toFixed(1)}%</div><div class="sub">${s30.c.toLocaleString('pt-BR')} de ${s30.l.toLocaleString('pt-BR')}</div></div>`;
+  h += `<div class="kpi"><div class="lb">Mês atual</div><div class="vl ${cls(mesAtual.pct)}">${mesAtual.pct}%</div><div class="sub">${mesAtual.mes}</div></div>`;
+  h += `<div class="kpi"><div class="lb">Ano 2026</div><div class="vl b">${pctAno.toFixed(1)}%</div><div class="sub">meta corrente: ≥ ${META_TETO}% · alerta &lt; 70%</div></div>`;
+  h += '</div>';
+
+  h += '<div class="cc"><div class="cttl">Cobertura diária — últimos 30 dias</div><div class="ch"><canvas id="cDia" role="img" aria-label="Linha da cobertura diária de trackeamento nos últimos 30 dias"></canvas></div></div>';
+  h += '<div class="cc"><div class="cttl">Cobertura mensal — 2026</div><div class="ch"><canvas id="cMes" role="img" aria-label="Barras da cobertura mensal de 2026"></canvas></div></div>';
+
+  const totCausas = causas.reduce((a,c)=>a+c.leads,0);
+  h += '<div class="cc"><div class="cttl">Leads sem lastro — últimos 30 dias, por causa</div><table><thead><tr><th>Causa</th><th style="text-align:right">Leads</th><th style="text-align:right">% do descoberto</th></tr></thead><tbody>';
+  causas.forEach(c=>{ h += `<tr><td>${c.causa}</td><td class="num">${c.leads.toLocaleString('pt-BR')}</td><td class="num">${totCausas?(100*c.leads/totCausas).toFixed(1):0}%</td></tr>`; });
+  h += '</tbody></table><div class="note">Regras: "Sem origem no CRM" = números WhatsApp mal integrados (chamado UNO). "CTWA clique não repassado" = perda natural do formato (teto ~50-55% por conversa). Queda brusca do % diário = regressão de integração — investigar no dia.</div></div>';
+
+  document.getElementById('main').innerHTML = h;
+
+  new Chart(document.getElementById('cDia'), {
+    type: 'line',
+    data: { labels: dias.map(d=>d.dia.slice(5)),
+      datasets: [{ label: '% com lastro', data: dias.map(d=>d.pct), borderColor: '#007aff', backgroundColor: 'rgba(0,122,255,.08)', fill: true, tension: .3, pointRadius: 2, borderWidth: 2 }]},
+    options: { responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: { y: { min: 0, max: 100, ticks: { callback: v => v + '%' } } } }
+  });
+  new Chart(document.getElementById('cMes'), {
+    type: 'bar',
+    data: { labels: meses.map(m=>m.mes),
+      datasets: [{ label: '% com lastro', data: meses.map(m=>m.pct), backgroundColor: meses.map(m=>m.pct>=75?'#34c759':(m.pct>=60?'#ff9500':'#ff3b30')), borderRadius: 4, maxBarThickness: 42 }]},
+    options: { responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: { y: { min: 0, max: 100, ticks: { callback: v => v + '%' } } } }
+  });
+});
+</script>
+</body>
+</html>

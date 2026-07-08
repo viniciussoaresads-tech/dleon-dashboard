@@ -157,7 +157,49 @@ for r in cur.fetchall():
     ad[n].append({'mes': str(r[1])[:7], 'avaliacoes': int(r[2]), 'compareceram': int(r[3]), 'converteram': int(r[4]), 'faturamento': float(r[5])})
 avaliadores = [{'nome': n, 'meses': ms} for n, ms in sorted(ad.items(), key=lambda x: -sum(m['converteram'] for m in x[1])) if at_[n] >= 5]
 
+# ── Cobertura de trackeamento (lastro facebook_source_id/wacl) ──
+cur.execute("""
+SELECT created_at::date AS dia, COUNT(*) AS leads,
+    COUNT(COALESCE(facebook_source_id, facebook_wacl_id)) AS com_lastro
+FROM com8053.deals
+WHERE schema='clinica_dleon' AND created_at::date >= %s
+GROUP BY 1 ORDER BY 1
+""", (str(today - timedelta(days=30)),))
+cob_dias = [{'dia': str(r[0]), 'leads': int(r[1]), 'com_lastro': int(r[2]),
+             'pct': round(100.0*r[2]/r[1], 1) if r[1] else 0} for r in cur.fetchall()]
+
+cur.execute("""
+SELECT DATE_TRUNC('month', created_at)::date AS mes, COUNT(*) AS leads,
+    COUNT(COALESCE(facebook_source_id, facebook_wacl_id)) AS com_lastro
+FROM com8053.deals
+WHERE schema='clinica_dleon' AND created_at >= '2026-01-01'
+GROUP BY 1 ORDER BY 1
+""")
+cob_meses = [{'mes': str(r[0])[:7], 'leads': int(r[1]), 'com_lastro': int(r[2]),
+              'pct': round(100.0*r[2]/r[1], 1) if r[1] else 0} for r in cur.fetchall()]
+
+cur.execute("""
+SELECT CASE
+    WHEN deal_origin_name IN ('Instagram Orgânico','Whatsapp Orgânico','Facebook Orgânico','Indicação','Outros','Google Tráfego Pago') THEN 'Orgânico / não-Meta (esperado)'
+    WHEN deal_origin_name = 'Facebook Tráfego Pago' THEN 'Cadastro — parâmetro perdido'
+    WHEN deal_origin_name = 'Whatsapp Tráfego Pago' THEN 'WhatsApp CTWA — clique não repassado'
+    WHEN deal_origin_name IS NULL THEN 'Sem origem no CRM (integração números)'
+    ELSE 'Instagram/Direct — sem integração' END AS causa,
+    COUNT(*) AS leads
+FROM com8053.deals
+WHERE schema='clinica_dleon' AND created_at::date >= %s
+  AND COALESCE(facebook_source_id, facebook_wacl_id) IS NULL
+GROUP BY 1 ORDER BY 2 DESC
+""", (str(today - timedelta(days=30)),))
+cob_causas = [{'causa': str(r[0]), 'leads': int(r[1])} for r in cur.fetchall()]
+
 conn.close()
+
+cobertura_file = ROOT / "data" / "cobertura.json"
+with open(cobertura_file, 'w', encoding='utf-8') as f:
+    json.dump({'updated_at': str(today), 'dias': cob_dias, 'meses': cob_meses,
+               'causas_30d': cob_causas}, f, ensure_ascii=False)
+print(f"cobertura OK: {len(cob_dias)} dias | {len(cob_meses)} meses")
 
 equipe_file = ROOT / "data" / "equipe.json"
 with open(equipe_file, 'w', encoding='utf-8') as f:
@@ -167,7 +209,7 @@ print(f"equipe OK: {len(vendedores)} vendedores | {len(sdrs)} SDRs | {len(avalia
 
 # Git push
 result = subprocess.run(
-    ['git', '-C', str(ROOT), 'add', 'data/funil.json', 'data/equipe.json'],
+    ['git', '-C', str(ROOT), 'add', 'data/funil.json', 'data/equipe.json', 'data/cobertura.json'],
     capture_output=True, text=True
 )
 result = subprocess.run(
