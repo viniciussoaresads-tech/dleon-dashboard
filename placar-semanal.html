@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Placar Semanal · Tráfego Lentes · D'Leon</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:#f5f5f5;color:#111;font-size:13px;line-height:1.4}
+.pg{max-width:1200px;margin:0 auto;padding:1.25rem}
+.hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.5rem}
+.brand{display:flex;align-items:center;gap:10px}
+.sq{width:36px;height:36px;background:#111;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700}
+.btext h1{font-size:15px;font-weight:600}.btext p{font-size:10.5px;color:#aaa;margin-top:1px}
+.nav-back{font-size:11.5px;color:#007aff;text-decoration:none;font-weight:600}
+.upd{font-size:10px;color:#ccc;text-align:right}
+.kgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:12px}
+.kpi{background:#fff;border-radius:12px;padding:12px 14px;border:1px solid #e8e8e8}
+.kpi .lb{color:#999;font-size:10px;text-transform:uppercase;letter-spacing:.5px;font-weight:600}
+.kpi .vl{font-size:20px;font-weight:700;margin:3px 0 1px}
+.alertbar{border-radius:10px;padding:10px 14px;font-size:12px;font-weight:600;margin-bottom:12px;display:none}
+.alertbar.on{display:block;background:#ffecec;border:1px solid #ff3b30;color:#c0392b}
+.cc{background:#fff;border-radius:12px;border:1px solid #e8e8e8;padding:14px 16px;margin-bottom:12px;overflow-x:auto}
+.cttl{font-size:12px;font-weight:600;margin-bottom:10px}
+table{width:100%;border-collapse:collapse;font-size:11.5px;min-width:900px}
+th{text-align:left;color:#999;font-weight:600;font-size:9.5px;text-transform:uppercase;letter-spacing:.4px;padding:6px;border-bottom:1px solid #eee;white-space:nowrap}
+td{padding:7px 6px;border-bottom:1px solid #f4f4f4;vertical-align:top}
+td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.adname{max-width:260px;font-weight:600;word-break:break-word}
+.camp{font-size:10px;color:#aaa;margin-top:1px;word-break:break-word}
+.pill{display:inline-block;border-radius:10px;padding:2px 9px;font-size:10px;font-weight:700;white-space:nowrap}
+.p-verde{background:#eafbef;color:#1d7a3a}.p-amarelo{background:#fff5e0;color:#a76b00}
+.p-vermelho{background:#ffecec;color:#c0392b}.p-graca{background:#eef3ff;color:#3a5bc7}
+.p-tracking{background:#f3e9ff;color:#7d3ac0}
+.acao{font-size:10.5px;color:#555;max-width:200px}
+.note{font-size:10.5px;color:#aaa;margin-top:8px}
+</style>
+</head>
+<body>
+<div class="pg">
+  <div class="hd">
+    <div class="brand">
+      <div class="sq">DL</div>
+      <div class="btext"><h1>Placar Semanal — Tráfego Lentes</h1><p>Decisor: custo por comparecimento · Janela: 14 dias fechados (D-21 a D-7) · SOP Otimização por Receita v1.0</p></div>
+    </div>
+    <div><a class="nav-back" href="./index.html">← Dashboard</a><div class="upd" id="upd-lbl"></div></div>
+  </div>
+  <div class="alertbar" id="alerta"></div>
+  <div id="main" style="color:#bbb;padding:40px;text-align:center">Carregando placar...</div>
+</div>
+<script>
+const brl = n => n==null ? '—' : 'R$ ' + Math.round(n).toLocaleString('pt-BR');
+fetch('./data/placar.json').then(r=>r.json()).then(j=>{
+  document.getElementById('upd-lbl').textContent = `Gerado: ${j.gerado_em} · Janela: ${j.janela.inicio} → ${j.janela.fim}`;
+  if (j.resumo.alerta_cobertura){ const a=document.getElementById('alerta'); a.textContent='🚨 '+j.resumo.alerta_cobertura; a.classList.add('on'); }
+  const R = j.resumo;
+  let h = '<div class="kgrid">';
+  h += `<div class="kpi"><div class="lb">Anúncios no placar</div><div class="vl">${R.ads_no_placar}</div></div>`;
+  h += `<div class="kpi"><div class="lb">Gasto na janela</div><div class="vl">${brl(R.gasto_janela)}</div></div>`;
+  h += `<div class="kpi"><div class="lb">Comparecimentos</div><div class="vl">${R.comparecimentos}</div></div>`;
+  h += `<div class="kpi"><div class="lb">Vendas (parciais)</div><div class="vl">${R.vendas_janela}</div></div>`;
+  h += `<div class="kpi"><div class="lb">Cobertura 7d</div><div class="vl">${R.cobertura_7d??'—'}%</div><div style="font-size:10px;color:#bbb">semana anterior: ${R.cobertura_semana_anterior??'—'}%</div></div>`;
+  h += '</div>';
+  h += '<div class="cc"><div class="cttl">Decisão por anúncio — ordenado por gasto</div><table><thead><tr><th>Anúncio / Campanha</th><th style="text-align:right">Gasto janela</th><th style="text-align:right">Gasto 7d</th><th style="text-align:right">Leads</th><th style="text-align:right">% agendou</th><th style="text-align:right">% compareceu</th><th style="text-align:right">Comp.</th><th style="text-align:right">Custo/Comp</th><th style="text-align:right">CPL</th><th style="text-align:right">Cobert.</th><th>Semáforo</th><th>Ação</th></tr></thead><tbody>';
+  const ordem = {vermelho:0, tracking:1, verde:2, amarelo:3, graca:4};
+  j.anuncios.sort((a,b)=> (ordem[a.cor]-ordem[b.cor]) || (b.gasto_janela - a.gasto_janela));
+  j.anuncios.forEach(a=>{
+    h += `<tr><td><div class="adname">${a.ad||'—'}</div><div class="camp">${a.camp||''}</div></td>
+      <td class="num">${brl(a.gasto_janela)}</td><td class="num">${brl(a.gasto_7d)}</td>
+      <td class="num">${a.leads}</td><td class="num">${a.pct_agendou??'—'}%</td><td class="num">${a.pct_compareceu??'—'}%</td>
+      <td class="num">${a.compareceu}</td><td class="num"><b>${brl(a.custo_comp)}</b></td>
+      <td class="num">${a.cpl?('R$ '+a.cpl):'—'}</td><td class="num">${a.cobertura??'—'}${a.cobertura!=null?'%':''}</td>
+      <td><span class="pill p-${a.cor}">${a.cor==='graca'?'EM GRAÇA':a.cor.toUpperCase()}</span></td>
+      <td class="acao">${a.acao}</td></tr>`;
+  });
+  h += '</tbody></table><div class="note">Regras (SOP v1.0): 🟢 custo/comp &lt; R$700 escala +20% · 🟡 R$700–1.500 mantém · 🔴 &gt; R$1.500 por 2 semanas corta 50%/pausa · EM GRAÇA = &lt;21 dias e &lt;150 leads, não julgar · TRACKING = cobertura &lt;40%, corrigir antes de julgar. CPL banda normal R$14–22 (fora = defeito de tracking). Vendas da janela são PARCIAIS (ciclo p75 = 15 dias). Registrar toda ação no LOG oficial.</div></div>';
+  document.getElementById('main').innerHTML = h;
+  document.getElementById('main').style.cssText='';
+});
+</script>
+</body>
+</html>
