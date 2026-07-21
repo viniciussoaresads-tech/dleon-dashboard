@@ -225,7 +225,7 @@ function computeRows(){
       if(o>=o0 && o<=o1){ sp+=v[0]; conv+=v[1]; leads+=v[2]; agend+=v[3]; comp+=v[4]; vend+=v[5]; }
       if(o>=oRecent) recent+=v[0];
     }
-    if(sp<=0 && leads<=0) return;
+    if(sp<=0) return;
     const key = state.consol ? a.cr : a.id;
     let b = bucket.get(key);
     if(!b){
