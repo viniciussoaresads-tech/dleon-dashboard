@@ -87,6 +87,9 @@ td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 .adname{max-width:280px;font-weight:600;word-break:break-word}
 .camp{font-size:10px;color:var(--mut);margin-top:1px;word-break:break-word}
 .crtag{display:inline-block;background:var(--card2);border:1px solid var(--bd);border-radius:5px;padding:0 5px;font-size:9.5px;color:var(--mut);margin-right:5px;font-weight:700}
+.fntag{display:inline-block;border-radius:4px;padding:0 5px;font-size:8.5px;font-weight:800;letter-spacing:.3px;margin-right:4px;vertical-align:1px}
+.fn-mensagem{background:var(--v-bg);color:var(--v-tx)}.fn-cadastro{background:var(--t-bg);color:var(--t-tx)}
+.fn-outros{background:var(--card2);color:var(--mut);border:1px solid var(--bd)}.fn-misto{background:var(--a-bg);color:var(--a-tx)}
 .pill{display:inline-block;border-radius:10px;padding:2px 9px;font-size:10px;font-weight:700;white-space:nowrap}
 .p-verde{background:var(--v-bg);color:var(--v-tx)}.p-amarelo{background:var(--a-bg);color:var(--a-tx)}
 .p-vermelho{background:var(--r-bg);color:var(--r-tx)}.p-graca{background:var(--g-bg);color:var(--g-tx)}
@@ -113,6 +116,15 @@ td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
     <div class="ctl">
       <label>Conta de anúncio</label>
       <select id="acc"></select>
+    </div>
+    <div class="ctl">
+      <label>Funil</label>
+      <select id="funil">
+        <option value="all">Todos os funis</option>
+        <option value="mensagem">🟢 Mensagem</option>
+        <option value="cadastro">📋 Cadastro</option>
+        <option value="outros">⚪ Outros</option>
+      </select>
     </div>
     <div class="ctl" style="flex:1;min-width:280px">
       <label>Período</label>
@@ -148,8 +160,18 @@ const brl = n => n==null ? '—' : 'R$ ' + Math.round(n).toLocaleString('pt-BR')
 const pct = n => n==null ? '—' : n + '%';
 const DAY = 86400000;
 let DS=null, TODAY=null, BASE=null, RETAIN=130;
-const state = {acc:null, start:null, end:null, preset:'sop', consol:false, minspend:100,
+const state = {acc:null, funil:'all', start:null, end:null, preset:'sop', consol:false, minspend:100,
                filterCor:null, sortKey:'gasto', sortDir:-1};
+
+/* Funil do anúncio, inferido pelo nome da campanha.
+   Cadastro (Typebot/formulário) não gera "conversas" — cobertura vira N/A. */
+function funilOf(camp){
+  const c = (camp||'').toUpperCase();
+  if(c.includes('CADASTRO') || c.includes('TYPEBO')) return 'cadastro';
+  if(c.includes('[MSG') || c.includes('MSG]') || c.includes('WHAT') || c.includes('DIRECT')) return 'mensagem';
+  return 'outros';
+}
+const FN_LABEL = {mensagem:'MSG', cadastro:'CAD', outros:'OUTRO', misto:'MISTO'};
 
 /* ---------- Theme ---------- */
 function applyTheme(t){
@@ -219,6 +241,8 @@ function computeRows(){
 
   DS.ads.forEach(a => {
     if(accFilter!=='all' && a.acc!==accFilter) return;
+    const fa = funilOf(a.camp);
+    if(state.funil!=='all' && fa!==state.funil) return;
     let sp=0, conv=0, leads=0, agend=0, comp=0, vend=0, recent=0;
     for(const k in a.d){
       const o = +k, v = a.d[k];
@@ -229,10 +253,11 @@ function computeRows(){
     const key = state.consol ? a.cr : a.id;
     let b = bucket.get(key);
     if(!b){
-      b = {key, ad:a.ad, camp:a.camp, cr:a.cr, acc:a.acc, pg:a.pg,
+      b = {key, ad:a.ad, camp:a.camp, cr:a.cr, acc:a.acc, pg:a.pg, fn:fa,
            sp:0, conv:0, leads:0, agend:0, comp:0, vend:0, recent:0, n:0};
       bucket.set(key, b);
     }
+    if(b.fn!==fa) b.fn='misto';   // criativo em funis diferentes (só ao consolidar)
     b.sp+=sp; b.conv+=conv; b.leads+=leads; b.agend+=agend; b.comp+=comp; b.vend+=vend; b.recent+=recent; b.n++;
     if(a.pg && (!b.pg || a.pg < b.pg)) b.pg = a.pg;   // criativo mais antigo define idade
   });
@@ -241,7 +266,8 @@ function computeRows(){
   bucket.forEach(b => {
     if(b.sp < state.minspend && b.leads<=0) return;
     const idade = b.pg ? Math.round((parse(TODAY)-parse(b.pg))/DAY) : 0;
-    const cobertura = b.conv>0 ? Math.round(1000*b.leads/b.conv)/10 : null;
+    // cobertura (leads/conversas) só faz sentido no funil de mensagem
+    const cobertura = (b.fn==='mensagem' && b.conv>0) ? Math.round(1000*b.leads/b.conv)/10 : null;
     const cpl = (b.leads>0 && b.sp>0) ? Math.round(10*b.sp/b.leads)/10 : null;
     const [cor, acao, custo] = semaforo(b.sp, b.comp, b.leads, idade, cobertura, b.conv);
     rows.push({...b, idade, cobertura, cpl, custo, cor, acao,
@@ -314,9 +340,10 @@ function render(){
      + th('comp','Comp.') + th('custo','Custo/Comp') + th('cpl','CPL') + th('cobertura','Cobert.') + th('vendas','Vendas')
      + '<th style="text-align:left">Semáforo</th><th style="text-align:left">Ação</th></tr></thead><tbody>';
   trows.forEach(r=>{
+    const fnb = `<span class="fntag fn-${r.fn}">${FN_LABEL[r.fn]||r.fn}</span>`;
     const nameCell = state.consol
-      ? `<div class="adname"><span class="crtag">${r.cr}</span>${r.n} instância${r.n>1?'s':''}</div><div class="camp">${(r.ad||'').slice(0,60)}</div>`
-      : `<div class="adname">${r.ad||'—'}</div><div class="camp">${r.camp||''}</div>`;
+      ? `<div class="adname"><span class="crtag">${r.cr}</span>${r.n} instância${r.n>1?'s':''}</div><div class="camp">${fnb} ${(r.ad||'').slice(0,60)}</div>`
+      : `<div class="adname">${r.ad||'—'}</div><div class="camp">${fnb} ${r.camp||''}</div>`;
     h += `<tr><td>${nameCell}</td>
       <td class="num">${brl(r.sp)}</td><td class="num">${r.recent?brl(r.recent):'—'}</td>
       <td class="num">${r.leads}</td><td class="num">${pct(r.pct_ag)}</td><td class="num">${pct(r.pct_cp)}</td>
@@ -327,7 +354,7 @@ function render(){
       <td class="acao">${r.acao}</td></tr>`;
   });
   if(!trows.length) h += '<tr><td colspan="12" style="text-align:center;color:var(--mut);padding:24px">Nenhum anúncio no filtro atual. Reduza o gasto mínimo ou amplie o período.</td></tr>';
-  h += `</tbody></table><div class="note"><b>Regras (SOP v1.0):</b> 🟢 custo/comp &lt; R$700 escala +20% · 🟡 R$700–1.500 mantém · 🔴 &gt; R$1.500 por 2 semanas corta 50%/pausa · <span style="color:var(--g-tx)">EM APRENDIZADO</span> = &lt;21 dias e &lt;150 leads · <span style="color:var(--t-tx)">FALHA TRACKING</span> = cobertura &lt;40%, corrigir antes de julgar. CPL banda normal R$14–22 (fora = defeito de tracking). Vendas parciais (ciclo p75 = 15d). Idade e "gasto 7d" são sempre relativos a hoje. Registrar toda ação no LOG oficial.</div>`;
+  h += `</tbody></table><div class="note"><b>Regras (SOP v1.0):</b> 🟢 custo/comp &lt; R$700 escala +20% · 🟡 R$700–1.500 mantém · 🔴 &gt; R$1.500 por 2 semanas corta 50%/pausa · <span style="color:var(--g-tx)">EM APRENDIZADO</span> = &lt;21 dias e &lt;150 leads · <span style="color:var(--t-tx)">FALHA TRACKING</span> = cobertura &lt;40%, corrigir antes de julgar. <b>Cobertura e Falha Tracking só se aplicam ao funil de Mensagem</b> — Cadastro (Typebot) não gera conversas, então aparece "—". CPL banda normal R$14–22 (fora = defeito de tracking). Vendas parciais (ciclo p75 = 15d). Idade e "gasto 7d" são sempre relativos a hoje. Registrar toda ação no LOG oficial.</div>`;
   $('main').innerHTML = h;
   $('main').className='';
   $('main').querySelectorAll('th[data-sort]').forEach(el=>{
@@ -363,6 +390,8 @@ function buildControls(){
   sel.value = '926172801304741';
   state.acc = sel.value;
   sel.onchange = ()=>{ state.acc=sel.value; updateCalibNote(); render(); };
+  // funil
+  $('funil').onchange = ()=>{ state.funil=$('funil').value; render(); };
   // presets
   $('presets').innerHTML = PRESETS.map(([k,l])=>`<span class="chip" data-k="${k}">${l}</span>`).join('');
   $('presets').querySelectorAll('.chip').forEach(c=>{
