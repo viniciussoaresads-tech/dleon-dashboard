@@ -200,7 +200,7 @@ const PRESETS = [
 function semaforo(sp, comp, leads, idade, cobertura, conv){
   const custo = (comp>0 && sp>0) ? Math.round(sp/comp) : null;
   const graca = idade < 21;
-  if(graca && leads < 150) return ['graca', `EM GRAÇA (${idade}d / ${leads} leads) — não julgar`, custo];
+  if(graca && leads < 150) return ['graca', `EM APRENDIZADO (${idade}d / ${leads} leads) — não julgar`, custo];
   if(cobertura!=null && cobertura<40 && conv>=50) return ['tracking', `COBERTURA ${cobertura}% — corrigir tracking antes de julgar`, custo];
   if(custo!=null && custo<700) return ['verde','ESCALAR +20%', custo];
   if(custo!=null && custo<=1500) return ['amarelo','MANTER', custo];
@@ -253,7 +253,7 @@ function computeRows(){
 
 /* ---------- Render ---------- */
 const ORDER = {vermelho:0, tracking:1, verde:2, amarelo:3, graca:4};
-const LABEL = {verde:'VERDE',amarelo:'AMARELO',vermelho:'VERMELHO',graca:'EM GRAÇA',tracking:'TRACKING'};
+const LABEL = {verde:'VERDE',amarelo:'AMARELO',vermelho:'VERMELHO',graca:'EM APRENDIZADO',tracking:'FALHA TRACKING'};
 const SORTF = {
   gasto:r=>r.sp, custo:r=>r.custo==null?Infinity:r.custo, leads:r=>r.leads,
   comp:r=>r.comp, cobertura:r=>r.cobertura==null?-1:r.cobertura, cpl:r=>r.cpl==null?-1:r.cpl,
@@ -266,7 +266,7 @@ function render(){
   const counts = {verde:0,amarelo:0,vermelho:0,graca:0,tracking:0};
   rows.forEach(r=>counts[r.cor]++);
   const cwrap = $('counters'); cwrap.style.display='flex'; cwrap.innerHTML='';
-  [['vermelho','🔴 Vermelho'],['tracking','🟣 Tracking'],['verde','🟢 Verde'],['amarelo','🟡 Amarelo'],['graca','🔵 Em graça']]
+  [['vermelho','🔴 Vermelho'],['tracking','🟣 Falha Tracking'],['verde','🟢 Verde'],['amarelo','🟡 Amarelo'],['graca','🔵 Em Aprendizado']]
     .forEach(([c,lbl])=>{
       const el = document.createElement('div');
       el.className = 'cnt c-'+c + (state.filterCor && state.filterCor!==c ? ' dim':'');
@@ -327,7 +327,7 @@ function render(){
       <td class="acao">${r.acao}</td></tr>`;
   });
   if(!trows.length) h += '<tr><td colspan="12" style="text-align:center;color:var(--mut);padding:24px">Nenhum anúncio no filtro atual. Reduza o gasto mínimo ou amplie o período.</td></tr>';
-  h += `</tbody></table><div class="note"><b>Regras (SOP v1.0):</b> 🟢 custo/comp &lt; R$700 escala +20% · 🟡 R$700–1.500 mantém · 🔴 &gt; R$1.500 por 2 semanas corta 50%/pausa · <span style="color:var(--g-tx)">EM GRAÇA</span> = &lt;21 dias e &lt;150 leads · <span style="color:var(--t-tx)">TRACKING</span> = cobertura &lt;40%, corrigir antes de julgar. CPL banda normal R$14–22 (fora = defeito de tracking). Vendas parciais (ciclo p75 = 15d). Idade e "gasto 7d" são sempre relativos a hoje. Registrar toda ação no LOG oficial.</div>`;
+  h += `</tbody></table><div class="note"><b>Regras (SOP v1.0):</b> 🟢 custo/comp &lt; R$700 escala +20% · 🟡 R$700–1.500 mantém · 🔴 &gt; R$1.500 por 2 semanas corta 50%/pausa · <span style="color:var(--g-tx)">EM APRENDIZADO</span> = &lt;21 dias e &lt;150 leads · <span style="color:var(--t-tx)">FALHA TRACKING</span> = cobertura &lt;40%, corrigir antes de julgar. CPL banda normal R$14–22 (fora = defeito de tracking). Vendas parciais (ciclo p75 = 15d). Idade e "gasto 7d" são sempre relativos a hoje. Registrar toda ação no LOG oficial.</div>`;
   $('main').innerHTML = h;
   $('main').className='';
   $('main').querySelectorAll('th[data-sort]').forEach(el=>{
