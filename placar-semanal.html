@@ -3,37 +3,97 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Placar Semanal · Tráfego Lentes · D'Leon</title>
+<title>Placar de Otimização · Tráfego · D'Leon</title>
 <style>
+:root{
+  --bg:#0f1115; --card:#171a21; --card2:#1d212b; --bd:#262b36; --bd2:#333a48;
+  --tx:#e6e8ec; --mut:#8b93a1; --mut2:#5f6673; --acc:#4c8dff;
+  --v-bg:#123021; --v-tx:#4ade80; --a-bg:#352a10; --a-tx:#fbbf24;
+  --r-bg:#3a1518; --r-tx:#f87171; --g-bg:#1a2340; --g-tx:#7ea2ff;
+  --t-bg:#2c1a3d; --t-tx:#c084fc;
+}
+:root[data-theme="light"]{
+  --bg:#f5f5f5; --card:#fff; --card2:#fafafa; --bd:#e8e8e8; --bd2:#ddd;
+  --tx:#111; --mut:#999; --mut2:#bbb; --acc:#007aff;
+  --v-bg:#eafbef; --v-tx:#1d7a3a; --a-bg:#fff5e0; --a-tx:#a76b00;
+  --r-bg:#ffecec; --r-tx:#c0392b; --g-bg:#eef3ff; --g-tx:#3a5bc7;
+  --t-bg:#f3e9ff; --t-tx:#7d3ac0;
+}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:#f5f5f5;color:#111;font-size:13px;line-height:1.4}
-.pg{max-width:1200px;margin:0 auto;padding:1.25rem}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--tx);font-size:13px;line-height:1.4;transition:background .2s,color .2s}
+.pg{max-width:1280px;margin:0 auto;padding:1.25rem}
 .hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.5rem}
 .brand{display:flex;align-items:center;gap:10px}
-.sq{width:36px;height:36px;background:#111;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700}
-.btext h1{font-size:15px;font-weight:600}.btext p{font-size:10.5px;color:#aaa;margin-top:1px}
-.nav-back{font-size:11.5px;color:#007aff;text-decoration:none;font-weight:600}
-.upd{font-size:10px;color:#ccc;text-align:right}
-.kgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:12px}
-.kpi{background:#fff;border-radius:12px;padding:12px 14px;border:1px solid #e8e8e8}
-.kpi .lb{color:#999;font-size:10px;text-transform:uppercase;letter-spacing:.5px;font-weight:600}
-.kpi .vl{font-size:20px;font-weight:700;margin:3px 0 1px}
+.sq{width:36px;height:36px;background:var(--acc);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700}
+.btext h1{font-size:15px;font-weight:600}.btext p{font-size:10.5px;color:var(--mut);margin-top:1px}
+.hd-right{display:flex;align-items:center;gap:12px}
+.nav-back{font-size:11.5px;color:var(--acc);text-decoration:none;font-weight:600}
+.themebtn{background:var(--card);border:1px solid var(--bd);color:var(--tx);border-radius:8px;padding:5px 10px;font-size:11px;cursor:pointer;font-weight:600}
+.themebtn:hover{border-color:var(--bd2)}
+.upd{font-size:10px;color:var(--mut2);text-align:right;margin-top:2px}
+
+/* Controls bar */
+.controls{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px 14px;margin-bottom:12px;display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end}
+.ctl{display:flex;flex-direction:column;gap:4px}
+.ctl label{font-size:9.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--mut);font-weight:600}
+select,input[type=date],input[type=number]{background:var(--card2);border:1px solid var(--bd);color:var(--tx);border-radius:8px;padding:6px 9px;font-size:12px;font-family:inherit}
+select:focus,input:focus{outline:none;border-color:var(--acc)}
+input[type=date]{color-scheme:dark}
+:root[data-theme="light"] input[type=date]{color-scheme:light}
+.presets{display:flex;flex-wrap:wrap;gap:5px}
+.chip{background:var(--card2);border:1px solid var(--bd);color:var(--mut);border-radius:20px;padding:4px 11px;font-size:11px;cursor:pointer;font-weight:600;white-space:nowrap}
+.chip:hover{border-color:var(--bd2);color:var(--tx)}
+.chip.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.toggle{display:flex;align-items:center;gap:7px;cursor:pointer;user-select:none;font-size:12px;font-weight:600}
+.toggle input{width:34px;height:19px;appearance:none;background:var(--bd2);border-radius:20px;position:relative;cursor:pointer;transition:background .2s;flex-shrink:0}
+.toggle input:checked{background:var(--acc)}
+.toggle input::after{content:"";position:absolute;top:2px;left:2px;width:15px;height:15px;background:#fff;border-radius:50%;transition:left .2s}
+.toggle input:checked::after{left:17px}
+
 .alertbar{border-radius:10px;padding:10px 14px;font-size:12px;font-weight:600;margin-bottom:12px;display:none}
-.alertbar.on{display:block;background:#ffecec;border:1px solid #ff3b30;color:#c0392b}
-.cc{background:#fff;border-radius:12px;border:1px solid #e8e8e8;padding:14px 16px;margin-bottom:12px;overflow-x:auto}
-.cttl{font-size:12px;font-weight:600;margin-bottom:10px}
-table{width:100%;border-collapse:collapse;font-size:11.5px;min-width:900px}
-th{text-align:left;color:#999;font-weight:600;font-size:9.5px;text-transform:uppercase;letter-spacing:.4px;padding:6px;border-bottom:1px solid #eee;white-space:nowrap}
-td{padding:7px 6px;border-bottom:1px solid #f4f4f4;vertical-align:top}
+.alertbar.on{display:block;background:var(--r-bg);border:1px solid var(--r-tx);color:var(--r-tx)}
+.notebar{border-radius:10px;padding:8px 13px;font-size:11px;margin-bottom:12px;background:var(--a-bg);color:var(--a-tx);border:1px solid transparent;display:none}
+.notebar.on{display:block}
+
+/* Counters */
+.counters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.cnt{flex:1;min-width:110px;background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:9px 12px;cursor:pointer;transition:transform .1s}
+.cnt:hover{transform:translateY(-1px)}
+.cnt.dim{opacity:.4}
+.cnt .n{font-size:22px;font-weight:700;font-variant-numeric:tabular-nums}
+.cnt .l{font-size:9.5px;text-transform:uppercase;letter-spacing:.5px;font-weight:700;margin-top:1px}
+.cnt.c-verde{border-left:3px solid var(--v-tx)}.cnt.c-verde .n{color:var(--v-tx)}
+.cnt.c-amarelo{border-left:3px solid var(--a-tx)}.cnt.c-amarelo .n{color:var(--a-tx)}
+.cnt.c-vermelho{border-left:3px solid var(--r-tx)}.cnt.c-vermelho .n{color:var(--r-tx)}
+.cnt.c-graca{border-left:3px solid var(--g-tx)}.cnt.c-graca .n{color:var(--g-tx)}
+.cnt.c-tracking{border-left:3px solid var(--t-tx)}.cnt.c-tracking .n{color:var(--t-tx)}
+
+.kgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:12px}
+.kpi{background:var(--card);border-radius:12px;padding:12px 14px;border:1px solid var(--bd)}
+.kpi .lb{color:var(--mut);font-size:10px;text-transform:uppercase;letter-spacing:.5px;font-weight:600}
+.kpi .vl{font-size:20px;font-weight:700;margin:3px 0 1px}
+.kpi .sub{font-size:10px;color:var(--mut2)}
+
+.cc{background:var(--card);border-radius:12px;border:1px solid var(--bd);padding:14px 16px;margin-bottom:12px;overflow-x:auto}
+.cttl{font-size:12px;font-weight:600;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+table{width:100%;border-collapse:collapse;font-size:11.5px;min-width:960px}
+th{text-align:left;color:var(--mut);font-weight:600;font-size:9.5px;text-transform:uppercase;letter-spacing:.4px;padding:6px;border-bottom:1px solid var(--bd);white-space:nowrap;cursor:pointer;user-select:none}
+th:hover{color:var(--tx)}
+th.sorted::after{content:" ▾";color:var(--acc)}
+th.sorted.asc::after{content:" ▴"}
+td{padding:7px 6px;border-bottom:1px solid var(--bd);vertical-align:top}
+tr:last-child td{border-bottom:none}
 td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
-.adname{max-width:260px;font-weight:600;word-break:break-word}
-.camp{font-size:10px;color:#aaa;margin-top:1px;word-break:break-word}
+.adname{max-width:280px;font-weight:600;word-break:break-word}
+.camp{font-size:10px;color:var(--mut);margin-top:1px;word-break:break-word}
+.crtag{display:inline-block;background:var(--card2);border:1px solid var(--bd);border-radius:5px;padding:0 5px;font-size:9.5px;color:var(--mut);margin-right:5px;font-weight:700}
 .pill{display:inline-block;border-radius:10px;padding:2px 9px;font-size:10px;font-weight:700;white-space:nowrap}
-.p-verde{background:#eafbef;color:#1d7a3a}.p-amarelo{background:#fff5e0;color:#a76b00}
-.p-vermelho{background:#ffecec;color:#c0392b}.p-graca{background:#eef3ff;color:#3a5bc7}
-.p-tracking{background:#f3e9ff;color:#7d3ac0}
-.acao{font-size:10.5px;color:#555;max-width:200px}
-.note{font-size:10.5px;color:#aaa;margin-top:8px}
+.p-verde{background:var(--v-bg);color:var(--v-tx)}.p-amarelo{background:var(--a-bg);color:var(--a-tx)}
+.p-vermelho{background:var(--r-bg);color:var(--r-tx)}.p-graca{background:var(--g-bg);color:var(--g-tx)}
+.p-tracking{background:var(--t-bg);color:var(--t-tx)}
+.acao{font-size:10.5px;color:var(--mut);max-width:210px}
+.note{font-size:10.5px;color:var(--mut);margin-top:10px;line-height:1.6}
+.loading{color:var(--mut);padding:40px;text-align:center}
 </style>
 </head>
 <body>
@@ -41,42 +101,302 @@ td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
   <div class="hd">
     <div class="brand">
       <div class="sq">DL</div>
-      <div class="btext"><h1>Placar Semanal — Tráfego Lentes</h1><p>Decisor: custo por comparecimento · Janela: 14 dias fechados (D-21 a D-7) · SOP Otimização por Receita v1.0</p></div>
+      <div class="btext"><h1>Placar de Otimização — Tráfego</h1><p>Decisor: custo por comparecimento · SOP Otimização por Receita v1.0</p></div>
     </div>
-    <div><a class="nav-back" href="./index.html">← Dashboard</a><div class="upd" id="upd-lbl"></div></div>
+    <div class="hd-right">
+      <button class="themebtn" id="themebtn" title="Alternar tema">🌙 off/white</button>
+      <div style="text-align:right"><a class="nav-back" href="./index.html">← Dashboard</a><div class="upd" id="upd-lbl"></div></div>
+    </div>
   </div>
+
+  <div class="controls" id="controls" style="display:none">
+    <div class="ctl">
+      <label>Conta de anúncio</label>
+      <select id="acc"></select>
+    </div>
+    <div class="ctl" style="flex:1;min-width:280px">
+      <label>Período</label>
+      <div class="presets" id="presets"></div>
+    </div>
+    <div class="ctl">
+      <label>De</label>
+      <input type="date" id="dstart">
+    </div>
+    <div class="ctl">
+      <label>Até</label>
+      <input type="date" id="dend">
+    </div>
+    <div class="ctl">
+      <label>Gasto mín. (R$)</label>
+      <input type="number" id="minspend" value="100" min="0" step="50" style="width:90px">
+    </div>
+    <div class="ctl">
+      <label>Visão</label>
+      <label class="toggle"><input type="checkbox" id="consol"><span>Consolidar por criativo</span></label>
+    </div>
+  </div>
+
   <div class="alertbar" id="alerta"></div>
-  <div id="main" style="color:#bbb;padding:40px;text-align:center">Carregando placar...</div>
+  <div class="notebar" id="calibnote"></div>
+  <div class="counters" id="counters" style="display:none"></div>
+  <div class="kgrid" id="kpis" style="display:none"></div>
+  <div id="main" class="loading">Carregando placar…</div>
 </div>
 <script>
+const $ = id => document.getElementById(id);
 const brl = n => n==null ? '—' : 'R$ ' + Math.round(n).toLocaleString('pt-BR');
-fetch('./data/placar.json').then(r=>r.json()).then(j=>{
-  document.getElementById('upd-lbl').textContent = `Gerado: ${j.gerado_em} · Janela: ${j.janela.inicio} → ${j.janela.fim}`;
-  if (j.resumo.alerta_cobertura){ const a=document.getElementById('alerta'); a.textContent='🚨 '+j.resumo.alerta_cobertura; a.classList.add('on'); }
-  const R = j.resumo;
-  let h = '<div class="kgrid">';
-  h += `<div class="kpi"><div class="lb">Anúncios no placar</div><div class="vl">${R.ads_no_placar}</div></div>`;
-  h += `<div class="kpi"><div class="lb">Gasto na janela</div><div class="vl">${brl(R.gasto_janela)}</div></div>`;
-  h += `<div class="kpi"><div class="lb">Comparecimentos</div><div class="vl">${R.comparecimentos}</div></div>`;
-  h += `<div class="kpi"><div class="lb">Vendas (parciais)</div><div class="vl">${R.vendas_janela}</div></div>`;
-  h += `<div class="kpi"><div class="lb">Cobertura 7d</div><div class="vl">${R.cobertura_7d??'—'}%</div><div style="font-size:10px;color:#bbb">semana anterior: ${R.cobertura_semana_anterior??'—'}%</div></div>`;
-  h += '</div>';
-  h += '<div class="cc"><div class="cttl">Decisão por anúncio — ordenado por gasto</div><table><thead><tr><th>Anúncio / Campanha</th><th style="text-align:right">Gasto janela</th><th style="text-align:right">Gasto 7d</th><th style="text-align:right">Leads</th><th style="text-align:right">% agendou</th><th style="text-align:right">% compareceu</th><th style="text-align:right">Comp.</th><th style="text-align:right">Custo/Comp</th><th style="text-align:right">CPL</th><th style="text-align:right">Cobert.</th><th>Semáforo</th><th>Ação</th></tr></thead><tbody>';
-  const ordem = {vermelho:0, tracking:1, verde:2, amarelo:3, graca:4};
-  j.anuncios.sort((a,b)=> (ordem[a.cor]-ordem[b.cor]) || (b.gasto_janela - a.gasto_janela));
-  j.anuncios.forEach(a=>{
-    h += `<tr><td><div class="adname">${a.ad||'—'}</div><div class="camp">${a.camp||''}</div></td>
-      <td class="num">${brl(a.gasto_janela)}</td><td class="num">${brl(a.gasto_7d)}</td>
-      <td class="num">${a.leads}</td><td class="num">${a.pct_agendou??'—'}%</td><td class="num">${a.pct_compareceu??'—'}%</td>
-      <td class="num">${a.compareceu}</td><td class="num"><b>${brl(a.custo_comp)}</b></td>
-      <td class="num">${a.cpl?('R$ '+a.cpl):'—'}</td><td class="num">${a.cobertura??'—'}${a.cobertura!=null?'%':''}</td>
-      <td><span class="pill p-${a.cor}">${a.cor==='graca'?'EM GRAÇA':a.cor.toUpperCase()}</span></td>
-      <td class="acao">${a.acao}</td></tr>`;
+const pct = n => n==null ? '—' : n + '%';
+const DAY = 86400000;
+let DS=null, TODAY=null, BASE=null, RETAIN=130;
+const state = {acc:null, start:null, end:null, preset:'sop', consol:false, minspend:100,
+               filterCor:null, sortKey:'gasto', sortDir:-1};
+
+/* ---------- Theme ---------- */
+function applyTheme(t){
+  document.documentElement.setAttribute('data-theme', t);
+  $('themebtn').textContent = t==='light' ? '🌙 off/white' : '☀️ light';
+  localStorage.setItem('placar-theme', t);
+}
+(function initTheme(){
+  const q = new URLSearchParams(location.search).get('theme');
+  const saved = localStorage.getItem('placar-theme');
+  applyTheme(q || saved || 'dark');
+})();
+$('themebtn').onclick = () =>
+  applyTheme(document.documentElement.getAttribute('data-theme')==='light' ? 'dark' : 'light');
+
+/* ---------- Date helpers ---------- */
+const iso = d => d.toISOString().slice(0,10);
+const parse = s => new Date(s+'T00:00:00Z');
+const offOf = s => Math.round((parse(s) - parse(BASE)) / DAY);
+function addDays(s, n){ const d=parse(s); d.setUTCDate(d.getUTCDate()+n); return iso(d); }
+function monthStart(s){ const d=parse(s); return iso(new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), 1))); }
+function monthEnd(s){ const d=parse(s); return iso(new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth()+1, 0))); }
+
+/* Presets estilo Meta (relativos a TODAY) */
+function presetRange(key){
+  const t = TODAY;
+  switch(key){
+    case 'sop':   return [addDays(t,-21), addDays(t,-8)];        // janela SOP D-21→D-7
+    case 'hoje':  return [t, t];
+    case 'ontem': return [addDays(t,-1), addDays(t,-1)];
+    case '7d':    return [addDays(t,-7), t];
+    case '14d':   return [addDays(t,-14), t];
+    case '30d':   return [addDays(t,-30), t];
+    case '90d':   return [addDays(t,-90), t];
+    case 'mes':   return [monthStart(t), t];
+    case 'mespass':{ const lm = addDays(monthStart(t),-1); return [monthStart(lm), monthEnd(lm)]; }
+    case 'max':   return [BASE, t];
+    default:      return null; // personalizado
+  }
+}
+const PRESETS = [
+  ['sop','Janela SOP'],['7d','7 dias'],['14d','14 dias'],['30d','30 dias'],
+  ['90d','90 dias'],['mes','Este mês'],['mespass','Mês passado'],['max','Máximo'],
+  ['hoje','Hoje'],['ontem','Ontem'],['custom','Personalizado'],
+];
+
+/* ---------- Semáforo (espelha o backend Python) ---------- */
+function semaforo(sp, comp, leads, idade, cobertura, conv){
+  const custo = (comp>0 && sp>0) ? Math.round(sp/comp) : null;
+  const graca = idade < 21;
+  if(graca && leads < 150) return ['graca', `EM GRAÇA (${idade}d / ${leads} leads) — não julgar`, custo];
+  if(cobertura!=null && cobertura<40 && conv>=50) return ['tracking', `COBERTURA ${cobertura}% — corrigir tracking antes de julgar`, custo];
+  if(custo!=null && custo<700) return ['verde','ESCALAR +20%', custo];
+  if(custo!=null && custo<=1500) return ['amarelo','MANTER', custo];
+  if(custo!=null) return ['vermelho','CORTAR 50% (pausar se 2ª semana vermelha)', custo];
+  if(sp>1500 && comp===0) return ['vermelho','ZERO comparecimentos com gasto relevante — cortar/pausar', custo];
+  if(sp>0) return ['amarelo','Amostra insuficiente — observar', custo];
+  return ['graca','Gasto recente apenas — aguardar maturação', custo];
+}
+
+/* ---------- Aggregation ---------- */
+function computeRows(){
+  const o0 = offOf(state.start), o1 = offOf(state.end);
+  const oRecent = offOf(TODAY) - 7;
+  const accFilter = state.acc;               // 'all' or account id
+  const bucket = new Map();                   // key -> aggregate
+
+  DS.ads.forEach(a => {
+    if(accFilter!=='all' && a.acc!==accFilter) return;
+    let sp=0, conv=0, leads=0, agend=0, comp=0, vend=0, recent=0;
+    for(const k in a.d){
+      const o = +k, v = a.d[k];
+      if(o>=o0 && o<=o1){ sp+=v[0]; conv+=v[1]; leads+=v[2]; agend+=v[3]; comp+=v[4]; vend+=v[5]; }
+      if(o>=oRecent) recent+=v[0];
+    }
+    if(sp<=0 && leads<=0) return;
+    const key = state.consol ? a.cr : a.id;
+    let b = bucket.get(key);
+    if(!b){
+      b = {key, ad:a.ad, camp:a.camp, cr:a.cr, acc:a.acc, pg:a.pg,
+           sp:0, conv:0, leads:0, agend:0, comp:0, vend:0, recent:0, n:0};
+      bucket.set(key, b);
+    }
+    b.sp+=sp; b.conv+=conv; b.leads+=leads; b.agend+=agend; b.comp+=comp; b.vend+=vend; b.recent+=recent; b.n++;
+    if(a.pg && (!b.pg || a.pg < b.pg)) b.pg = a.pg;   // criativo mais antigo define idade
   });
-  h += '</tbody></table><div class="note">Regras (SOP v1.0): 🟢 custo/comp &lt; R$700 escala +20% · 🟡 R$700–1.500 mantém · 🔴 &gt; R$1.500 por 2 semanas corta 50%/pausa · EM GRAÇA = &lt;21 dias e &lt;150 leads, não julgar · TRACKING = cobertura &lt;40%, corrigir antes de julgar. CPL banda normal R$14–22 (fora = defeito de tracking). Vendas da janela são PARCIAIS (ciclo p75 = 15 dias). Registrar toda ação no LOG oficial.</div></div>';
-  document.getElementById('main').innerHTML = h;
-  document.getElementById('main').style.cssText='';
-});
+
+  const rows = [];
+  bucket.forEach(b => {
+    if(b.sp < state.minspend && b.leads<=0) return;
+    const idade = b.pg ? Math.round((parse(TODAY)-parse(b.pg))/DAY) : 0;
+    const cobertura = b.conv>0 ? Math.round(1000*b.leads/b.conv)/10 : null;
+    const cpl = (b.leads>0 && b.sp>0) ? Math.round(10*b.sp/b.leads)/10 : null;
+    const [cor, acao, custo] = semaforo(b.sp, b.comp, b.leads, idade, cobertura, b.conv);
+    rows.push({...b, idade, cobertura, cpl, custo, cor, acao,
+      pct_ag: b.leads? Math.round(1000*b.agend/b.leads)/10 : null,
+      pct_cp: b.agend? Math.round(1000*b.comp/b.agend)/10 : null});
+  });
+  return rows;
+}
+
+/* ---------- Render ---------- */
+const ORDER = {vermelho:0, tracking:1, verde:2, amarelo:3, graca:4};
+const LABEL = {verde:'VERDE',amarelo:'AMARELO',vermelho:'VERMELHO',graca:'EM GRAÇA',tracking:'TRACKING'};
+const SORTF = {
+  gasto:r=>r.sp, custo:r=>r.custo==null?Infinity:r.custo, leads:r=>r.leads,
+  comp:r=>r.comp, cobertura:r=>r.cobertura==null?-1:r.cobertura, cpl:r=>r.cpl==null?-1:r.cpl,
+  recent:r=>r.recent, vendas:r=>r.vend,
+};
+
+function render(){
+  const rows = computeRows();
+  // counters
+  const counts = {verde:0,amarelo:0,vermelho:0,graca:0,tracking:0};
+  rows.forEach(r=>counts[r.cor]++);
+  const cwrap = $('counters'); cwrap.style.display='flex'; cwrap.innerHTML='';
+  [['vermelho','🔴 Vermelho'],['tracking','🟣 Tracking'],['verde','🟢 Verde'],['amarelo','🟡 Amarelo'],['graca','🔵 Em graça']]
+    .forEach(([c,lbl])=>{
+      const el = document.createElement('div');
+      el.className = 'cnt c-'+c + (state.filterCor && state.filterCor!==c ? ' dim':'');
+      el.innerHTML = `<div class="n">${counts[c]}</div><div class="l">${lbl}</div>`;
+      el.onclick = ()=>{ state.filterCor = state.filterCor===c ? null : c; render(); };
+      cwrap.appendChild(el);
+    });
+
+  // KPIs
+  const shown = state.filterCor ? rows.filter(r=>r.cor===state.filterCor) : rows;
+  const K = {
+    ads: shown.length,
+    gasto: shown.reduce((s,r)=>s+r.sp,0),
+    comp: shown.reduce((s,r)=>s+r.comp,0),
+    vend: shown.reduce((s,r)=>s+r.vend,0),
+    leads: shown.reduce((s,r)=>s+r.leads,0),
+  };
+  const custoConta = K.comp>0 ? K.gasto/K.comp : null;
+  const kwrap = $('kpis'); kwrap.style.display='grid';
+  kwrap.innerHTML =
+    kpi(state.consol?'Criativos':'Anúncios', K.ads) +
+    kpi('Gasto no período', brl(K.gasto)) +
+    kpi('Comparecimentos', K.comp, custoConta!=null?`custo médio ${brl(custoConta)}`:'') +
+    kpi('Vendas (parciais)', K.vend) +
+    kpi('Leads', K.leads.toLocaleString('pt-BR'));
+
+  // table
+  rows.sort((a,b)=>{
+    const f = SORTF[state.sortKey];
+    let d = (f(a)-f(b)) * state.sortDir;
+    if(d===0) d = (ORDER[a.cor]-ORDER[b.cor]);
+    return d;
+  });
+  const trows = state.filterCor ? rows.filter(r=>r.cor===state.filterCor) : rows;
+  const th = (key,lbl,al='right')=>{
+    const on = state.sortKey===key;
+    return `<th class="${on?'sorted '+(state.sortDir===1?'asc':''):''}" style="text-align:${al}" data-sort="${key}">${lbl}</th>`;
+  };
+  let h = `<div class="cttl"><span>${state.consol?'Decisão por criativo consolidado':'Decisão por anúncio'} — ${trows.length} ${state.consol?'criativos':'anúncios'}</span>`;
+  h += `<span style="font-weight:400;color:var(--mut);font-size:10.5px">${state.start} → ${state.end}</span></div>`;
+  h += '<table><thead><tr>';
+  h += `<th style="text-align:left">${state.consol?'Criativo':'Anúncio / Campanha'}</th>`;
+  h += th('gasto','Gasto') + th('recent','Gasto 7d') + th('leads','Leads')
+     + '<th style="text-align:right">% ag.</th><th style="text-align:right">% comp.</th>'
+     + th('comp','Comp.') + th('custo','Custo/Comp') + th('cpl','CPL') + th('cobertura','Cobert.') + th('vendas','Vendas')
+     + '<th style="text-align:left">Semáforo</th><th style="text-align:left">Ação</th></tr></thead><tbody>';
+  trows.forEach(r=>{
+    const nameCell = state.consol
+      ? `<div class="adname"><span class="crtag">${r.cr}</span>${r.n} instância${r.n>1?'s':''}</div><div class="camp">${(r.ad||'').slice(0,60)}</div>`
+      : `<div class="adname">${r.ad||'—'}</div><div class="camp">${r.camp||''}</div>`;
+    h += `<tr><td>${nameCell}</td>
+      <td class="num">${brl(r.sp)}</td><td class="num">${r.recent?brl(r.recent):'—'}</td>
+      <td class="num">${r.leads}</td><td class="num">${pct(r.pct_ag)}</td><td class="num">${pct(r.pct_cp)}</td>
+      <td class="num">${r.comp}</td><td class="num"><b>${brl(r.custo)}</b></td>
+      <td class="num">${r.cpl!=null?('R$ '+r.cpl):'—'}</td><td class="num">${r.cobertura!=null?r.cobertura+'%':'—'}</td>
+      <td class="num">${r.vend}</td>
+      <td><span class="pill p-${r.cor}">${LABEL[r.cor]}</span></td>
+      <td class="acao">${r.acao}</td></tr>`;
+  });
+  if(!trows.length) h += '<tr><td colspan="12" style="text-align:center;color:var(--mut);padding:24px">Nenhum anúncio no filtro atual. Reduza o gasto mínimo ou amplie o período.</td></tr>';
+  h += `</tbody></table><div class="note"><b>Regras (SOP v1.0):</b> 🟢 custo/comp &lt; R$700 escala +20% · 🟡 R$700–1.500 mantém · 🔴 &gt; R$1.500 por 2 semanas corta 50%/pausa · <span style="color:var(--g-tx)">EM GRAÇA</span> = &lt;21 dias e &lt;150 leads · <span style="color:var(--t-tx)">TRACKING</span> = cobertura &lt;40%, corrigir antes de julgar. CPL banda normal R$14–22 (fora = defeito de tracking). Vendas parciais (ciclo p75 = 15d). Idade e "gasto 7d" são sempre relativos a hoje. Registrar toda ação no LOG oficial.</div>`;
+  $('main').innerHTML = h;
+  $('main').className='';
+  $('main').querySelectorAll('th[data-sort]').forEach(el=>{
+    el.onclick = ()=>{ const k=el.dataset.sort;
+      if(state.sortKey===k) state.sortDir*=-1; else {state.sortKey=k; state.sortDir=-1;}
+      render(); };
+  });
+}
+const kpi = (lb,vl,sub='') => `<div class="kpi"><div class="lb">${lb}</div><div class="vl">${vl}</div>${sub?`<div class="sub">${sub}</div>`:''}</div>`;
+
+/* ---------- Controls wiring ---------- */
+function setRange(start, end, preset){
+  state.start=start; state.end=end; state.preset=preset;
+  $('dstart').value=start; $('dend').value=end;
+  $('presets').querySelectorAll('.chip').forEach(c=>c.classList.toggle('on', c.dataset.k===preset));
+  updateCalibNote(); render();
+}
+function updateCalibNote(){
+  const n = $('calibnote');
+  const isLentes = state.acc==='926172801304741';
+  if(isLentes){ n.classList.remove('on'); return; }
+  const nm = state.acc==='all' ? 'todas as contas' : (DS.accounts.find(a=>a.id===state.acc)||{}).nome;
+  n.textContent = `⚠️ Limiares (R$700 / R$1.500) foram calibrados para Lentes. Leitura de ${nm} é direcional — recalibrar antes de decidir budget.`;
+  n.classList.add('on');
+}
+
+function buildControls(){
+  $('controls').style.display='flex';
+  // account select
+  const sel = $('acc');
+  sel.innerHTML = '<option value="all">Todas as contas</option>' +
+    DS.accounts.map(a=>`<option value="${a.id}">${a.nome}</option>`).join('');
+  sel.value = '926172801304741';
+  state.acc = sel.value;
+  sel.onchange = ()=>{ state.acc=sel.value; updateCalibNote(); render(); };
+  // presets
+  $('presets').innerHTML = PRESETS.map(([k,l])=>`<span class="chip" data-k="${k}">${l}</span>`).join('');
+  $('presets').querySelectorAll('.chip').forEach(c=>{
+    c.onclick = ()=>{
+      if(c.dataset.k==='custom'){ state.preset='custom';
+        $('presets').querySelectorAll('.chip').forEach(x=>x.classList.toggle('on',x===c));
+        return; }
+      const [s,e]=presetRange(c.dataset.k); setRange(s,e,c.dataset.k);
+    };
+  });
+  // date inputs (min/max = retained window)
+  ['dstart','dend'].forEach(id=>{ $(id).min=BASE; $(id).max=TODAY; });
+  const onDate = ()=>{ state.start=$('dstart').value; state.end=$('dend').value; state.preset='custom';
+    $('presets').querySelectorAll('.chip').forEach(x=>x.classList.toggle('on',x.dataset.k==='custom'));
+    render(); };
+  $('dstart').onchange=onDate; $('dend').onchange=onDate;
+  // min spend + consolidate
+  $('minspend').oninput = ()=>{ state.minspend=+$('minspend').value||0; render(); };
+  $('consol').onchange = ()=>{ state.consol=$('consol').checked; render(); };
+}
+
+/* ---------- Load ---------- */
+fetch('./data/placar_dataset.json').then(r=>r.json()).then(j=>{
+  DS=j; TODAY=j.gerado_em; BASE=j.base; RETAIN=j.retain;
+  $('upd-lbl').textContent = `Gerado: ${j.gerado_em} · dados dos últimos ${j.retain} dias`;
+  buildControls();
+  // regressão de cobertura (do snapshot legado, se existir)
+  fetch('./data/placar.json').then(r=>r.json()).then(p=>{
+    if(p.resumo && p.resumo.alerta_cobertura){
+      const a=$('alerta'); a.textContent='🚨 '+p.resumo.alerta_cobertura; a.classList.add('on');
+    }
+  }).catch(()=>{});
+  const [s,e]=presetRange('sop'); setRange(s,e,'sop');
+}).catch(err=>{ $('main').innerHTML='<div class="loading">Erro ao carregar dataset: '+err+'</div>'; });
 </script>
 </body>
 </html>
