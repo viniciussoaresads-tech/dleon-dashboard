@@ -40,15 +40,19 @@ def off(d):
 
 
 def criativo_key(ad):
-    """Codigo do criativo base p/ consolidacao: [NNN] quando existir."""
+    """Criativo consolidado (regra validada 04/08/26): instancias do MESMO criativo
+    somam (remove 'Cópia', extensao e sufixo '2' de re-upload); prefixos de versao
+    (v2/v3/vB/V3...) sao criativos DIFERENTES e NAO consolidam entre si.
+    A separacao por canal (mensagem x cadastro) é feita pelo frontend via campanha."""
     if not ad:
         return '(sem nome)'
-    m = re.search(r'\[(\d{2,3})\]', ad)
-    if m:
-        return '[' + m.group(1) + ']'
-    base = re.sub(r'\.(mp4|mov|jpg|png|jpeg)', '', ad, flags=re.I)
-    base = re.sub(r'\s*C[oó]pia.*$', '', base, flags=re.I).strip()
-    return base[:40] or '(sem nome)'
+    a = ad.strip()
+    a = re.sub(r'\s*[—–-]?\s*C[oó]pia(\s+C[oó]pia)*(\s*\d+)?\s*$', '', a, flags=re.I)
+    a = re.sub(r'\s*C[oó]pia\s*', ' ', a, flags=re.I)
+    a = re.sub(r'\.(mp4|mov|jpg|png|jpeg)(\.(mp4|mov))?\s*\.?\s*$', '', a, flags=re.I)
+    a = re.sub(r'([\]\)])\s*2\s*$', r'\1', a)
+    a = re.sub(r'\s+', ' ', a).strip(' .-—–')
+    return a.upper()[:60] or '(sem nome)'
 
 
 conn = psycopg2.connect(
