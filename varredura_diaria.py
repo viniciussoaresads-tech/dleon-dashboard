@@ -288,6 +288,21 @@ if '--no-chain' not in sys.argv:
                        capture_output=True, text=True, encoding='utf-8', errors='replace')
     print((r.stdout or '').strip() or ('analise falhou: ' + (r.stderr or '')[:200]))
 
+    # segunda-feira: analise semanal de escala (camada 2) -> ClickUp 86ajeuvtn
+    if HOJE.weekday() == 0:
+        r = subprocess.run([sys.executable, str(ROOT / 'analise_semanal.py')],
+                           capture_output=True, text=True, encoding='utf-8', errors='replace')
+        print((r.stdout or '').strip() or ('analise semanal falhou: ' + (r.stderr or '')[:200]))
+
+    # primeiro dia util >= dia 5: fechamento de safra (camada 3) -> ClickUp 86ajeuvug
+    marker = ROOT / 'data' / 'analise_mensal_last.txt'
+    mes_atual = f'{HOJE.year}-{HOJE.month:02d}'
+    ja_rodou = marker.exists() and marker.read_text(encoding='utf-8').strip() == mes_atual
+    if HOJE.day >= 5 and not ja_rodou:
+        r = subprocess.run([sys.executable, str(ROOT / 'analise_mensal.py')],
+                           capture_output=True, text=True, encoding='utf-8', errors='replace')
+        print((r.stdout or '').strip() or ('analise mensal falhou: ' + (r.stderr or '')[:200]))
+
 # ---- 7. Git push (publica no GitHub Pages, como o placar) ----------------
 if '--no-push' not in sys.argv:
     subprocess.run(['git', '-C', str(ROOT), 'add', 'data/varredura.json', 'data/varredura_hist.json', 'varredura-diaria.html'],
