@@ -259,85 +259,28 @@ out = {
 (ROOT / 'data' / 'varredura.json').write_text(
     json.dumps(out, ensure_ascii=False, indent=1), encoding='utf-8')
 
-# ---- 4. HTML da leitura --------------------------------------------------
-CORES = {'PAUSAR': '#f87171', 'AUDITAR': '#fb923c', 'ATENCAO': '#fbbf24',
-         'AMARELO': '#fbbf24', 'AMOSTRA': '#9aa3b5', 'AGUARDANDO': '#9aa3b5',
-         'VERDE': '#34d399', 'INFO': '#60a5fa'}
-
-def linha(x):
-    cor = CORES.get(x['status'], '#9aa3b5')
-    custo = f"R$ {x['custo']:.2f}" if x.get('custo') else '—'
-    teto = f"R$ {x['teto']:.2f}" if x.get('teto') else '—'
-    fr = f"{x['freq']:.1f}" if x.get('freq') else '—'
-    tipo = 'NOVO' if x.get('novo') else ''
-    return (f"<tr><td><span class='pill' style='background:{cor}22;color:{cor}'>{x['status']}</span></td>"
-            f"<td class='adname'>{x['ad']}<br><small>{x['camp']}</small></td>"
-            f"<td>{x['celula']}{' <b>' + tipo + '</b>' if tipo else ''}</td>"
-            f"<td class='num'>{x['idade']}d</td><td class='num'>{custo}</td>"
-            f"<td class='num'>{teto}</td><td class='num'>R$ {x['gasto']:.0f}</td>"
-            f"<td class='num'>{fr}</td><td>{x['acao']}</td></tr>")
-
-def cel_linha(k, c):
-    ch = f"{c['chegada']:.0f}%" if c.get('chegada') else '—'
-    alerta = ' ⚠' if c.get('chegada') and c['chegada'] < CHEGADA_MIN else ''
-    cu = f"R$ {c['custo7']:.2f}" if c.get('custo7') else '—'
-    return (f"<tr><td>{k}</td><td class='num'>R$ {c['gasto7']:.0f}</td>"
-            f"<td class='num'>{cu}</td><td class='num'>R$ {c['teto']:.2f}</td>"
-            f"<td class='num'>{ch}{alerta}</td><td>{c['metrica']}</td></tr>")
+# ---- 4. Pagina standalone virou redirect p/ Central de Otimizacao ---------
+REDIR = ('<!DOCTYPE html><html><head><meta charset="utf-8">'
+         '<meta http-equiv="refresh" content="0;url=./placar-semanal.html">'
+         '<title>Central de Otimizacao</title></head>'
+         '<body><a href="./placar-semanal.html">Central de Otimizacao</a></body></html>')
+(ROOT / 'varredura-diaria.html').write_text(REDIR, encoding='utf-8')
 
 n = out['resumo']
-html = f"""<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1"><title>Varredura Diária — {HOJE}</title>
-<style>
-:root{{--bg:#0b0e14;--card:#151a26;--card2:#1a2030;--txt:#e8ecf4;--txt2:#9aa3b5;--line:#242c3e}}
-[data-theme=light]{{--bg:#f4f6fa;--card:#fff;--card2:#f0f3f8;--txt:#1a2030;--txt2:#5b6478;--line:#dde3ee}}
-*{{margin:0;padding:0;box-sizing:border-box}}body{{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--txt);padding:28px 14px;line-height:1.5}}
-.wrap{{max-width:1200px;margin:0 auto}}h1{{font-size:22px;margin-bottom:4px}}.sub{{color:var(--txt2);font-size:13px;margin-bottom:18px}}
-.kpis{{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}}.kpi{{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 18px;font-size:13px}}
-.kpi b{{font-size:20px;display:block}}table{{width:100%;border-collapse:collapse;background:var(--card);font-size:13px;border-radius:12px;overflow:hidden}}
-.tw{{overflow-x:auto;border:1px solid var(--line);border-radius:12px;margin-bottom:24px}}
-th{{background:var(--card2);text-align:left;padding:9px 10px;font-size:11px;text-transform:uppercase;color:var(--txt2);white-space:nowrap}}
-td{{padding:9px 10px;border-top:1px solid var(--line);vertical-align:top}}td.num{{text-align:right;white-space:nowrap}}
-.adname{{max-width:330px}}small{{color:var(--txt2)}}
-.pill{{padding:2px 9px;border-radius:10px;font-size:11px;font-weight:700;white-space:nowrap}}
-h2{{font-size:16px;margin:18px 0 8px}}
-.btn{{position:fixed;top:14px;right:14px;background:var(--card);color:var(--txt);border:1px solid var(--line);border-radius:18px;padding:6px 16px;cursor:pointer;font-size:12px;font-weight:600}}
-</style></head><body>
-<button class="btn" onclick="tt()">off/white</button><div class="wrap">
-<h1>🔎 Varredura Diária — Régua v2</h1>
-<p class="sub">{HOJE} · leitura para decisão (o agente não pausa nada) · Meta API: {'ok' if api_ok else 'indisponível — sem frequência'} · janela veterano: {W1_INI} → {W1_FIM}</p>
-<div class="kpis">
-<div class="kpi" style="border-left:3px solid #f87171"><b>{n['PAUSAR']}</b>🔴 pausar</div>
-<div class="kpi" style="border-left:3px solid #fb923c"><b>{n['AUDITAR']}</b>🟠 auditar piso</div>
-<div class="kpi" style="border-left:3px solid #fbbf24"><b>{n['ATENCAO']}</b>⚠ 1ª janela</div>
-<div class="kpi" style="border-left:3px solid #fbbf24"><b>{n['AMARELO']}</b>🟡 amarelo</div>
-<div class="kpi" style="border-left:3px solid #34d399"><b>{n['VERDE']}</b>🟢 verde</div>
-<div class="kpi"><b>{n['AMOSTRA'] + n['AGUARDANDO']}</b>⏳ sem amostra</div>
-<div class="kpi" style="border-left:3px solid #a78bfa"><b>{out['fadiga']}</b>😴 fadiga ≥{FREQ_FADIGA}</div>
-</div>
-<h2>Resumo por célula (janela 7d)</h2>
-<div class="tw"><table><tr><th>Célula</th><th>Gasto 7d</th><th>Custo/resultado</th><th>Teto</th><th>Chegada CRM</th><th>Métrica</th></tr>
-{''.join(cel_linha(k, c) for k, c in sorted(celulas.items()))}</table></div>
-<h2>Anúncios ({len(leitura)})</h2>
-<div class="tw"><table><tr><th>Status</th><th>Anúncio / campanha</th><th>Célula</th><th>Idade</th><th>Custo</th><th>Teto</th><th>Gasto*</th><th>Freq 7d</th><th>Leitura / ação recomendada</th></tr>
-{''.join(linha(x) for x in leitura)}</table></div>
-<p class="sub">*Gasto: acumulado desde o início (novos) ou janela 7d (veteranos). Bandas oficiais 2026-08-07 —
-cadastro medido em lead CRM (teto convertido pela taxa de chegada). Spec: REGUA-OTIMIZACAO-CRIATIVOS-v2.md</p>
-</div><script>
-const p=new URLSearchParams(location.search).get('theme'),s=localStorage.getItem('theme');
-if((p||s)==='light')document.documentElement.setAttribute('data-theme','light');
-function tt(){{const h=document.documentElement,l=h.getAttribute('data-theme')==='light';
-if(l){{h.removeAttribute('data-theme');localStorage.setItem('theme','dark')}}else{{h.setAttribute('data-theme','light');localStorage.setItem('theme','light')}}}}
-</script></body></html>"""
-(ROOT / 'varredura-diaria.html').write_text(html, encoding='utf-8')
-
 print(f"varredura OK: {len(leitura)} anuncios | PAUSAR={n['PAUSAR']} AUDITAR={n['AUDITAR']} "
       f"ATENCAO={n['ATENCAO']} VERDE={n['VERDE']} fadiga={out['fadiga']} | API Meta: {api_ok}")
 for x in leitura:
     if x['status'] in ('PAUSAR', 'AUDITAR', 'ATENCAO'):
         print(f"  [{x['status']}] {x['conta']} {x['celula']} | {x['ad'][:50]} | {x['acao']}")
 
-# ---- 5. Git push (publica no GitHub Pages, como o placar) ----------------
+# ---- 5. Atualiza dataset semanal (Central le os dois JSONs frescos) ------
+if '--no-chain' not in sys.argv:
+    r = subprocess.run([sys.executable, str(ROOT / 'placar_semanal.py')],
+                       capture_output=True, text=True)
+    print('placar_dataset atualizado' if r.returncode == 0
+          else f'aviso: placar falhou: {(r.stderr or "")[:200]}')
+
+# ---- 6. Git push (publica no GitHub Pages, como o placar) ----------------
 if '--no-push' not in sys.argv:
     subprocess.run(['git', '-C', str(ROOT), 'add', 'data/varredura.json', 'varredura-diaria.html'],
                    capture_output=True, text=True)
