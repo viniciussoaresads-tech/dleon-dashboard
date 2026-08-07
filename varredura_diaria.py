@@ -167,6 +167,7 @@ for sid, dd in serie.items():
 
     if canal == 'outros':
         leitura.append({'sid': sid, 'ad': m['ad'], 'camp': m['camp'], 'conta': acc_nome,
+                        'gasto_d1': round(soma(dd, D1, D1)[0], 0),
                         'celula': f'{prod}|outros', 'idade': idade, 'status': 'INFO',
                         'acao': 'Campanha fora do funil direto (branding/evento) — sem banda',
                         'custo': None, 'gasto': round(soma(dd, W1_INI, W1_FIM)[0], 0)})
@@ -233,6 +234,7 @@ for sid, dd in serie.items():
     if fadiga and status in ('VERDE', 'AMARELO'):
         acao += f' | FADIGA freq {fq["freq"]:.1f} — pedir criativo novo'
     leitura.append({'sid': sid, 'ad': (m['ad'] or '')[:70], 'camp': (m['camp'] or '')[:60],
+                    'gasto_d1': round(soma(dd, D1, D1)[0], 0),
                     'conta': acc_nome, 'celula': k, 'idade': idade, 'status': status,
                     'custo': custo, 'teto': b['teto'], 'metrica': b['metrica'],
                     'gasto': gasto, 'freq': fq.get('freq'), 'acao': acao,
@@ -280,9 +282,15 @@ if '--no-chain' not in sys.argv:
     print('placar_dataset atualizado' if r.returncode == 0
           else f'aviso: placar falhou: {(r.stderr or "")[:200]}')
 
-# ---- 6. Git push (publica no GitHub Pages, como o placar) ----------------
+# ---- 6. Analise interpretada -> comentario no ClickUp (ritual diario) ----
+if '--no-chain' not in sys.argv:
+    r = subprocess.run([sys.executable, str(ROOT / 'analise_diaria.py')],
+                       capture_output=True, text=True, encoding='utf-8', errors='replace')
+    print((r.stdout or '').strip() or ('analise falhou: ' + (r.stderr or '')[:200]))
+
+# ---- 7. Git push (publica no GitHub Pages, como o placar) ----------------
 if '--no-push' not in sys.argv:
-    subprocess.run(['git', '-C', str(ROOT), 'add', 'data/varredura.json', 'varredura-diaria.html'],
+    subprocess.run(['git', '-C', str(ROOT), 'add', 'data/varredura.json', 'data/varredura_hist.json', 'varredura-diaria.html'],
                    capture_output=True, text=True)
     r = subprocess.run(['git', '-C', str(ROOT), 'commit', '-m', f'chore: varredura {HOJE}'],
                        capture_output=True, text=True)
