@@ -3,21 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Placar de Otimização · Tráfego · D'Leon</title>
+<title>Central de Otimização · Tráfego · D'Leon</title>
 <style>
 :root{
   --bg:#0f1115; --card:#171a21; --card2:#1d212b; --bd:#262b36; --bd2:#333a48;
   --tx:#e6e8ec; --mut:#8b93a1; --mut2:#5f6673; --acc:#4c8dff;
   --v-bg:#123021; --v-tx:#4ade80; --a-bg:#352a10; --a-tx:#fbbf24;
   --r-bg:#3a1518; --r-tx:#f87171; --g-bg:#1a2340; --g-tx:#7ea2ff;
-  --t-bg:#2c1a3d; --t-tx:#c084fc;
+  --t-bg:#2c1a3d; --t-tx:#c084fc; --o-bg:#3a2410; --o-tx:#fb923c;
 }
 :root[data-theme="light"]{
   --bg:#f5f5f5; --card:#fff; --card2:#fafafa; --bd:#e8e8e8; --bd2:#ddd;
   --tx:#111; --mut:#999; --mut2:#bbb; --acc:#007aff;
   --v-bg:#eafbef; --v-tx:#1d7a3a; --a-bg:#fff5e0; --a-tx:#a76b00;
   --r-bg:#ffecec; --r-tx:#c0392b; --g-bg:#eef3ff; --g-tx:#3a5bc7;
-  --t-bg:#f3e9ff; --t-tx:#7d3ac0;
+  --t-bg:#f3e9ff; --t-tx:#7d3ac0; --o-bg:#fff0e4; --o-tx:#c2560d;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--tx);font-size:13px;line-height:1.4;transition:background .2s,color .2s}
@@ -97,6 +97,17 @@ td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 .acao{font-size:10.5px;color:var(--mut);max-width:210px}
 .note{font-size:10.5px;color:var(--mut);margin-top:10px;line-height:1.6}
 .loading{color:var(--mut);padding:40px;text-align:center}
+/* Leitura de hoje (guardrail diário) */
+.p-pausar{background:var(--r-bg);color:var(--r-tx)}
+.p-auditar{background:var(--o-bg);color:var(--o-tx)}
+.p-atencao{background:var(--a-bg);color:var(--a-tx)}
+.p-fadiga{background:var(--t-bg);color:var(--t-tx)}
+.hoje-chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:10px}
+.hchip{border-radius:9px;padding:6px 12px;font-size:11px;font-weight:700;background:var(--card2);border:1px solid var(--bd)}
+.hchip b{font-size:16px;margin-right:5px}
+.hoje-ok{color:var(--v-tx);font-weight:600;font-size:12px;padding:6px 0}
+.hoje-tbl table{min-width:820px}
+.htoggle{font-size:10.5px;color:var(--acc);cursor:pointer;font-weight:600;user-select:none}
 </style>
 </head>
 <body>
@@ -104,7 +115,7 @@ td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
   <div class="hd">
     <div class="brand">
       <div class="sq">DL</div>
-      <div class="btext"><h1>Placar de Otimização — Tráfego</h1><p>Decisor: custo por comparecimento · SOP Otimização por Receita v1.0</p></div>
+      <div class="btext"><h1>Central de Otimização — Tráfego</h1><p>Hoje: guardrail Régua v2 (CPL por célula) · Semana: custo por comparecimento (decisor)</p></div>
     </div>
     <div class="hd-right">
       <button class="themebtn" id="themebtn" title="Alternar tema">🌙 off/white</button>
@@ -149,6 +160,7 @@ td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
   </div>
 
   <div class="alertbar" id="alerta"></div>
+  <div id="hoje"></div>
   <div class="notebar" id="calibnote"></div>
   <div class="counters" id="counters" style="display:none"></div>
   <div class="kgrid" id="kpis" style="display:none"></div>
@@ -160,6 +172,11 @@ const brl = n => n==null ? '—' : 'R$ ' + Math.round(n).toLocaleString('pt-BR')
 const pct = n => n==null ? '—' : n + '%';
 const DAY = 86400000;
 let DS=null, TODAY=null, BASE=null, RETAIN=130;
+let VAR=null;                       // data/varredura.json (guardrail diário — régua v2)
+const VARMAP = new Map();           // ad id -> {status, acao, custo, freq}
+const VSEV = {PAUSAR:0, AUDITAR:1, ATENCAO:2};   // só exceções ganham badge na tabela
+const VLBL = {PAUSAR:'🔴 PAUSAR', AUDITAR:'🟠 AUDITAR', ATENCAO:'⚠ ATENÇÃO'};
+const VCLS = {PAUSAR:'p-pausar', AUDITAR:'p-auditar', ATENCAO:'p-atencao'};
 const state = {acc:null, funil:'all', start:null, end:null, preset:'sop', consol:false, minspend:100,
                filterCor:null, sortKey:'gasto', sortDir:-1};
 
@@ -254,11 +271,11 @@ function computeRows(){
     let b = bucket.get(key);
     if(!b){
       b = {key, ad:a.ad, camp:a.camp, cr:a.cr, acc:a.acc, pg:a.pg, fn:fa,
-           sp:0, conv:0, leads:0, agend:0, comp:0, vend:0, recent:0, n:0};
+           sp:0, conv:0, leads:0, agend:0, comp:0, vend:0, recent:0, n:0, ids:[]};
       bucket.set(key, b);
     }
     if(b.fn!==fa) b.fn='misto';   // criativo em funis diferentes (só ao consolidar)
-    b.sp+=sp; b.conv+=conv; b.leads+=leads; b.agend+=agend; b.comp+=comp; b.vend+=vend; b.recent+=recent; b.n++;
+    b.sp+=sp; b.conv+=conv; b.leads+=leads; b.agend+=agend; b.comp+=comp; b.vend+=vend; b.recent+=recent; b.n++; b.ids.push(a.id);
     if(a.pg && (!b.pg || a.pg < b.pg)) b.pg = a.pg;   // criativo mais antigo define idade
   });
 
@@ -275,6 +292,16 @@ function computeRows(){
       pct_cp: b.agend? Math.round(1000*b.comp/b.agend)/10 : null});
   });
   return rows;
+}
+
+/* Pior status do guardrail de hoje entre as instâncias do bucket */
+function hojeOf(b){
+  let worst=null;
+  (b.ids||[]).forEach(id=>{
+    const v = VARMAP.get(id);
+    if(v && v.status in VSEV && (!worst || VSEV[v.status] < VSEV[worst.status])) worst=v;
+  });
+  return worst;
 }
 
 /* ---------- Render ---------- */
@@ -335,16 +362,20 @@ function render(){
   h += `<span style="font-weight:400;color:var(--mut);font-size:10.5px">${state.start} → ${state.end}</span></div>`;
   h += '<table><thead><tr>';
   h += `<th style="text-align:left">${state.consol?'Criativo':'Anúncio / Campanha'}</th>`;
-  h += th('gasto','Gasto') + th('recent','Gasto 7d') + th('leads','Leads')
+  h += '<th style="text-align:left">Hoje</th>'
+     + th('gasto','Gasto') + th('recent','Gasto 7d') + th('leads','Leads')
      + '<th style="text-align:right">% ag.</th><th style="text-align:right">% comp.</th>'
      + th('comp','Comp.') + th('custo','Custo/Comp') + th('cpl','CPL') + th('cobertura','Cobert.') + th('vendas','Vendas')
      + '<th style="text-align:left">Semáforo</th><th style="text-align:left">Ação</th></tr></thead><tbody>';
   trows.forEach(r=>{
+    const hj = hojeOf(r);
+    const hjCell = hj ? `<span class="pill ${VCLS[hj.status]}" title="${(hj.acao||'').replace(/"/g,'&quot;')}">${VLBL[hj.status]}</span>` : '<span style="color:var(--mut2)">—</span>';
     const fnb = `<span class="fntag fn-${r.fn}">${FN_LABEL[r.fn]||r.fn}</span>`;
     const nameCell = state.consol
       ? `<div class="adname"><span class="crtag">${r.cr}</span>${r.n} instância${r.n>1?'s':''}</div><div class="camp">${fnb} ${(r.ad||'').slice(0,60)}</div>`
       : `<div class="adname">${r.ad||'—'}</div><div class="camp">${fnb} ${r.camp||''}</div>`;
     h += `<tr><td>${nameCell}</td>
+      <td>${hjCell}</td>
       <td class="num">${brl(r.sp)}</td><td class="num">${r.recent?brl(r.recent):'—'}</td>
       <td class="num">${r.leads}</td><td class="num">${pct(r.pct_ag)}</td><td class="num">${pct(r.pct_cp)}</td>
       <td class="num">${r.comp}</td><td class="num"><b>${brl(r.custo)}</b></td>
@@ -353,7 +384,7 @@ function render(){
       <td><span class="pill p-${r.cor}">${LABEL[r.cor]}</span></td>
       <td class="acao">${r.acao}</td></tr>`;
   });
-  if(!trows.length) h += '<tr><td colspan="12" style="text-align:center;color:var(--mut);padding:24px">Nenhum anúncio no filtro atual. Reduza o gasto mínimo ou amplie o período.</td></tr>';
+  if(!trows.length) h += '<tr><td colspan="13" style="text-align:center;color:var(--mut);padding:24px">Nenhum anúncio no filtro atual. Reduza o gasto mínimo ou amplie o período.</td></tr>';
   h += `</tbody></table><div class="note"><b>Regras (SOP v1.0):</b> 🟢 custo/comp &lt; R$700 escala +20% · 🟡 R$700–1.500 mantém · 🔴 &gt; R$1.500 por 2 semanas corta 50%/pausa · <span style="color:var(--g-tx)">EM APRENDIZADO</span> = &lt;21 dias e &lt;150 leads · <span style="color:var(--t-tx)">FALHA TRACKING</span> = cobertura &lt;40%, corrigir antes de julgar. <b>Cobertura e Falha Tracking só se aplicam ao funil de Mensagem</b> — Cadastro (Typebot) não gera conversas, então aparece "—". CPL banda normal R$14–22 (fora = defeito de tracking). Vendas parciais (ciclo p75 = 15d). Idade e "gasto 7d" são sempre relativos a hoje. Registrar toda ação no LOG oficial.</div>`;
   $('main').innerHTML = h;
   $('main').className='';
@@ -413,10 +444,57 @@ function buildControls(){
   $('consol').onchange = ()=>{ state.consol=$('consol').checked; render(); };
 }
 
+/* ---------- Leitura de hoje (guardrail Régua v2, data/varredura.json) ---------- */
+function renderHoje(){
+  if(!VAR) return;
+  VARMAP.clear();
+  (VAR.anuncios||[]).forEach(a=>VARMAP.set(a.sid, a));
+  const exc = (VAR.anuncios||[]).filter(a=>a.status in VSEV);
+  const fad = (VAR.anuncios||[]).filter(a=>a.freq && a.freq>=2.8);
+  const fluxo = Object.entries(VAR.celulas||{}).filter(([k,c])=>c.chegada!=null && c.chegada<55);
+  const n = VAR.resumo||{};
+  let h = `<div class="cc"><div class="cttl"><span>🔎 Leitura de hoje — guardrail Régua v2</span>`;
+  h += `<span style="font-weight:400;color:var(--mut);font-size:10.5px">varredura de ${VAR.gerado_em} · o agente não pausa — decisão é sua</span></div>`;
+  h += `<div class="hoje-chips">`;
+  h += `<div class="hchip" style="border-left:3px solid var(--r-tx)"><b>${n.PAUSAR||0}</b>🔴 pausar</div>`;
+  h += `<div class="hchip" style="border-left:3px solid var(--o-tx)"><b>${n.AUDITAR||0}</b>🟠 auditar piso</div>`;
+  h += `<div class="hchip" style="border-left:3px solid var(--a-tx)"><b>${n.ATENCAO||0}</b>⚠ 1ª janela</div>`;
+  h += `<div class="hchip" style="border-left:3px solid var(--t-tx)"><b>${fad.length}</b>😴 fadiga ≥2,8</div>`;
+  h += `<div class="hchip" style="border-left:3px solid var(--v-tx)"><b>${n.VERDE||0}</b>🟢 verdes</div>`;
+  h += `<div class="hchip"><b>${(n.AMOSTRA||0)+(n.AGUARDANDO||0)}</b>⏳ sem amostra</div></div>`;
+  fluxo.forEach(([k,c])=>{
+    h += `<div class="alertbar on" style="margin-bottom:8px">⚙️ FLUXO: ${k} com taxa de chegada Meta→CRM de ${c.chegada}% (mín. 55%) — investigar bot/API antes de julgar criativo</div>`;
+  });
+  if(!exc.length && !fad.length){
+    h += `<div class="hoje-ok">✅ Nenhuma exceção de custo hoje — nenhum anúncio estourando teto ou piso.</div>`;
+  } else {
+    h += `<div class="hoje-tbl" style="overflow-x:auto"><table><thead><tr>
+      <th style="text-align:left">Status</th><th style="text-align:left">Anúncio / Campanha</th><th style="text-align:left">Célula</th>
+      <th style="text-align:right">Idade</th><th style="text-align:right">Custo</th><th style="text-align:right">Teto</th>
+      <th style="text-align:right">Gasto</th><th style="text-align:right">Freq</th><th style="text-align:left">Leitura</th></tr></thead><tbody>`;
+    const rows = [...exc, ...fad.filter(a=>!(a.status in VSEV))];
+    rows.forEach(a=>{
+      const cls = VCLS[a.status] || 'p-fadiga';
+      const lbl = VLBL[a.status] || '😴 FADIGA';
+      h += `<tr><td><span class="pill ${cls}">${lbl}</span>${a.novo?' <span class="crtag">NOVO</span>':''}</td>
+        <td><div class="adname">${a.ad||'—'}</div><div class="camp">${a.conta} · ${a.camp||''}</div></td>
+        <td>${a.celula}</td><td class="num">${a.idade}d</td>
+        <td class="num"><b>${a.custo!=null?('R$ '+a.custo.toFixed(2)):'—'}</b></td>
+        <td class="num">${a.teto!=null?('R$ '+a.teto.toFixed(2)):'—'}</td>
+        <td class="num">${brl(a.gasto)}</td><td class="num">${a.freq?a.freq.toFixed(1):'—'}</td>
+        <td class="acao" style="max-width:320px">${a.acao||''}</td></tr>`;
+    });
+    h += `</tbody></table></div>`;
+  }
+  h += `<div class="note">Bandas oficiais 2026-08-07 por célula produto×canal · mensagem = custo/conversa (gerenciador) · cadastro = custo/lead CRM (teto convertido pela taxa de chegada) · novos (&lt;14d): acumulado, leitura no D+3 com 30 resultados · veteranos: janela móvel 7d (2 janelas &gt; teto, ou 1 &gt; 1,5×) · atualizada dias úteis às 08h.</div></div>`;
+  $('hoje').innerHTML = h;
+}
+
 /* ---------- Load ---------- */
 fetch('./data/placar_dataset.json').then(r=>r.json()).then(j=>{
   DS=j; TODAY=j.gerado_em; BASE=j.base; RETAIN=j.retain;
   $('upd-lbl').textContent = `Gerado: ${j.gerado_em} · dados dos últimos ${j.retain} dias`;
+  fetch('./data/varredura.json').then(r=>r.json()).then(v=>{ VAR=v; renderHoje(); if(state.start) render(); }).catch(()=>{});
   buildControls();
   // regressão de cobertura (do snapshot legado, se existir)
   fetch('./data/placar.json').then(r=>r.json()).then(p=>{
