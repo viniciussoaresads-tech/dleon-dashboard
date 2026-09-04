@@ -1,0 +1,169 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pauta de Criativo · D'Leon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+:root{
+  --ground:#f4f6f8; --surface:#fff; --surface2:#eef1f5; --ink:#161b22; --mut:#5b6673;
+  --mut2:#8b95a3; --line:#dde2e9; --accent:#0f6f5c; --accent-soft:#e2f0ec;
+  --ok:#1f6f43; --ok-bg:#e4f2e9; --warn:#8a5a00; --warn-bg:#faf0da;
+  --bad:#a8342c; --bad-bg:#fbe7e5; --shadow:0 1px 2px rgba(20,28,38,.06),0 8px 24px rgba(20,28,38,.05);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --ground:#0e1217; --surface:#151a21; --surface2:#1b222b; --ink:#e7ebf0; --mut:#98a3b1;
+  --mut2:#6d7885; --line:#252d38; --accent:#48c9aa; --accent-soft:#16302b;
+  --ok:#5fce93; --ok-bg:#132a1e; --warn:#e0ac53; --warn-bg:#2c2213;
+  --bad:#f0837a; --bad-bg:#301917; --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.28);}}
+:root[data-theme="dark"]{
+  --ground:#0e1217; --surface:#151a21; --surface2:#1b222b; --ink:#e7ebf0; --mut:#98a3b1;
+  --mut2:#6d7885; --line:#252d38; --accent:#48c9aa; --accent-soft:#16302b;
+  --ok:#5fce93; --ok-bg:#132a1e; --warn:#e0ac53; --warn-bg:#2c2213;
+  --bad:#f0837a; --bad-bg:#301917; --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.28);}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:Archivo,"Helvetica Neue",Arial,sans-serif;
+  font-size:14.5px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1120px;margin:0 auto;padding:26px 20px 70px}
+.f,.num{font-family:"IBM Plex Mono",ui-monospace,Consolas,monospace;font-variant-numeric:tabular-nums}
+header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:22px}
+.lbl{font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+h1{font-size:clamp(24px,3.4vw,34px);line-height:1.06;font-weight:800;letter-spacing:-.02em;margin:6px 0 6px}
+.sub{color:var(--mut);margin:0;font-size:13.5px;max-width:70ch}
+.btn{background:var(--surface);color:var(--mut);border:1px solid var(--line);border-radius:999px;
+  padding:6px 14px;font-size:11px;font-weight:700;letter-spacing:.06em;cursor:pointer;font-family:inherit}
+.btn:hover{color:var(--ink);border-color:var(--accent)}
+.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-bottom:26px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:11px;padding:13px 15px;box-shadow:var(--shadow)}
+.kpi b{display:block;font-size:9.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--mut2);margin-bottom:5px}
+.kpi .v{font-family:"IBM Plex Mono",monospace;font-size:23px;font-weight:600;line-height:1;letter-spacing:-.02em}
+.kpi small{display:block;color:var(--mut);font-size:12px;margin-top:5px}
+h2{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--mut2);
+   margin:34px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.fila{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent);
+  border-radius:0 11px 11px 0;padding:14px 18px;margin-bottom:10px;box-shadow:var(--shadow)}
+.fila.b{border-left-color:var(--warn)} .fila.c{border-left-color:var(--mut2)}
+.fila-h{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;margin-bottom:6px}
+.cod{font-family:"IBM Plex Mono",monospace;font-weight:600;color:var(--accent);font-size:13px}
+.ang{font-weight:700;font-size:15px;letter-spacing:-.01em}
+.cel{font-size:11px;color:var(--mut2);letter-spacing:.04em;text-transform:uppercase}
+.linha{font-size:13px;color:var(--mut);margin:3px 0}
+.linha b{color:var(--ink);font-weight:600}
+.fazer{background:var(--accent-soft);border-radius:7px;padding:8px 11px;margin-top:8px;font-size:13px;color:var(--ink)}
+.fila.b .fazer{background:var(--warn-bg)}
+.tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}
+.tag{font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--surface2);color:var(--mut)}
+.tw{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:11px;box-shadow:var(--shadow)}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th{font-size:9.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--mut2);
+   text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);background:var(--surface2);white-space:nowrap}
+td{padding:9px 12px;border-bottom:1px solid var(--line);color:var(--mut)}
+tr:last-child td{border-bottom:none}
+td.n,th.n{text-align:right;font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;white-space:nowrap}
+td.zero{color:var(--bad);font-weight:600}
+.nota{font-size:12.5px;color:var(--mut2);margin-top:9px}
+.loading{color:var(--mut2);padding:40px;text-align:center}
+</style>
+
+<div class="wrap">
+<header>
+  <div>
+    <div class="lbl">Ritual semanal · produção de criativo</div>
+    <h1>Pauta de Criativo</h1>
+    <p class="sub">Gerada da leitura por degrau das 3 contas. Cada peça chega com o alvo numérico, o elemento a preservar e uma única variável a mudar.</p>
+  </div>
+  <button class="btn" id="tema" type="button">off / white</button>
+</header>
+<div id="app"><div class="loading">carregando…</div></div>
+</div>
+
+<script>
+(function(){
+  var raiz=document.documentElement,botao=document.getElementById('tema');
+  var url=new URLSearchParams(location.search).get('theme'),salvo=null;
+  try{salvo=localStorage.getItem('dleon-tema');}catch(e){}
+  var ini=url||salvo;
+  if(ini==='dark'||ini==='light')raiz.setAttribute('data-theme',ini);
+  function atual(){var m=raiz.getAttribute('data-theme');return m||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');}
+  function rot(){botao.textContent=atual()==='dark'?'white':'off';}
+  botao.onclick=function(){var p=atual()==='dark'?'light':'dark';raiz.setAttribute('data-theme',p);
+    try{localStorage.setItem('dleon-tema',p);}catch(e){}rot();};
+  rot();
+})();
+
+var brl=function(v){return 'R$ '+(v||0).toLocaleString('pt-BR',{maximumFractionDigits:0});};
+
+fetch('./data/criativo_filas.json').then(function(r){return r.json();}).then(function(d){
+  var h='';
+  var pct=d.total_ads?Math.round(100*d.elegiveis/d.total_ads):0;
+  var n=d.numeracao||{};
+  h+='<div class="kpis">'
+   + kpi('Anúncios lidos',d.total_ads,'janela de '+d.janela+' dias')
+   + kpi('Com evidência para julgar',d.elegiveis+' <span style="font-size:14px;color:var(--mut2)">('+pct+'%)</span>',
+         'piso: '+brl(d.piso.gasto)+' · '+d.piso.res+' resultados')
+   + kpi('Próximo código livre','['+(n.proximo||'—')+']',(n.mes||'')+' · '+(n.usados||0)+' usados')
+   + kpi('Slots da semana',(d.slots.A+d.slots.B+d.slots.C),'A '+d.slots.A+' · B '+d.slots.B+' · C '+d.slots.C)
+   + '</div>';
+
+  h+='<h2>Fila A · multiplicar — grave só ganchos novos, não regrave o corpo</h2>';
+  h+= d.filaA.length ? d.filaA.map(function(a){return card(a,'a',
+        'Exportar o corpo sem os 3s iniciais e gravar 3 aberturas novas. Não tocar na argumentação.');}).join('')
+      : vazio('Nenhum criativo atingiu o p75 da célula nesta janela.');
+
+  h+='<h2>Fila B · reescrever o corpo — a abertura já foi validada</h2>';
+  h+= d.filaB.length ? d.filaB.map(function(a){return card(a,'b',
+        'Manter os 3s iniciais. Reescrever prova, mecanismo e CTA. Uma variável nesta peça: só o corpo.');}).join('')
+      : vazio('Nenhum criativo com gancho acima da mediana e corpo abaixo do p25.');
+
+  h+='<h2>Fila C · explorar — combinações sem nenhum teste com verba real</h2>';
+  h+= d.lacunas.map(function(c){
+    return '<div class="fila c"><div class="fila-h"><span class="ang">'+c.tema.replace(/_/g,' ')+' × '+c.estrutura.replace(/_/g,' ')+'</span></div>'
+      +'<div class="linha">o tema entrega <b>CPL '+ (c.cpl_tema?('R$ '+c.cpl_tema.toFixed(2)):'—') +'</b> com '+c.leads_tema+' leads, e essa abertura nunca foi testada</div>'
+      +'<div class="fazer">Gravar 1 peça nova com esta combinação. Vai para a arena, não para conjunto existente.</div></div>';
+  }).join('') || vazio('Todas as combinações com tema conhecido já foram testadas.');
+
+  h+='<h2>Sem julgamento — não reprovaram, nunca tiveram verba</h2>';
+  h+='<div class="tw"><table><thead><tr><th>Criativo</th><th>Célula</th><th class="n">gasto</th><th class="n">resultados</th><th>falta</th></tr></thead><tbody>';
+  h+= d.sem_julgamento.map(function(a){
+    var falta=[];
+    if(a.gasto<d.piso.gasto) falta.push('verba');
+    if(a.res<d.piso.res) falta.push('volume');
+    if(!a.video) falta.push('não é vídeo');
+    return '<tr><td><b>['+(a.cod||'?')+']</b> '+esc(a.angulo||a.ad).slice(0,34)+'</td><td>'+a.conta+' · '+a.canal+'</td>'
+      +'<td class="n">'+brl(a.gasto)+'</td><td class="n">'+a.res+'</td><td>'+(falta.join(' + ')||'—')+'</td></tr>';
+  }).join('');
+  h+='</tbody></table></div><p class="nota">Estes vão para a arena — 1 criativo por conjunto, verba igual, 7 dias. Não são pauta de produção.</p>';
+
+  h+='<h2>Matriz de cobertura — o que já foi testado por tema × abertura</h2>';
+  h+='<div class="tw"><table><thead><tr><th>Tema</th><th>Abertura</th><th class="n">peças</th><th class="n">com evidência</th><th class="n">gasto</th><th class="n">CPL</th></tr></thead><tbody>';
+  h+= d.matriz.map(function(m){
+    return '<tr><td>'+m.tema.replace(/_/g,' ')+'</td><td>'+m.estrutura.replace(/_/g,' ')+'</td>'
+      +'<td class="n">'+m.ads+'</td><td class="n '+(m.elegiveis?'':'zero')+'">'+m.elegiveis+'</td>'
+      +'<td class="n">'+brl(m.gasto)+'</td><td class="n">'+(m.cpl?('R$ '+m.cpl.toFixed(2)):'—')+'</td></tr>';
+  }).join('');
+  h+='</tbody></table></div>';
+  h+='<p class="nota">Gerado em '+d.gerado+' · '+d.hist_novas+' linhas novas no histórico. '
+    +'Abertura "não classificada" é criativo cujo nome não carrega a estrutura — some conforme o padrão novo entra.</p>';
+
+  document.getElementById('app').innerHTML=h;
+
+  function kpi(t,v,s){return '<div class="kpi"><b>'+t+'</b><div class="v">'+v+'</div><small>'+s+'</small></div>';}
+  function vazio(t){return '<div class="fila c"><div class="linha">'+t+'</div></div>';}
+  function esc(s){return (s||'').replace(/[<>&]/g,function(c){return {'<':'&lt;','>':'&gt;','&':'&amp;'}[c];});}
+  function card(a,cls,fazer){
+    var tags=[a.tema,a.estrutura,a.formato,a.figura].filter(function(x){return x&&x!=='nao classificado';})
+      .map(function(x){return '<span class="tag">'+x.replace(/_/g,' ')+'</span>';}).join('');
+    return '<div class="fila '+cls+'">'
+      +'<div class="fila-h"><span class="cod">['+(a.cod||'?')+']</span><span class="ang">'+esc(a.angulo||a.ad).slice(0,40)+'</span>'
+      +'<span class="cel">'+a.conta+' · '+a.canal+(a.tipo==='evento'?' · evento':'')+'</span></div>'
+      +'<div class="linha">'+esc(a.motivo)+'</div>'
+      +(a.corte?'<div class="linha">onde perde: <b>'+esc(a.corte)+'</b></div>':'')
+      +(a.evolucao?'<div class="linha">'+esc(a.evolucao)+'</div>':'')
+      +'<div class="tags">'+tags+'</div>'
+      +'<div class="fazer">'+fazer+'</div></div>';
+  }
+}).catch(function(e){
+  document.getElementById('app').innerHTML='<div class="loading">Erro ao carregar data/criativo_filas.json: '+e+'</div>';
+});
+</script>
