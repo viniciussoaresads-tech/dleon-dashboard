@@ -94,6 +94,10 @@ td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 .p-verde{background:var(--v-bg);color:var(--v-tx)}.p-amarelo{background:var(--a-bg);color:var(--a-tx)}
 .p-vermelho{background:var(--r-bg);color:var(--r-tx)}.p-graca{background:var(--g-bg);color:var(--g-tx)}
 .p-tracking{background:var(--t-bg);color:var(--t-tx)}
+.p-cri{background:var(--card2);color:var(--mut);border:1px solid var(--bd);cursor:help}
+.p-cri.ok{background:var(--v-bg);color:var(--v-tx);border-color:transparent}
+.p-cri.bad{background:var(--r-bg);color:var(--r-tx);border-color:transparent}
+.p-cri.warn{background:var(--a-bg);color:var(--a-tx);border-color:transparent}
 .acao{font-size:10.5px;color:var(--mut);max-width:210px}
 .note{font-size:10.5px;color:var(--mut);margin-top:10px;line-height:1.6}
 .loading{color:var(--mut);padding:40px;text-align:center}
@@ -172,6 +176,7 @@ const brl = n => n==null ? '—' : 'R$ ' + Math.round(n).toLocaleString('pt-BR')
 const pct = n => n==null ? '—' : n + '%';
 const DAY = 86400000;
 let DS=null, TODAY=null, BASE=null, RETAIN=130;
+let CRI=null; const CRIMAP=new Map();
 let VAR=null;                       // data/varredura.json (guardrail diário — régua v2)
 const VARMAP = new Map();           // ad id -> {status, acao, custo, freq}
 const VSEV = {PAUSAR:0, AUDITAR:1, ATENCAO:2};   // só exceções ganham badge na tabela
@@ -294,6 +299,40 @@ function computeRows(){
   return rows;
 }
 
+/* ---------- Diagnóstico de criativo (data/criativo.json) ---------- */
+/* Camada 4 da régua: NÃO decide verba — diz em qual degrau do vídeo o furo está.
+   BODY correlaciona NEGATIVO com comparecimento (r=-0,52), então "validado" aqui
+   significa "converte lead barato", nunca "pode escalar". Quem escala é o semáforo. */
+const CRI_CLS = {
+  'validado':'ok', 'na banda':'', 'embalagem errada':'warn',
+  'prende e nao converte':'bad', 'promessa nao sustenta':'bad', 'gancho fraco':'bad',
+};
+const CRI_LBL = {
+  'validado':'✓ converte', 'na banda':'na banda', 'embalagem errada':'gancho estreito',
+  'prende e nao converte':'não converte', 'promessa nao sustenta':'promessa fraca',
+  'gancho fraco':'gancho fraco', 'sem volume':'sem volume',
+  'sem volume p/ julgar':'sem volume', 'sem benchmark':'sem base', 'estatico':'estático',
+};
+/* Instância de maior gasto do bucket — o diagnóstico segue o dinheiro */
+function criOf(b){
+  let best=null;
+  (b.ids||[]).forEach(id=>{ const c=CRIMAP.get(String(id));
+    if(c && (!best || c.gasto>best.gasto)) best=c; });
+  return best;
+}
+function criCell(b){
+  const c = criOf(b);
+  if(!c) return '<span style="color:var(--mut2)">—</span>';
+  const cls = CRI_CLS[c.classe]!==undefined ? CRI_CLS[c.classe] : '';
+  const lbl = CRI_LBL[c.classe] || c.classe;
+  const deg = `hook ${c.hook}% · hold ${c.hold!=null?c.hold+'%':'—'} · body ${c.body!=null?c.body+'%':'—'}`;
+  const tip = `${deg}
+${c.porque}
+AÇÃO: ${c.acao}
+(benchmark: ${c.bench||'—'}, 14d)`;
+  return `<span class="pill p-cri ${cls}" title="${tip.replace(/"/g,'&quot;')}">${lbl}</span>`;
+}
+
 /* Pior status do guardrail de hoje entre as instâncias do bucket */
 function hojeOf(b){
   let worst=null;
@@ -362,7 +401,7 @@ function render(){
   h += `<span style="font-weight:400;color:var(--mut);font-size:10.5px">${state.start} → ${state.end}</span></div>`;
   h += '<table><thead><tr>';
   h += `<th style="text-align:left">${state.consol?'Criativo':'Anúncio / Campanha'}</th>`;
-  h += '<th style="text-align:left">Hoje</th>'
+  h += '<th style="text-align:left">Hoje</th><th style="text-align:left">Criativo</th>'
      + th('gasto','Gasto') + th('recent','Gasto 7d') + th('leads','Leads')
      + '<th style="text-align:right">% ag.</th><th style="text-align:right">% comp.</th>'
      + th('comp','Comp.') + th('custo','Custo/Comp') + th('cpl','CPL') + th('cobertura','Cobert.') + th('vendas','Vendas')
@@ -376,6 +415,7 @@ function render(){
       : `<div class="adname">${r.ad||'—'}</div><div class="camp">${fnb} ${r.camp||''}</div>`;
     h += `<tr><td>${nameCell}</td>
       <td>${hjCell}</td>
+      <td>${criCell(r)}</td>
       <td class="num">${brl(r.sp)}</td><td class="num">${r.recent?brl(r.recent):'—'}</td>
       <td class="num">${r.leads}</td><td class="num">${pct(r.pct_ag)}</td><td class="num">${pct(r.pct_cp)}</td>
       <td class="num">${r.comp}</td><td class="num"><b>${brl(r.custo)}</b></td>
@@ -384,8 +424,8 @@ function render(){
       <td><span class="pill p-${r.cor}">${LABEL[r.cor]}</span></td>
       <td class="acao">${r.acao}</td></tr>`;
   });
-  if(!trows.length) h += '<tr><td colspan="13" style="text-align:center;color:var(--mut);padding:24px">Nenhum anúncio no filtro atual. Reduza o gasto mínimo ou amplie o período.</td></tr>';
-  h += `</tbody></table><div class="note"><b>Regras (SOP v1.0):</b> 🟢 custo/comp &lt; R$700 escala +20% · 🟡 R$700–1.500 mantém · 🔴 &gt; R$1.500 por 2 semanas corta 50%/pausa · <span style="color:var(--g-tx)">EM APRENDIZADO</span> = &lt;21 dias e &lt;150 leads · <span style="color:var(--t-tx)">FALHA TRACKING</span> = cobertura &lt;40%, corrigir antes de julgar. <b>Cobertura e Falha Tracking só se aplicam ao funil de Mensagem</b> — Cadastro (Typebot) não gera conversas, então aparece "—". CPL banda normal R$14–22 (fora = defeito de tracking). Vendas parciais (ciclo p75 = 15d). Idade e "gasto 7d" são sempre relativos a hoje. Registrar toda ação no LOG oficial.</div>`;
+  if(!trows.length) h += '<tr><td colspan="14" style="text-align:center;color:var(--mut);padding:24px">Nenhum anúncio no filtro atual. Reduza o gasto mínimo ou amplie o período.</td></tr>';
+  h += `</tbody></table><div class="note"><b>Regras (SOP v1.0):</b> 🟢 custo/comp &lt; R$700 escala +20% · 🟡 R$700–1.500 mantém · 🔴 &gt; R$1.500 por 2 semanas corta 50%/pausa · <span style="color:var(--g-tx)">EM APRENDIZADO</span> = &lt;21 dias e &lt;150 leads · <span style="color:var(--t-tx)">FALHA TRACKING</span> = cobertura &lt;40%, corrigir antes de julgar. <b>Cobertura e Falha Tracking só se aplicam ao funil de Mensagem</b> — Cadastro (Typebot) não gera conversas, então aparece "—". CPL banda normal R$14–22 (fora = defeito de tracking). Vendas parciais (ciclo p75 = 15d). Idade e "gasto 7d" são sempre relativos a hoje. Registrar toda ação no LOG oficial. <b>Coluna Criativo</b> (14d): em qual degrau do vídeo o furo está — hook (3s÷impressões) · hold (ThruPlay÷3s) · body (resultado÷ThruPlay), comparados ao percentil da própria célula. É <b>diagnóstico, não decisão de verba</b>: body alto correlaciona negativo com comparecimento (r=-0,52), então \"✓ converte\" significa lead barato, não paciente na cadeira. Passe o mouse para ver a ação e o que NÃO mexer.</div>`;
   $('main').innerHTML = h;
   $('main').className='';
   $('main').querySelectorAll('th[data-sort]').forEach(el=>{
@@ -495,6 +535,9 @@ fetch('./data/placar_dataset.json').then(r=>r.json()).then(j=>{
   DS=j; TODAY=j.gerado_em; BASE=j.base; RETAIN=j.retain;
   $('upd-lbl').textContent = `Gerado: ${j.gerado_em} · dados dos últimos ${j.retain} dias`;
   fetch('./data/varredura.json').then(r=>r.json()).then(v=>{ VAR=v; renderHoje(); if(state.start) render(); }).catch(()=>{});
+  fetch('./data/criativo.json').then(r=>r.json()).then(c=>{ CRI=c;
+    (c.ads||[]).forEach(a=>CRIMAP.set(String(a.ad_id), a));
+    if(state.start) render(); }).catch(()=>{});
   buildControls();
   // regressão de cobertura (do snapshot legado, se existir)
   fetch('./data/placar.json').then(r=>r.json()).then(p=>{
